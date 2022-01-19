@@ -171,6 +171,8 @@ Use this space to list resources you find helpful and would like to give credit 
 * [Choose an Open Source License](https://choosealicense.com)
 * [Img Shields](https://shields.io)
 * [GitHub Pages](https://pages.github.com)
+* [MadenCo]("https://maddenco.com")
+* [AstraZeneca](https://www.astrazeneca.com)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
