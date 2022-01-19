@@ -44,7 +44,6 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -114,6 +113,11 @@ Next, you will need the executable files.
    ```py
    API_KEY = 'ENTER YOUR API';
    ```
+4. Execute `main.py`   
+   
+   ```sh
+   python main.py
+   ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -151,9 +155,9 @@ Distributed under the Apache 2.0 License. See `LICENSE.txt` for more information
 <!-- CONTACT -->
 ## Contact
 
-Zak Pruitt - [LinkedIn](https://www.linkedin.com/in/zak-pruitt-136567191/) - pruittzn@gmail.com
-Swayde Sanders - [LinkedIn](https://www.linkedin.com/in/zak-pruitt-136567191/) - ssanders2@eagles.usi.edu
-Logan Oakley - [LinkedIn](https://www.linkedin.com/in/zak-pruitt-136567191/) - loakley@eagles.usi.edu
+Zak Pruitt - [LinkedIn](https://www.linkedin.com/in/zak-pruitt-136567191/) - pruittzn@gmail.com <br/>
+Swayde Sanders - [LinkedIn](https://www.linkedin.com/in/zak-pruitt-136567191/) - ssanders2@eagles.usi.edu <br/>
+Logan Oakley - [LinkedIn](https://www.linkedin.com/in/zak-pruitt-136567191/) - loakley@eagles.usi.edu <br/>
 
 Project Link: [GitHub](https://github.com/zakpruitt/senior-project)
 
