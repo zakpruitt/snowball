@@ -185,3 +185,4 @@ Use this space to list resources you find helpful and would like to give credit 
 [license-shield]: https://img.shields.io/github/license/zakpruitt/senior-project.svg?style=for-the-badge
 [license-url]: https://github.com/zakpruitt/senior-project/master/LICENSE.txt
 [product-screenshot]: https://raw.githubusercontent.com/othneildrew/Best-README-Template/master/images/screenshot.png
+[product-screenshots]: https://raw.githubusercontent.com/othneildrew/Best-README-Template/master/images/screenshot.png
