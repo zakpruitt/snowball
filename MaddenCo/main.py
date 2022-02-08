@@ -17,13 +17,32 @@ def generate_excel_file(data):
     worksheet = writer.sheets['MaddenCo Data {Date}']
 
     # formats
-    red_format = workbook.add_format(
-        {'bg_color': 'white', 'font': 'Calibri Light', 'font_size': '12', 'align': 'center'})
-    green_format = workbook.add_format({'bg_color': 'black'})
+    blue_header_format = workbook.add_format(
+        {'bg_color': '#5B9BD5', 'font': 'Calibri Light', 'font_size': '12', 'align': 'center',
+         'border': 1})
+    yellow_header_format = workbook.add_format(
+        {'bg_color': '#FFC000', 'font': 'Calibri Light', 'font_size': '12', 'align': 'center',
+         'border': 1})
+    blue_format = workbook.add_format(
+        {'bg_color': '#DDEBF7', 'font': 'Calibri Light', 'font_size': '12', 'align': 'center',
+         'border': 1})
+    yellow_format = workbook.add_format(
+        {'bg_color': '#FFF2CC', 'font': 'Calibri Light', 'font_size': '12', 'align': 'center',
+         'border': 1})
+
+    # set column headers
+    for col_num, value in enumerate(df.columns.values):
+        if col_num % 2 == 0:
+            worksheet.write(0, col_num, value, blue_header_format)
+        else:
+            worksheet.write(0, col_num, value, yellow_header_format)
 
     # set columns
-    worksheet.set_column(0, 8, 20, red_format)
-    worksheet.set_column(9, 10, 20, green_format)
+    for col in range(0, 9):
+        if col % 2 == 0:
+            worksheet.set_column(col, col, 25, blue_format)
+        else:
+            worksheet.set_column(col, col, 25, yellow_format)
 
     writer.save()
     print(df)
