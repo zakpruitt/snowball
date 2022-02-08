@@ -1,8 +1,4 @@
-from cgi import test
-from cgitb import text
-import time
 import re
-from xml.dom.minidom import Element
 
 
 class FileParser:
@@ -11,6 +7,7 @@ class FileParser:
         self.emp_flag = None
         self.email_flag = False
         self.sub_dept_flag = False
+        self.output = []
 
     def parse_text(self):
         with open(self.file_path, 'r+', encoding="utf-16") as file:
@@ -22,7 +19,8 @@ class FileParser:
                         # email flag to off
                     else:
                         # line with information
-                        self.__parse_information_line(line)
+                        self.output.append(self.__parse_information_line(line))
+        return self.output
 
     def __parse_count_line(self, line):
         self.email_flag = False
@@ -31,6 +29,7 @@ class FileParser:
 
     def __parse_information_line(self, line):
         information_array = self.__build_information_array(line.split())
+        return information_array
 
     def __build_information_array(self, line_array):
         symbols = ['H', 'S', 'E']
@@ -57,4 +56,4 @@ class FileParser:
         information_array[7] = line_array[length - 2]
         information_array[8] = line_array[length - 1]
         
-        print(information_array)
+        return information_array
