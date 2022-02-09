@@ -29,23 +29,27 @@ class ExcelWriter:
 
     def format_headers_af(self, sheet_name, dataframe, buffer, format1, format2):
         worksheet = self.writer.sheets[sheet_name]
-        for col_num, value in enumerate(dataframe.columns.values):
-            if col_num % 2 == 0:
-                worksheet.write(0, col_num + buffer, value,
+        for col in range(0 + buffer, len(dataframe.columns.values) + buffer):
+            value = dataframe.columns.values[col - buffer]
+            if col % 2 == 0:
+                worksheet.write(0, col, value,
                                 self.formats[format1])
             else:
-                worksheet.write(0, col_num + buffer, value,
+                worksheet.write(0, col, value,
                                 self.formats[format2])
 
-    def format_columns_sf(self, sheet_name, dataframe, spacing, format):
+    def format_columns_sf(self, sheet_name, dataframe, buffer, spacing, format):
         worksheet = self.writer.sheets[sheet_name]
         for col in range(0, len(dataframe.columns)):
-            worksheet.set_column(col, col, spacing, self.formats[format])
+            worksheet.set_column(
+                col, col + buffer, spacing, self.formats[format])
 
     def format_columns_af(self, sheet_name, dataframe, buffer, spacing, format1, format2):
         worksheet = self.writer.sheets[sheet_name]
-        for col in range(0, len(dataframe.columns)):
+        for col in range(0, len(dataframe.columns) + buffer):
             if col % 2 == 0:
-                worksheet.set_column(col, col + buffer, spacing, self.formats[format1])
+                worksheet.set_column(
+                    col, col, spacing, self.formats[format1])
             else:
-                worksheet.set_column(col, col + buffer, spacing, self.formats[format2])
+                worksheet.set_column(
+                    col, col, spacing, self.formats[format2])
