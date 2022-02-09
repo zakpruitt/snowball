@@ -6,14 +6,9 @@ class FileParser:
         self.emp_flag = None
         self.email_flag = False
         self.sub_dept_flag = False
+        # TODO: convert to dict
         self.line_information = []
         self.count_information = {}
-
-    def get_information(self):
-        return self.line_information
-
-    def get_count(self):
-        return self.count_information
 
     def parse_text(self):
         with open(self.file_path, 'r+', encoding="utf-16") as file:
@@ -84,4 +79,4 @@ class FileParser:
             self.count_information[employee_number]['Emails'] += 1
 
     def __str__(self):
-        return str(self.output)
+        return str(self.line_information)
