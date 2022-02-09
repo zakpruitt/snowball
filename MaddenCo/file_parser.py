@@ -1,5 +1,6 @@
 import re
 
+
 class FileParser:
     def __init__(self, file_path):
         self.file_path = file_path
@@ -64,16 +65,16 @@ class FileParser:
                 'Later': 0,
                 'Emails': 0
             }
-        
+
         # update total
         self.count_information[employee_number]['Total'] += 1
-        
+
         # update immed/later. if not immed, it must be later.
         if information_array[6] == information_array[7]:
             self.count_information[employee_number]['Immed'] += 1
         else:
             self.count_information[employee_number]['Later'] += 1
-        
+
         # update emails
         if information_array[3] == True:
             self.count_information[employee_number]['Emails'] += 1
