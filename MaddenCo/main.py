@@ -1,55 +1,58 @@
 import pandas as pd
 from file_parser import FileParser
-
-
-def generate_excel_file(data):
-    # create dataframe
-    columns = ['Date Created', 'Sup Code', 'Sub Dept', 'Email', 'Employee #',
-               'Support #', 'Last User', 'Original User', 'Time Last Changed']
-    df = pd.DataFrame(data, columns=columns)
-
-    # XLSX writer objects
-    writer = pd.ExcelWriter("output.xlsx",
-                            engine='xlsxwriter',
-                            options={'strings_to_numbers': True})
-    df.to_excel(writer, sheet_name='MaddenCo Data {Date}', index=False)
-    workbook = writer.book
-    worksheet = writer.sheets['MaddenCo Data {Date}']
-
-    # formats
-    blue_header_format = workbook.add_format(
-        {'bg_color': '#5B9BD5', 'font': 'Calibri Light', 'font_size': '12', 'align': 'center',
-         'border': 1})
-    yellow_header_format = workbook.add_format(
-        {'bg_color': '#FFC000', 'font': 'Calibri Light', 'font_size': '12', 'align': 'center',
-         'border': 1})
-    blue_format = workbook.add_format(
-        {'bg_color': '#DDEBF7', 'font': 'Calibri Light', 'font_size': '12', 'align': 'center',
-         'border': 1})
-    yellow_format = workbook.add_format(
-        {'bg_color': '#FFF2CC', 'font': 'Calibri Light', 'font_size': '12', 'align': 'center',
-         'border': 1})
-
-    # set column headers
-    for col_num, value in enumerate(df.columns.values):
-        if col_num % 2 == 0:
-            worksheet.write(0, col_num, value, blue_header_format)
-        else:
-            worksheet.write(0, col_num, value, yellow_header_format)
-
-    # set columns
-    for col in range(0, 9):
-        if col % 2 == 0:
-            worksheet.set_column(col, col, 25, blue_format)
-        else:
-            worksheet.set_column(col, col, 25, yellow_format)
-
-    writer.save()
-    print(df)
-
+from excel_writer import ExcelWriter
+from datetime import date
 
 if __name__ == '__main__':
+    # parse text file(s)
     file_parser = FileParser("./MaddenCo/20220106.txt")
-    data = file_parser.parse_text()
-    generate_excel_file(data)
-    print("done")
+    file_parser.parse_text()
+
+    # create excel_writer object and dataframes
+    excel_writer = ExcelWriter()
+    columns = ['Date Created', 'Sup Code', 'Sub Dept', 'Email', 'Employee #',
+               'Support #', 'Last User', 'Original User', 'Time Last Changed']
+    info_df = pd.DataFrame(file_parser.line_information, columns=columns)
+    count_df = pd.DataFrame(file_parser.count_information)
+
+    # create and write new sheets
+    today = date.today()
+    formatted_date = today.strftime("%m-%d-%Y")
+    excel_writer.create_and_write_new_sheet(
+        f"MaddenCo Data {formatted_date}", info_df)
+    excel_writer.create_and_write_new_sheet(
+        f"MaddenCo Count {formatted_date}", count_df, True)
+
+    # create formats
+    excel_writer.create_format(
+        "blue_header_format", '#5B9BD5', 'Calibri Light', '12', 'center', 1)
+    excel_writer.create_format(
+        "yellow_header_format", '#FFC000', 'Calibri Light', '12', 'center', 1)
+    excel_writer.create_format(
+        "blue_format", '#DDEBF7', 'Calibri Light', '12', 'center', 1)
+    excel_writer.create_format(
+        "yellow_format", '#FFF2CC', 'Calibri Light', '12', 'center', 1)
+    excel_writer.create_format(
+        "cyan_header_format", "#4BACC6", 'Calibri Light', '12', 'center', 1)
+    excel_writer.create_format(
+        "orange_header_format", "#F79646", 'Calibri Light', '12', 'center', 1)
+    excel_writer.create_format(
+        "cyan_format", "#DAEEF3", 'Calibri Light', '12', 'center', 1)
+    excel_writer.create_format(
+        "orange_format", "#FDE9D9", 'Calibri Light', '12', 'center', 1)
+
+    # format sheets
+    excel_writer.format_headers_af(
+        f"MaddenCo Data {formatted_date}", info_df, 0, "blue_header_format", "yellow_header_format")
+    excel_writer.format_columns_af(
+        f"MaddenCo Data {formatted_date}", info_df, 0, 25, "blue_format", "yellow_format")
+    excel_writer.format_headers_af(
+        f"MaddenCo Count {formatted_date}", count_df, 1, "cyan_header_format", "orange_header_format")
+    excel_writer.format_columns_af(
+        f"MaddenCo Count {formatted_date}", count_df, 1, 25, "cyan_format", "orange_format")
+    excel_writer.format_row_index(
+        f"MaddenCo Count {formatted_date}", count_df, "cyan_header_format")
+
+    # save
+    excel_writer.writer.save()
+    print("Done!")

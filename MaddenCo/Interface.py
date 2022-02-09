@@ -1,9 +1,8 @@
 from tkinter import *
-from tkinter import ttk
 from tkinter import filedialog
-from Inputs_Class import InputFiles
+from file_input import InputFiles
 
-class SnowBall:
+class Snowball:
 
     def __init__(self):
         self.inputFiles = InputFiles()
@@ -76,4 +75,4 @@ class SnowBall:
     def close(self):
         print("Clean up and Close")
 
-app=SnowBall()
+app = Snowball()
