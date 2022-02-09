@@ -8,74 +8,70 @@ class SnowBall:
     def __init__(self):
         self.inputFiles = InputFiles()
 
-        self.winWidth = 400
-        self.winHeight = 400
+        self.winWidth = 800
+        self.winHeight = 200
 
         self.root = Tk()
         self.root.title('Snowball - File Parser')
-        self.root.geometry(f'{self.winWidth}x{self.winWidth}')
+        self.root.minsize(width=self.winWidth, height=self.winHeight)
+        self.root.grid_columnconfigure(0, weight=1)
 
-        self.allFileFrame = Frame()
-        Label(master=self.allFileFrame, text="All File Selected:").pack()
-        self.allFileLabelText = StringVar()
-        self.allFileLabel = Label(master=self.allFileFrame, textvariable=self.allFileLabelText)
-        self.allFileButton = Button(master=self.allFileFrame, text="Select \"All\" File", command = self.fetchAllFile)
+        self.inputFrame=ttk.Frame(self.root, padding="3 3 12 12")
+        self.inputFrame.grid(column=0,row=0,sticky=(N, W, E, S))
+        self.inputFrame.grid_columnconfigure(1, weight=1)
+
+        self.controlFrame = ttk.Frame(self.root, padding="3 3 12 12")
+        self.controlFrame.grid(column=0, row=1, sticky=(N, S , E, W))
+        self.controlFrame.grid_columnconfigure(0,weight=1)
+        self.controlFrame.grid_columnconfigure(1,weight=1)
+
+        ttk.Label(self.inputFrame, text="All File Selected:").grid(column=0, row=0)
+        self.allFileEntryText = StringVar()
+        self.allFileEntry = Entry(self.inputFrame,textvariable=self.allFileEntryText).grid(column=1, row=0, sticky=(W,E))
+        self.allFileButton = Button(self.inputFrame,text="Select \"All\" File", command = self.fetchAllFile).grid(column=2, row=0, sticky=(W,E))
         
 
-        self.standardFileFrame = Frame()
-        Label(master=self.standardFileFrame, text="Standard File Selected:").pack()
-        self.standardFileLabelText = StringVar()
-        self.standardFileLabel = Label(master=self.standardFileFrame, textvariable=self.standardFileLabelText)
-        self.standardFileButton = Button(master=self.standardFileFrame, text="Select Standard File", command = self.fetchStandardFile)
-
-        self.outFileFrame = Frame()
-        Label(master=self.outFileFrame, text="Out File Selected:").pack()
-        self.outFileLabelText = StringVar()
-        self.outFileLabel = Label(master=self.outFileFrame,textvariable=self.outFileLabelText)
-        self.outFileButton = Button(master=self.outFileFrame, text="Select Out File", command = self.fetchOutputFile)
-
-        self.controlFrame = Frame()
-        Button(master=self.controlFrame, text="Parse Files", command=self.startParse).pack()
-        Button(master=self.controlFrame, text="Close", command=self.close).pack()
-
-
         
-        self.allFileLabel.pack()
-        self.allFileButton.pack()
-        self.allFileFrame.pack()
+        ttk.Label(self.inputFrame, text="Standard File Selected:").grid(column=0, row=1)
+        self.standardFileEntryText = StringVar()
+        self.standardFileEntry = Entry(self.inputFrame, textvariable=self.standardFileEntryText).grid(column=1, row=1, sticky=(W,E))
+        self.standardFileButton = Button(self.inputFrame, text="Select Standard File", command = self.fetchStandardFile).grid(column=2, row=1, sticky=(W,E))
 
-        
-        self.standardFileLabel.pack()
-        self.standardFileButton.pack()
-        self.standardFileFrame.pack()
+        Label(self.inputFrame, text="Out File Selected:").grid(column=0, row=2)
+        self.outFileEntryText = StringVar()
+        self.outFileEntry = Entry(self.inputFrame, textvariable=self.outFileEntryText).grid(column=1,row=2, sticky=(W,E))
+        self.outFileButton = Button(self.inputFrame, text="Select Out File", command = self.fetchOutputFile).grid(column=2, row=2, sticky=(W,E))
 
-        
-        self.outFileLabel.pack()
-        self.outFileButton.pack()
-        self.outFileFrame.pack()
+        for child in self.inputFrame.winfo_children(): 
+            child.grid_configure(padx=5, pady=5)
+       
+        Button(self.controlFrame, text="Parse Files", command=self.startParse).grid(column=0, row=0)
+        Button(self.controlFrame, text="Close", command=self.close).grid(column=1, row=0)
 
-        self.controlFrame.pack()
         self.root.mainloop()
 
 
     def fetchAllFile(self):
         file = filedialog.askopenfilename()
         self.inputFiles.setAllFile(file)
-        self.allFileLabelText.set(file)
+        self.allFileEntryText.set(file)
         
         
     def fetchStandardFile(self):
         file = filedialog.askopenfilename()
         self.inputFiles.setAllFile(file)
-        self.standardFileLabelText.set(file)
+        self.standardFileEntryText.set(file)
         
     def fetchOutputFile(self):
         file = filedialog.askopenfilename()
         self.inputFiles.setOutputFile(file)
-        self.outFileLabelText.set(file)
+        self.outFileEntryText.set(file)
 
     def startParse(self):
-        print("Do Stuff")
+        self.inputFiles.setAllFile(self.allFileEntryText.get())
+        self.inputFiles.setStandardFile(self.standardFileEntryText.get())
+        self.inputFiles.setOutputFile(self.outFileEntryText.get())
+        print(f'All File: {self.inputFiles.getAllFile()} \nStandard File: {self.inputFiles.getStandardFile()} \nOutFile: {self.inputFiles.getOutputFile()}')
     
     def close(self):
         print("Clean up and Close")
