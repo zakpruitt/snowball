@@ -14,7 +14,7 @@ class FileParser:
     def parse_text(self):
         with open(self.file_path, 'r+', encoding="utf-16") as file:
             for line in file.readlines():
-                if re.search("(^\s|^20([0-9]{6}))", line):
+                if re.search("(^\s|^[0-9]{8})", line):
                     if line.startswith(" "):
                         # line with count/email, etc
                         self.email_flag = False
