@@ -1,7 +1,6 @@
 from tkinter import *
-from tkinter import ttk
 from tkinter import filedialog
-from Inputs_Class import InputFiles
+from file_input import InputFiles
 
 class SnowBall:
 

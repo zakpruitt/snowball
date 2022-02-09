@@ -1,7 +1,7 @@
 import string
 
 
-class InputFiles:
+class FileInput:
     allFilePath = ''
     standardFilePath = ''
     outputFilePath = ''
