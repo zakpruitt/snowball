@@ -1,11 +1,12 @@
 from tkinter import *
+from tkinter import ttk
 from tkinter import filedialog
-from file_input import InputFiles
+from file_input import FileInput
 
 class Snowball:
 
     def __init__(self):
-        self.inputFiles = InputFiles()
+        self.inputFiles = FileInput()
 
         self.winWidth = 800
         self.winHeight = 200
