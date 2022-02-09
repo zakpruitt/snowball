@@ -1,6 +1,4 @@
 import re
-from turtle import update
-
 
 class FileParser:
     def __init__(self, file_path):
@@ -11,6 +9,12 @@ class FileParser:
         self.line_information = []
         self.count_information = {}
 
+    def get_information(self):
+        return self.line_information
+
+    def get_count(self):
+        return self.count_information
+
     def parse_text(self):
         with open(self.file_path, 'r+', encoding="utf-16") as file:
             for line in file.readlines():
@@ -20,8 +24,8 @@ class FileParser:
                         self.email_flag = False
                     else:
                         # line with information
-                        self.line_information.append(self.__parse_information_line(line))
-        return self.line_information
+                        information_array = self.__parse_information_line(line)
+                        self.line_information.append(information_array)
 
     def __parse_information_line(self, line):
         information_array = self.__build_information_array(line.split())
@@ -57,27 +61,27 @@ class FileParser:
 
     def __update_count(self, information_array):
         # create key in dict if not already created
-        employee_number = information_array[3]
+        employee_number = information_array[4]
         if employee_number not in self.count_information.keys():
             self.count_information[self.emp_flag] = {
-                'total': 0,
-                'immed': 0,
-                'later': 0,
-                'emails': 0
+                'Total': 0,
+                'Immed': 0,
+                'Later': 0,
+                'Emails': 0
             }
         
         # update total
-        self.count_information[employee_number]['total'] += 1
+        self.count_information[employee_number]['Total'] += 1
         
         # update immed/later. if not immed, it must be later.
         if information_array[6] == information_array[7]:
-            self.count_information[employee_number]['immed'] += 1
+            self.count_information[employee_number]['Immed'] += 1
         else:
-            self.count_information[employee_number]['later'] += 1
+            self.count_information[employee_number]['Later'] += 1
         
         # update emails
         if information_array[3] == True:
-            self.count_information[employee_number]['emails'] += 1
+            self.count_information[employee_number]['Emails'] += 1
 
     def __str__(self):
         return str(self.output)
