@@ -1,12 +1,12 @@
 import pandas as pd
 
-from file_parsing.file_parser import FileParser
+from file_parsing.parser import Parser
 from file_parsing.excel_writer import ExcelWriter
 from datetime import date
 
 if __name__ == '__main__':
     # parse text file(s)
-    file_parser = FileParser("./File Parsing/20220106.txt")
+    file_parser = Parser("./File Parsing/20220106.txt")
     file_parser.parse_text()
 
     # create excel_writer object and dataframes
