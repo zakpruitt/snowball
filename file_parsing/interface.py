@@ -15,20 +15,24 @@ class Snowball:
         self.winWidth = 800
         self.winHeight = 200
 
+        #initialize root
         self.root = Tk()
         self.root.title('Snowball - File Parser')
         self.root.minsize(width=self.winWidth, height=self.winHeight)
         self.root.grid_columnconfigure(0, weight=1)
 
+        #define frame for input lines
         self.inputFrame = ttk.Frame(self.root, padding="3 3 12 12")
         self.inputFrame.grid(column=0, row=0, sticky=(N, W, E, S))
         self.inputFrame.grid_columnconfigure(1, weight=1)
 
+        #define frame for parse and cancel buttons
         self.controlFrame = ttk.Frame(self.root, padding="3 3 12 12")
         self.controlFrame.grid(column=0, row=1, sticky=(N, S, E, W))
         self.controlFrame.grid_columnconfigure(0, weight=1)
         self.controlFrame.grid_columnconfigure(1, weight=1)
 
+        #create All File controls
         ttk.Label(self.inputFrame, text="All File Selected:").grid(
             column=0, row=0)
         self.allFileEntryText = StringVar()
@@ -37,6 +41,7 @@ class Snowball:
         self.allFileButton = Button(self.inputFrame, text="Select \"All\" File",
                                     command=self.fetchAllFile).grid(column=2, row=0, sticky=(W, E))
 
+        #create standard file controls
         ttk.Label(self.inputFrame, text="Standard File Selected:").grid(
             column=0, row=1)
         self.standardFileEntryText = StringVar()
@@ -45,6 +50,7 @@ class Snowball:
         self.standardFileButton = Button(self.inputFrame, text="Select Standard File",
                                          command=self.fetchStandardFile).grid(column=2, row=1, sticky=(W, E))
 
+        #create output file controls
         Label(self.inputFrame, text="Out File Selected:").grid(column=0, row=2)
         self.outFileEntryText = StringVar()
         self.outFileEntry = Entry(self.inputFrame, textvariable=self.outFileEntryText).grid(
@@ -97,23 +103,7 @@ class Snowball:
         excel_writer.create_and_write_new_sheet(
             f"MaddenCo Count {formatted_date}", count_df, True)
 
-        # create formats
-        excel_writer.create_format(
-            "blue_header_format", '#5B9BD5', 'Calibri Light', '12', 'center', 1)
-        excel_writer.create_format(
-            "yellow_header_format", '#FFC000', 'Calibri Light', '12', 'center', 1)
-        excel_writer.create_format(
-            "blue_format", '#DDEBF7', 'Calibri Light', '12', 'center', 1)
-        excel_writer.create_format(
-            "yellow_format", '#FFF2CC', 'Calibri Light', '12', 'center', 1)
-        excel_writer.create_format(
-            "cyan_header_format", "#4BACC6", 'Calibri Light', '12', 'center', 1)
-        excel_writer.create_format(
-            "orange_header_format", "#F79646", 'Calibri Light', '12', 'center', 1)
-        excel_writer.create_format(
-            "cyan_format", "#DAEEF3", 'Calibri Light', '12', 'center', 1)
-        excel_writer.create_format(
-            "orange_format", "#FDE9D9", 'Calibri Light', '12', 'center', 1)
+        excel_writer.create_formats("file_parsing\ExcelFormats.json")
 
         # format sheets
         excel_writer.format_headers_af(

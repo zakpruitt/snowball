@@ -1,5 +1,5 @@
 import pandas as pd
-
+import json
 
 class ExcelWriter:
     def __init__(self, outFile):
@@ -16,11 +16,13 @@ class ExcelWriter:
             index=row_labels
         )
 
-    def create_format(self, format_name, bg_color, font, font_size, align, border):
-        format = self.workbook.add_format(
-            {'bg_color': bg_color, 'font': font, 'font_size': font_size, 'align': align,
-             'border': border})
-        self.formats[format_name] = format
+    def create_formats(self, format_path):
+        file = open(format_path)
+        format_file_contents=json.load(file)
+        for i in format_file_contents["formats"]:
+            name=i.pop("name")
+            format = self.workbook.add_format(i)
+            self.formats[name] = format
 
     def format_headers_sf(self, sheet_name, dataframe, buffer, format):
         worksheet = self.writer.sheets[sheet_name]
