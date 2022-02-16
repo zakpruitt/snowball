@@ -2,8 +2,8 @@ import pandas as pd
 
 
 class ExcelWriter:
-    def __init__(self):
-        self.writer = pd.ExcelWriter("output.xlsx",
+    def __init__(self, outFile):
+        self.writer = pd.ExcelWriter(outFile,
                                      engine='xlsxwriter',
                                      engine_kwargs={'options': {'strings_to_numbers': True}})
         self.workbook = self.writer.book
@@ -61,3 +61,5 @@ class ExcelWriter:
         for row in range(0, len(dataframe.index)):
             value = dataframe.index.values[row]
             worksheet.write(row + 1, 0, value, self.formats[format])
+
+    
