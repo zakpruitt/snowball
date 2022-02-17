@@ -9,8 +9,7 @@ __pycache__/
 # VSCode
 *.vscode
 
-output.xlsx
-new_master.xlsx
+generated/
 
 
 # Distribution / packaging
