@@ -15,10 +15,10 @@ class ExcelWriter:
             sheet_name=sheet_name,
             index=row_labels
         )
-
+    
     def create_formats(self, format_path):
         file = open(format_path)
-        format_file_contents=json.load(file)
+        format_file_contents = json.load(file)
         for i in format_file_contents["formats"]:
             name = i.pop("name")
             format = self.workbook.add_format(i)

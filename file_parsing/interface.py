@@ -17,7 +17,6 @@ formatted_time = now.strftime("%H:%M:%S")
 
 
 class Snowball:
-
     def __init__(self):
         self.inputFiles = FileInput()
 
@@ -129,8 +128,6 @@ class Snowball:
                     total_count_info[key][sub_key] += daily_parser.count_information[key][sub_key]
             count_df = pd.DataFrame(total_count_info)
 
-            # add all cells together to get total count in count_df and daily_count_df
-
             # create and write new sheets
             excel_writer.create_and_write_new_sheet(
                 f"MaddenCo Daily Data {formatted_date}", daily_df)
@@ -143,7 +140,7 @@ class Snowball:
             excel_writer.create_and_write_new_sheet(
                 f"MaddenCo Total Count {formatted_date}", count_df, True)
 
-            excel_writer.create_formats("file_parsing\ExcelFormats.json")
+            excel_writer.create_formats("./config/excel_formats.json")
 
             # format sheets
             excel_writer.format_headers_af(
