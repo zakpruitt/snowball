@@ -20,7 +20,7 @@ class ExcelWriter:
         file = open(format_path)
         format_file_contents=json.load(file)
         for i in format_file_contents["formats"]:
-            name=i.pop("name")
+            name = i.pop("name")
             format = self.workbook.add_format(i)
             self.formats[name] = format
 

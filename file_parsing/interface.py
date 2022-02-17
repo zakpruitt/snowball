@@ -1,3 +1,4 @@
+from itertools import count
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
@@ -41,14 +42,14 @@ class Snowball:
         self.allFileButton = Button(self.inputFrame, text="Select \"All\" File",
                                     command=self.fetchAllFile).grid(column=2, row=0, sticky=(W, E))
 
-        #create standard file controls
-        ttk.Label(self.inputFrame, text="Standard File Selected:").grid(
+        #create daily file controls
+        ttk.Label(self.inputFrame, text="Daily File Selected:").grid(
             column=0, row=1)
-        self.standardFileEntryText = StringVar()
-        self.standardFileEntry = Entry(self.inputFrame, textvariable=self.standardFileEntryText).grid(
+        self.dailyFileEntryText = StringVar()
+        self.dailyFileEntry = Entry(self.inputFrame, textvariable=self.dailyFileEntryText).grid(
             column=1, row=1, sticky=(W, E))
-        self.standardFileButton = Button(self.inputFrame, text="Select Standard File",
-                                         command=self.fetchStandardFile).grid(column=2, row=1, sticky=(W, E))
+        self.dailyFileButton = Button(self.inputFrame, text="Select daily File",
+                                         command=self.fetchDailyFile).grid(column=2, row=1, sticky=(W, E))
 
         #create output file controls
         Label(self.inputFrame, text="Out File Selected:").grid(column=0, row=2)
@@ -73,10 +74,10 @@ class Snowball:
         self.inputFiles.setAllFile(file)
         self.allFileEntryText.set(file)
 
-    def fetchStandardFile(self):
+    def fetchDailyFile(self):
         file = filedialog.askopenfilename()
         self.inputFiles.setAllFile(file)
-        self.standardFileEntryText.set(file)
+        self.dailyFileEntryText.set(file)
 
     def fetchOutputFile(self):
         file = filedialog.askopenfilename()
@@ -85,39 +86,70 @@ class Snowball:
     
     def startParse(self):
         # parse text file(s)
-        file_parser = Parser(self.allFileEntryText.get())
-        file_parser.parse_text()
+        all_parser = Parser(self.allFileEntryText.get())
+        all_parser.parse_text()
+        daily_parser = Parser(self.dailyFileEntryText.get())
+        daily_parser.parse_text()
 
         # create excel_writer object and dataframes
         excel_writer = ExcelWriter(self.outFileEntryText.get())
         columns = ['Date Created', 'Sup Code', 'Sub Dept', 'Email', 'Employee #',
                 'Support #', 'Last User', 'Original User', 'Time Last Changed']
-        info_df = pd.DataFrame(file_parser.line_information, columns=columns)
-        count_df = pd.DataFrame(file_parser.count_information)
+        all_df = pd.DataFrame(all_parser.line_information, columns=columns)
+        daily_df = pd.DataFrame(daily_parser.line_information, columns=columns)
+        all_count_df = pd.DataFrame(all_parser.count_information)
+        daily_count_df = pd.DataFrame(daily_parser.count_information)
+        count_df = pd.merge(all_count_df, daily_count_df)
 
         # create and write new sheets
         today = date.today()
         formatted_date = today.strftime("%m-%d-%Y")
         excel_writer.create_and_write_new_sheet(
-            f"MaddenCo Data {formatted_date}", info_df)
+            f"MaddenCo Daily Data {formatted_date}", daily_df)
         excel_writer.create_and_write_new_sheet(
-            f"MaddenCo Count {formatted_date}", count_df, True)
+            f"MaddenCo All Data {formatted_date}", all_df)
+        excel_writer.create_and_write_new_sheet(
+            f"MaddenCo Daily Count {formatted_date}", daily_count_df, True)
+        excel_writer.create_and_write_new_sheet(
+            f"MaddenCo All Count {formatted_date}", all_count_df, True)
+        excel_writer.create_and_write_new_sheet(
+            f"MaddenCo Total Count {formatted_date}", count_df, True)
 
         excel_writer.create_formats("file_parsing\ExcelFormats.json")
 
         # format sheets
         excel_writer.format_headers_af(
-            f"MaddenCo Data {formatted_date}", info_df, 0, "blue_header_format", "yellow_header_format")
+            f"MaddenCo Daily Data {formatted_date}", all_df, 0, "blue_header_format", "yellow_header_format")
         excel_writer.format_columns_af(
-            f"MaddenCo Data {formatted_date}", info_df, 0, 25, "blue_format", "yellow_format")
-        excel_writer.format_headers_af(
-            f"MaddenCo Count {formatted_date}", count_df, 1, "cyan_header_format", "orange_header_format")
-        excel_writer.format_columns_af(
-            f"MaddenCo Count {formatted_date}", count_df, 1, 25, "cyan_format", "orange_format")
-        excel_writer.format_row_index(
-            f"MaddenCo Count {formatted_date}", count_df, "cyan_header_format")
+            f"MaddenCo Daily Data {formatted_date}", all_df, 0, 25, "blue_format", "yellow_format")
 
-        # save
+        excel_writer.format_headers_af(
+            f"MaddenCo All Data {formatted_date}", all_df, 0, "blue_header_format", "yellow_header_format")
+        excel_writer.format_columns_af(
+            f"MaddenCo All Data {formatted_date}", all_df, 0, 25, "blue_format", "yellow_format")
+
+        excel_writer.format_headers_af(
+            f"MaddenCo Daily Count {formatted_date}", daily_count_df, 1, "cyan_header_format", "orange_header_format")
+        excel_writer.format_columns_af(
+            f"MaddenCo Daily Count {formatted_date}", daily_count_df, 1, 25, "cyan_format", "orange_format")
+        excel_writer.format_row_index(
+            f"MaddenCo Daily Count {formatted_date}", daily_count_df, "cyan_header_format")
+        
+        excel_writer.format_headers_af(
+            f"MaddenCo All Count {formatted_date}", all_count_df, 1, "cyan_header_format", "orange_header_format")
+        excel_writer.format_columns_af(
+            f"MaddenCo All Count {formatted_date}", all_count_df, 1, 25, "cyan_format", "orange_format")
+        excel_writer.format_row_index(
+            f"MaddenCo All Count {formatted_date}", all_count_df, "cyan_header_format")
+
+        excel_writer.format_headers_af(
+            f"MaddenCo Total Count {formatted_date}", count_df, 1, "cyan_header_format", "orange_header_format")
+        excel_writer.format_columns_af(
+            f"MaddenCo Total Count {formatted_date}", count_df, 1, 25, "cyan_format", "orange_format")
+        excel_writer.format_row_index(
+            f"MaddenCo Total Count {formatted_date}", count_df, "cyan_header_format")
+
+        # save  
         excel_writer.writer.save()
         print("Done!")
 
