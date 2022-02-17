@@ -177,7 +177,7 @@ class Snowball:
             # save
             excel_writer.writer.save()
             xw.Book(f"./generated/output {formatted_date}.xlsx")
-            print("Done!")
+            messagebox.showinfo(title="Complete", message="Parsing was successful!")
         except Exception as e:
             print(e)
             messagebox.showerror("Error", e)
