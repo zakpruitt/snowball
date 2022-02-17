@@ -21,19 +21,28 @@ class Parser:
                     else:
                         # line with information
                         information_array = self.__parse_information_line(line)
-                        self.line_information.append(information_array)
+                        if (information_array != "INVALID"):
+                            self.line_information.append(information_array)
 
     def __parse_information_line(self, line):
+        # split line and check if invalid
+        line_array = line.split()
+        if line_array[1] == "W" or line_array[1] == "N":
+            return "INVALID"
+
+        # build information array and update count, then return array to append
         information_array = self.__build_information_array(line.split())
         self.__update_count(information_array)
         return information_array
 
     def __build_information_array(self, line_array):
         symbols = ['H', 'S', 'E']
-
+        
+        # build array with placeholder values
         information_array = ["" for x in range(0, 9)]
         length = len(line_array)
 
+        # check flags
         for element in line_array:
             if element in symbols:
                 if self.email_flag == False and element == "E":
@@ -43,6 +52,7 @@ class Parser:
             elif len(element) == 3 and element.isdigit():
                 self.emp_flag = element
 
+        # build array with actual values
         information_array[0] = line_array[0]
         information_array[1] = line_array[1]
         information_array[2] = self.sub_dept_flag
