@@ -1,4 +1,3 @@
-from collections import Counter
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
@@ -6,14 +5,12 @@ from tkinter import filedialog
 from file_parsing.file_input import FileInput
 from file_parsing.parser import Parser
 from file_parsing.excel_writer import ExcelWriter
+import sys
+import traceback
 from datetime import date, datetime
 import pandas as pd
 import xlwings as xw
-
-today = date.today()
-now = datetime.now()
-formatted_date = today.strftime("%m-%d-%Y")
-formatted_time = now.strftime("%H:%M:%S")
+from file_parsing.utility import getFileDate, getDateTime
 
 
 class Snowball:
@@ -103,12 +100,19 @@ class Snowball:
         self.outFileEntryText.set(file)
 
     def startParse(self):
-        # parse text file(s)
         try:
+            # parse text file(s)
             all_parser = Parser(self.allFileEntryText.get())
             all_parser.parse_text()
             daily_parser = Parser(self.dailyFileEntryText.get())
             daily_parser.parse_text()
+
+            # check date
+            formatted_date = None
+            if getFileDate(self.allFileEntryText.get()) == getFileDate(self.dailyFileEntryText.get()):
+                formatted_date = getFileDate(self.dailyFileEntryText.get())
+            else:
+                raise Exception("All and Daily files are not from the same day.")
 
             # create excel_writer object and dataframes
             excel_writer = ExcelWriter(
@@ -116,16 +120,18 @@ class Snowball:
             columns = ['Date Created', 'Sup Code', 'Sub Dept', 'Email', 'Employee #',
                        'Support #', 'Last User', 'Original User', 'Time Last Changed']
             all_df = pd.DataFrame(all_parser.line_information, columns=columns)
-            daily_df = pd.DataFrame(
-                daily_parser.line_information, columns=columns)
+            daily_df = pd.DataFrame(daily_parser.line_information, columns=columns)
             all_count_df = pd.DataFrame(all_parser.count_information)
             daily_count_df = pd.DataFrame(daily_parser.count_information)
 
             # create total count df
             total_count_info = all_parser.count_information
-            for key in total_count_info.keys():
-                for sub_key in total_count_info[key].keys():
-                    total_count_info[key][sub_key] += daily_parser.count_information[key][sub_key]
+            for key in daily_parser.count_information.keys():
+                if key not in total_count_info:
+                    total_count_info[key] = daily_parser.count_information[key]
+                else:
+                    for sub_key in daily_parser.count_information[key].keys():
+                        total_count_info[key][sub_key] += daily_parser.count_information[key][sub_key]
             count_df = pd.DataFrame(total_count_info)
 
             # create and write new sheets
@@ -179,7 +185,7 @@ class Snowball:
             xw.Book(f"./generated/output {formatted_date}.xlsx")
             messagebox.showinfo(title="Complete", message="Parsing was successful!")
         except Exception as e:
-            print(e)
+            exc_type, exc_obj, exc_tb = sys.exc_info()
             messagebox.showerror("Error", e)
             with open("error_log.txt", "a") as f:
-                f.write(f"{formatted_date} {formatted_time} - {e} \n")
+                f.write(f"{getDateTime()} on file {getFileDate(self.allFileEntryText.get())} on line {traceback.format_exc()} - {e} | {exc_type} | {exc_obj} | {exc_tb} \n\n\n")

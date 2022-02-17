@@ -1,5 +1,8 @@
 import json
 import os
+import ntpath
+import datetime
+
 
 def createDependencies(path):
     if not path.exists('generated'):
@@ -81,3 +84,13 @@ def writeFormatJSON():
                 }
             ]
         }, f)
+
+
+def getFileDate(file_path):
+    date = ntpath.basename(file_path)[:8]
+    formatted_date = date[4:6] + '-' + date[6:] + '-' + date[0:4]  # mm-dd-yyyy
+    return formatted_date
+
+
+def getDateTime():
+    return datetime.datetime.now().strftime("%m-%d-%Y %H:%M:%S")
