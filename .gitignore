@@ -9,6 +9,10 @@ __pycache__/
 # VSCode
 *.vscode
 
+output.xlsx
+new_master.xlsx
+
+
 # Distribution / packaging
 .Python
 build/
