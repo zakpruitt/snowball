@@ -13,7 +13,7 @@ generated/
 config/
 error_log.txt
 myIcon.ico
-
+node_modules/
 
 # Distribution / packaging
 .Python
