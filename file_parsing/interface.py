@@ -1,4 +1,4 @@
-from itertools import count
+from collections import Counter
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
@@ -7,6 +7,10 @@ from file_parsing.parser import Parser
 from file_parsing.excel_writer import ExcelWriter
 from datetime import date
 import pandas as pd
+import xlwings as xw
+
+today = date.today()
+formatted_date = today.strftime("%m-%d-%Y")
 
 class Snowball:
 
@@ -92,18 +96,25 @@ class Snowball:
         daily_parser.parse_text()
 
         # create excel_writer object and dataframes
-        excel_writer = ExcelWriter(self.outFileEntryText.get())
+        excel_writer = ExcelWriter(f"./generated/output {formatted_date}.xlsx")
         columns = ['Date Created', 'Sup Code', 'Sub Dept', 'Email', 'Employee #',
                 'Support #', 'Last User', 'Original User', 'Time Last Changed']
         all_df = pd.DataFrame(all_parser.line_information, columns=columns)
         daily_df = pd.DataFrame(daily_parser.line_information, columns=columns)
         all_count_df = pd.DataFrame(all_parser.count_information)
         daily_count_df = pd.DataFrame(daily_parser.count_information)
-        count_df = pd.merge(all_count_df, daily_count_df)
+
+        # create total count df
+        total_count_info = all_parser.count_information
+        for key in total_count_info.keys():
+            for sub_key in total_count_info[key].keys():
+                total_count_info[key][sub_key] += daily_parser.count_information[key][sub_key]
+        count_df = pd.DataFrame(total_count_info)
+
+        # add all cells together to get total count in count_df and daily_count_df
+        
 
         # create and write new sheets
-        today = date.today()
-        formatted_date = today.strftime("%m-%d-%Y")
         excel_writer.create_and_write_new_sheet(
             f"MaddenCo Daily Data {formatted_date}", daily_df)
         excel_writer.create_and_write_new_sheet(
@@ -151,6 +162,7 @@ class Snowball:
 
         # save  
         excel_writer.writer.save()
+        xw.Book(f"./generated/output {formatted_date}.xlsx")
         print("Done!")
 
     def close(self):

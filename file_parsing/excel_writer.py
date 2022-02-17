@@ -2,7 +2,7 @@ import pandas as pd
 import json
 
 class ExcelWriter:
-    def __init__(self, outFile):
+    def __init__(self, outFile="output.xlsx"):
         self.writer = pd.ExcelWriter(outFile,
                                      engine='xlsxwriter',
                                      engine_kwargs={'options': {'strings_to_numbers': True}})
