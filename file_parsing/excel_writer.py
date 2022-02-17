@@ -2,8 +2,8 @@ import pandas as pd
 
 
 class ExcelWriter:
-    def __init__(self):
-        self.writer = pd.ExcelWriter("output.xlsx",
+    def __init__(self, output_name):
+        self.writer = pd.ExcelWriter(output_name,
                                      engine='xlsxwriter',
                                      engine_kwargs={'options': {'strings_to_numbers': True}})
         self.workbook = self.writer.book

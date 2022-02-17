@@ -1,4 +1,5 @@
 import pandas as pd
+import xlwings as xw
 
 from file_parsing.parser import Parser
 from file_parsing.excel_writer import ExcelWriter
@@ -6,11 +7,11 @@ from datetime import date
 
 if __name__ == '__main__':
     # parse text file(s)
-    file_parser = Parser("./File Parsing/20220106.txt")
+    file_parser = Parser("./file_parsing/20220106.txt")
     file_parser.parse_text()
 
     # create excel_writer object and dataframes
-    excel_writer = ExcelWriter()
+    excel_writer = ExcelWriter("output.xlsx")
     columns = ['Date Created', 'Sup Code', 'Sub Dept', 'Email', 'Employee #',
                'Support #', 'Last User', 'Original User', 'Time Last Changed']
     info_df = pd.DataFrame(file_parser.line_information, columns=columns)
@@ -56,4 +57,9 @@ if __name__ == '__main__':
 
     # save
     excel_writer.writer.save()
+
+    wb = xw.Book('master.xlsm')
+    print(wb.Range('A1').current_region.last_cell.row)
+    print(wb.sheets["DATA"]['Q1'].value)
+
     print("Done!")
