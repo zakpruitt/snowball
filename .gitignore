@@ -10,6 +10,8 @@ __pycache__/
 *.vscode
 
 generated/
+error_log.txt
+icon.ico
 
 
 # Distribution / packaging
