@@ -20,5 +20,8 @@
   "homepage": "https://github.com/zakpruitt/senior-project#readme",
   "devDependencies": {
     "electron": "^17.0.1"
+  },
+  "dependencies": {
+    "electron-reload": "^2.0.0-alpha.1"
   }
 }
