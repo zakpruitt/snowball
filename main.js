@@ -1,15 +1,22 @@
 const { app, BrowserWindow, Menu } = require('electron');
-require('electron-reload')(__dirname);
+const { PythonShell } = require('python-shell');
 
+
+PythonShell.run(__dirname + '/src/main.py', null, function (err, results) {
+    if (err) throw err;
+    console.log('results: %j', results);
+});
 
 function createWindow() {
     // create window
     const mainWindow = new BrowserWindow({
-        width: 1000,
-        height: 700,
+        width: 1500,
+        height: 1000,
     });
-    mainWindow.loadFile("src/templates/index.html");
+    mainWindow.loadURL('http://127.0.0.1:5000');
     mainWindow.removeMenu();
+    mainWindow.setResizable(false);
+    //mainWindow.webContents.openDevTools();
     // create menus
     // let menu = Menu.buildFromTemplate(
     // [
@@ -34,6 +41,11 @@ function createWindow() {
     // Menu.setApplicationMenu(menu);
 }
 
-app.whenReady().then(() => {
+app.whenReady().then(() => {  
     createWindow();
+});
+
+app.on('window-all-closed', () => {
+    console.log("done");
+    app.quit();
 });
