@@ -30,11 +30,5 @@ app.whenReady().then(() => {
 
 app.on('window-all-closed', () => {
     console.log("done");
-    PythonShell.end(function (err,code,signal) {
-        if (err) throw err;
-        console.log('The exit code was: ' + code);
-        console.log('The exit signal was: ' + signal);
-        console.log('finished');
-    });
     app.quit();
 });
