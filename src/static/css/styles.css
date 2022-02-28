@@ -1,5 +1,10 @@
-.bg-1 {
-  background-image: url("./src/static/images/1jpg.jpg");
+.grow {
+  transition: all 0.2s ease-in-out;
+}
+
+.grow:hover {
+  transform: scale(1.1);
+  cursor: pointer;
 }
 
 .bi {
@@ -8,6 +13,6 @@
   fill: currentColor;
 }
 
-.nav-link:hover:not(.active)  {
+.nav-link:hover:not(.active) {
   color: #0275d8 !important;
 }
