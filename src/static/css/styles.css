@@ -1,25 +1,5 @@
-body {
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
-  background-color: whitesmoke;
-}
-
-html {
-  height: -webkit-fill-available;
-}
-
-main {
-  display: flex;
-  flex-wrap: nowrap;
-  height: 100vh;
-  height: -webkit-fill-available;
-  max-height: 100vh;
-  overflow-x: auto;
-  overflow-y: hidden;
-}
-
-.sidebar {
-    box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+.bg-1 {
+  background-image: url("./src/static/images/1jpg.jpg");
 }
 
 .bi {
