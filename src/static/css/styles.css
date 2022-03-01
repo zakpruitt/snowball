@@ -19,6 +19,10 @@
   transform: scale(1.1);
   cursor: pointer;
 }
+/* 
+.test {
+  margin-top: 25%;
+}  */
 
 .bi {
   vertical-align: -0.125em;
