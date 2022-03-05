@@ -5,10 +5,19 @@ const dailyFilePath = document.getElementById("formFileDaily")
 
 
 allFilePath.addEventListener("change" , (e) =>{
-    console.log(allFilePath.files[0].name)
-    $("#AllPreview").attr("data", "/src/temp/" + allFilePath.files[0].name ) 
-})
+    var fr = new FileReader();
+    fr.onload = function () {
+        var text = fr.result;
+        $("#taAll").text(text);
+    }
+    fr.readAsText(allFilePath.files[0]);
+});
 
 dailyFilePath.addEventListener("change" , (e) =>{
-    console.log(e)
-})
+    var fr = new FileReader();
+    fr.onload = function () {
+        var text = fr.result;
+        $("#taDaily").text(text);
+    }
+    fr.readAsText(dailyFilePath.files[0]);
+});

@@ -4,7 +4,7 @@
   -khtml-user-select: none; /* Konqueror HTML */
   -moz-user-select: none; /* Old versions of Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; 
+  user-select: none;
 }
 
 .hidden {
@@ -20,11 +20,17 @@
   cursor: pointer;
 }
 
-
 .bi {
   vertical-align: -0.125em;
   pointer-events: none;
   fill: currentColor;
+}
+
+textarea {
+  white-space: pre;
+  overflow-wrap: normal;
+  overflow-x: scroll;
+  height: 300px;
 }
 
 .card-bg-1 {
