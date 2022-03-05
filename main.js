@@ -16,7 +16,8 @@ function createWindow() {
     });
     mainWindow.loadURL('http://127.0.0.1:5000');
     mainWindow.removeMenu();
-    mainWindow.setResizable(false);
+    mainWindow.webContents.openDevTools();
+    //mainWindow.setResizable(false);
 
     globalShortcut.register('f5', function () {
         console.log('Refreshing Electron page...');

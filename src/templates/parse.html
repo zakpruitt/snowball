@@ -24,40 +24,41 @@
                     <h5 class="card-title text-center">Single Report Parser</h5>
 
                     <!-- File Inputs -->
-                    <div class="mb-3 mt-2">
-                        <label for="formFile" class="form-label">Daily File Input</label>
-                        <input class="form-control" type="file" id="formFile">
-                    </div>
-                    <div class="mb-3 mt-3">
-                        <label for="formFile" class="form-label">All File Input</label>
-                        <input class="form-control" type="file" id="formFile">
-                    </div>
-                    <div class="mb-3 mt-3">
-                        <label for="formFile" class="form-label">Outfile Name</label>
-                        <input class="form-control" type="text" id="formFile">
-                    </div>
-                    
-                    <!-- Parsing Method Choice -->
-                    <label for="formFile" class="form-label">Parsing Method</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Parsing Approach 1
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
-                            checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            Parsing Approach 2
-                        </label>
-                    </div>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Parsing Approach 3
-                        </label>
-                    </div>
+                    <form id="myForm">
+                        <div class="mb-3 mt-2">
+                            <label for="formFile" class="form-label">Daily File Input</label>
+                            <input class="form-control" type="file" id="formFileDaily">
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <label for="formFile" class="form-label">All File Input</label>
+                            <input class="form-control" type="file" id="formFileAll">
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <label for="formFile" class="form-label">Outfile Name</label>
+                            <input class="form-control" type="text" id="formFileOutput">
+                        </div>
+
+                        <label for="formFile" class="form-label">Parsing Method</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Parsing Approach 1
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
+                                checked>
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Parsing Approach 2
+                            </label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Parsing Approach 3
+                            </label>
+                        </div>
+                    </form>
 
                     <!-- Conditions -->
                     <label for="formFile" class="form-label">Conditions</label>
@@ -87,14 +88,24 @@
 
         <!-- Previews-->
         <div class="col-6">
-            <h4>Daily File Preview</h4>
-            <object class="mb-5" data="https://www.w3.org/TR/PNG/iso_8859-1.txt" width="600" height="300">
-                Not supported
-            </object>
-            <h4>All File Preview</h4>
-            <object data="https://www.w3.org/TR/PNG/iso_8859-1.txt" width="600" height="300">
-                Not supported
-            </object>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Daily File Preview</h4>
+
+                    <textarea class="form-control bg-white text-dark" placeholder="None Selected" id="taDaily"
+                        style="height: 300px;" readonly></textarea>
+
+                </div>
+            </div>
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h4 class="card-title">All File Preview</h4>
+
+                    <textarea class="form-control bg-white text-dark" placeholder="None Selected" id="taAll"
+                        style="height: 300px;" readonly></textarea>
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
