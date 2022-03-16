@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form method="post">
+                <input type="text" name="id" placeholder="Id">
+                <input type="text" name="name" placeholder="Name">
+                <input type="text" name="sub_dept" placeholder="Sub Dept">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <div class="col">
+            <table>
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>name</th>
+                        <th>sub_dept</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for employee in employees %}
+                    <tr>
+                        <td>{{ employee[0] }}</td>
+                        <td>{{ employee[1] }}</td>
+                        <td>{{ employee[2] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

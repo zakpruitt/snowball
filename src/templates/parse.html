@@ -24,65 +24,22 @@
                     <h5 class="card-title text-center">Single Report Parser</h5>
 
                     <!-- File Inputs -->
-                    <form id="myForm">
+                    <form method="post" enctype = "multipart/form-data">
                         <div class="mb-3 mt-2">
                             <label for="formFile" class="form-label">Daily File Input</label>
-                            <input class="form-control" type="file" id="formFileDaily">
+                            <input class="form-control" name="formFileDaily" type="file" id="formFileDaily">
                         </div>
                         <div class="mb-3 mt-3">
                             <label for="formFile" class="form-label">All File Input</label>
-                            <input class="form-control" type="file" id="formFileAll">
+                            <input class="form-control" name="formFileAll" type="file" id="formFileAll">
                         </div>
                         <div class="mb-3 mt-3">
                             <label for="formFile" class="form-label">Outfile Name</label>
-                            <input class="form-control" type="text" id="formFileOutput">
+                            <input class="form-control" name="formFileOutput" type="text" id="formFileOutput">
                         </div>
+
+                        <button type="submit" class="btn btn-primary float-end">Parse Report</button>
                     </form>
-
-
-                    <!-- <label for="formFile" class="form-label">Parsing Method</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Parsing Approach 1
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
-                            checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            Parsing Approach 2
-                        </label>
-                    </div>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Parsing Approach 3
-                        </label>
-                    </div>
-                    <!-- Conditions -->
-                    <label for="formFile" class="form-label">Conditions</label>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                        <label class="form-check-label" for="flexSwitchCheckDefault">Track Condition 1</label>
-                    </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-                        <label class="form-check-label" for="flexSwitchCheckChecked">Track Condition 2</label>
-                    </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDisabled" disabled>
-                        <label class="form-check-label" for="flexSwitchCheckDisabled">Track Condition 3</label>
-                    </div>
-                    <div class="form-check form-switch mb-4">
-                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked
-                            disabled>
-                        <label class="form-check-label" for="flexSwitchCheckCheckedDisabled">Track Condition
-                            4</label>
-                    </div> 
-
-
-                    <a href="#" class="btn btn-primary float-end">Parse Report</a>
                 </div>
             </div>
         </div>
@@ -94,7 +51,6 @@
                     <h4 class="card-title">Daily File Preview</h4>
                     <textarea class="form-control bg-white text-dark" placeholder="None Selected" id="taDaily"
                         readonly></textarea>
-
                 </div>
             </div>
             <div class="card mt-3">

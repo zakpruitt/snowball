@@ -12,6 +12,11 @@ def createDependencies(path):
         writeFormatJSON()
 
 
+def createTempFile(*args):
+    for file in args:
+        file.save("./data/temp/" + file.filename)
+
+
 def writeFormatJSON():
     with open("./config/excel_formats.json", 'w') as f:
         json.dump({
