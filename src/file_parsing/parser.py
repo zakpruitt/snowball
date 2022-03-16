@@ -57,6 +57,6 @@ class Parser:
         call_array[7] = line_array[length - 2]
         call_array[8] = line_array[length - 1]
 
+        # convert to tuple and return
         call = tuple(call_array) 
-        print(call)
         return call

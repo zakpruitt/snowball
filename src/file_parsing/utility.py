@@ -12,7 +12,7 @@ def createDependencies(path):
         writeFormatJSON()
 
 
-def createTempFile(*args):
+def createTempFiles(*args):
     for file in args:
         file.save("./data/temp/" + file.filename)
 
