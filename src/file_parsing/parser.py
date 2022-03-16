@@ -18,6 +18,7 @@ class Parser:
                     else:
                         # since line is valid, parse it.
                         self.__parse_line(line)
+        self.__reset_flags()
 
     def __parse_line(self, line):
         # check if line is valid
@@ -60,3 +61,8 @@ class Parser:
         # convert to tuple and return
         call = tuple(call_array) 
         return call
+
+    def __reset_flags(self):
+        self.emp_flag = None
+        self.email_flag = False
+        self.sub_dept_flag = False
