@@ -30,6 +30,13 @@ def parse():
         return redirect('/')
 
 
+@app.route('/sheets', methods=["GET", "POST"])
+def sheets():
+    if request.method == "GET":
+        return render_template('sheets.html')
+    
+
+
 @app.route('/employees',  methods=["GET", "POST"])
 def employees():
     emp_db = Employee()
