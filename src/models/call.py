@@ -10,15 +10,17 @@ class Call:
     def create_table(self):
         self.cursor.execute('''
                             CREATE TABLE IF NOT EXISTS calls(
-                                    support_number TEXT PRIMARY KEY, 
+                                    support_number TEXT, 
                                     date_created TEXT, 
                                     sup_code TEXT,
                                     sub_dept TEXT,
                                     email TEXT,
-                                    employee_id TEXT REFERENCES employees(id), 
-                                    last_user TEXT REFERENCES employees(name), 
-                                    original_user REFERENCES employees(name), 
-                                    time_last_changed TEXT)
+                                    employee_id TEXT, 
+                                    last_user TEXT, 
+                                    original_user TEXT, 
+                                    time_last_changed TEXT,
+                                    FOREIGN KEY(employee_id) REFERENCES employees(id),
+                                    PRIMARY KEY(support_number, date_created))
                             ''')
 
     def insert(self, call):
