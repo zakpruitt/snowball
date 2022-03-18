@@ -32,3 +32,6 @@ class Employee:
     def close(self):
         self.cursor.close()
         self.conn.close()
+
+    def build_employee(self, employee_id, name, sub_dept):
+        return tuple(employee_id, name, sub_dept)

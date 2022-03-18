@@ -1,14 +1,17 @@
 import os
 from flask import Flask, redirect, render_template, request
-from file_parsing.utility import createDependencies, createTempFiles
+from utility import create_dependencies, create_temp_files
 from models.employee import Employee
-from file_parsing.parser import Parser
+from models.call import Call
+from parser import Parser
 
 app = Flask(__name__)
+calls_db = Call()
+employees_db = Employee()
 
 
 @app.route('/')
-def hello_world():
+def index():
     return render_template('index.html')
 
 
@@ -20,39 +23,35 @@ def parse():
         # create temp files
         daily = request.files['formFileDaily']
         all = request.files['formFileAll']
-        createTempFiles(daily, all)
+        create_temp_files(daily, all)
 
         # parse temp files
         parser = Parser()
         parser.parse_text("./data/temp/" + daily.filename)
         parser.parse_text("./data/temp/" + all.filename)
 
-        return redirect('/')
+        return redirect('/sheets')
 
 
-@app.route('/sheets', methods=["GET", "POST"])
+@app.route('/sheets', methods=["GET"])
 def sheets():
-    if request.method == "GET":
-        return render_template('sheets.html')
-    
+    return render_template('sheets.html', calls=calls_db.read())
 
 
 @app.route('/employees',  methods=["GET", "POST"])
 def employees():
-    emp_db = Employee()
-
     if request.method == "GET":
-        return render_template('employees.html', employees=emp_db.read())
+        return render_template('employees.html', employees=employees_db.read())
     elif request.method == "POST":
-        employee = (
-            request.form['id'],
+        employee = employees_db.build_employee(
+            request.form['employee_id'],
             request.form['name'],
             request.form['sub_dept']
         )
-        emp_db.insert(employee)
+        employees_db.insert(employee)
         return redirect('/employees')
 
 
 if __name__ == '__main__':
-    createDependencies(os.path)
+    create_dependencies(os.path)
     app.run(debug=True)

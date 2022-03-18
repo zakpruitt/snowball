@@ -3,14 +3,14 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog
 from file_parsing.file_input import FileInput
-from file_parsing.parser import Parser
+from parser import Parser
 from file_parsing.excel_writer import ExcelWriter
 import sys
 import traceback
 from datetime import date, datetime
 import pandas as pd
 import xlwings as xw
-from file_parsing.utility import getFileDate, getDateTime
+from utility import get_file_date, get_date_time
 
 
 class Snowball:
@@ -109,8 +109,8 @@ class Snowball:
 
             # check date
             formatted_date = None
-            if getFileDate(self.allFileEntryText.get()) == getFileDate(self.dailyFileEntryText.get()):
-                formatted_date = getFileDate(self.dailyFileEntryText.get())
+            if get_file_date(self.allFileEntryText.get()) == get_file_date(self.dailyFileEntryText.get()):
+                formatted_date = get_file_date(self.dailyFileEntryText.get())
             else:
                 raise Exception("All and Daily files are not from the same day.")
 
@@ -188,4 +188,4 @@ class Snowball:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             messagebox.showerror("Error", e)
             with open("error_log.txt", "a") as f:
-                f.write(f"{getDateTime()} on file {getFileDate(self.allFileEntryText.get())} on line {traceback.format_exc()} - {e} | {exc_type} | {exc_obj} | {exc_tb} \n\n\n")
+                f.write(f"{get_date_time()} on file {get_file_date(self.allFileEntryText.get())} on line {traceback.format_exc()} - {e} | {exc_type} | {exc_obj} | {exc_tb} \n\n\n")
