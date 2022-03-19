@@ -10,6 +10,8 @@ def create_dependencies(path):
     if not path.exists('config'):
         os.makedirs('./config')
         write_format_json()
+    if not path.exists('./data/temp'):
+        os.makedirs('./data/temp')
 
 
 def create_temp_files(*args):

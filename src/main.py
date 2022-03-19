@@ -3,7 +3,7 @@ from flask import Flask, redirect, render_template, request
 from utility import create_dependencies, create_temp_files
 from models.employee import Employee
 from models.call import Call
-from parser import Parser
+from report_parser import Parser
 
 app = Flask(__name__)
 calls_db = Call()
