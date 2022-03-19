@@ -3,7 +3,7 @@ import sqlite3
 
 class Call:
     def __init__(self) -> None:
-        self.conn = sqlite3.connect('data/snowball.db')
+        self.conn = sqlite3.connect('data/snowball.db', check_same_thread=False)
         self.cursor = self.conn.cursor()
         self.create_table()
 
