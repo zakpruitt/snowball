@@ -23,8 +23,7 @@ class Parser:
     def __parse_line(self, line):
         # check if line is valid
         line_array = line.split()
-        if line_array[1] == "W" or line_array[1] == "N":
-            return "INVALID"
+
 
         call = self.__build_call(line_array)
         self.calls_db.insert(call)
@@ -38,16 +37,22 @@ class Parser:
         length = len(line_array)
 
         # check flags
+        #if not self.email_flag and line_array[3]=="E":
+        #    self.email_flag = True
+        #self.sub_dept_flag = line_array[2]
+        #self.emp_flag = line_array[4]
+
+
         for element in line_array:
             if element in symbols:
-                if self.email_flag == False and element == "E":
-                    self.email_flag = True
-                else:
-                    self.sub_dept_flag = element
-            elif len(element) == 3 and element.isdigit():
-                self.emp_flag = element
+               if self.email_flag == False and element == "E":
+                   self.email_flag = True
+               else:
+                   self.sub_dept_flag = element
+            elif re.match("^[0-9]{3}$",element) :
+               self.emp_flag = element
 
-        # hydrate call with actual values
+        #hydrate call with actual values
         call_array[0] = line_array[length - 4]
         call_array[1] = line_array[0]
         call_array[2] = line_array[1]
