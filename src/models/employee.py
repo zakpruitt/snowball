@@ -29,6 +29,18 @@ class Employee:
         #     print(row)
         return self.cursor.fetchall()
 
+    def find_employee(self, name):
+        name = name.upper()
+        print(name)
+        self.cursor.execute(f'''
+                            SELECT * 
+                            FROM employees
+                            WHERE employees.name = "{name}"
+                            ''')
+        # for row in self.cursor:
+        #     print(row)
+        return self.cursor.fetchall()
+
     def close(self):
         self.cursor.close()
         self.conn.close()
