@@ -5,8 +5,8 @@ class Parser:
     def __init__(self):
         self.calls_db = Call()
         self.emp_flag = None
+        self.sub_dept_flag = None
         self.email_flag = False
-        self.sub_dept_flag = False
 
     def parse_text(self, file):
         with open(file, 'r+', encoding="utf-16") as f:
@@ -69,5 +69,5 @@ class Parser:
 
     def __reset_flags(self):
         self.emp_flag = None
+        self.sub_dept_flag = None
         self.email_flag = False
-        self.sub_dept_flag = False

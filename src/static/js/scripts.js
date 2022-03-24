@@ -12,17 +12,18 @@ const emailRadioButtons = $(".emailRadioButton")
 
 $(document).ready(function () {
     sheetTable.dataTable({
-        dom: 'Bfrtip',
+        dom: '<<Bft>ip>',
+        // dom: 'lfrtip',
         buttons: [
             {
                 extend: 'excel',
                 text: '<i class="fas fa-file-excel"></i>',
-                className: 'btn btn-outline btn-success export-btn'
+                className: 'btn btn-outline btn-success'
             },
             {
                 extend: 'pdf',
                 text: '<i class="fas fa-file-pdf"></i>',
-                className: 'btn btn-outline btn-danger export-btn'
+                className: 'btn btn-outline btn-danger'
             },
         ],
         "lengthMenu": [[15, -1], [15, "All"]],
@@ -53,7 +54,7 @@ dailyFilePath && dailyFilePath.addEventListener("change", (e) => {
 
 // SHEET TABLE FUNCTIONS
 
-employeeSheetChecks && employeeSheetChecks.each(function(i, element) {
+employeeSheetChecks && employeeSheetChecks.each(function (i, element) {
     element.addEventListener("change", (e) => {
         if (e.target.checked) {
             alert('hello');
@@ -61,7 +62,7 @@ employeeSheetChecks && employeeSheetChecks.each(function(i, element) {
     })
 });
 
-dateConstraint && dateConstraint.each(function(i, element) {
+dateConstraint && dateConstraint.each(function (i, element) {
     element.addEventListener("change", (e) => {
         if (e.target.checked) {
             alert('hello');
@@ -69,23 +70,41 @@ dateConstraint && dateConstraint.each(function(i, element) {
     })
 });
 
-subDeptChecks && subDeptChecks.each(function(i, element) {
+subDeptChecks && subDeptChecks.each(function (i, element) {
     element.addEventListener("change", (e) => {
         if (e.target.checked) {
-            alert('hello');
+            var table = sheetTable.DataTable();
+            table.column(3).search(e.target.value + "H|S",true,false).draw();
+            // var array = table.column(3)
+            //     .data()
+            //     .filter(function (value, index) {
+            //         return value === e.target.value;
+            //     })
+            //     .draw();
+
+            // $.fn.dataTableExt.afnFiltering.push(
+            //     function (oSettings, aData, iDataIndex) {
+            //         return aData[3] === e.target.value;
+            //     }
+            // );
+
+            // table.draw()
+        } else {
+
         }
     })
 });
 
-supCodeChecks && supCodeChecks.each(function(i, element) {
+supCodeChecks && supCodeChecks.each(function (i, element) {
     element.addEventListener("change", (e) => {
         if (e.target.checked) {
-            alert('hello');
+            var table = sheetTable.DataTable();
+            table.search('').columns(2).search(e.target.value).draw();
         }
     })
 });
 
-emailRadioButtons && emailRadioButtons.each(function(i, element) {
+emailRadioButtons && emailRadioButtons.each(function (i, element) {
     element.addEventListener("change", (e) => {
         if (e.target.checked) {
             alert('hello');

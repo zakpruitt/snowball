@@ -13,7 +13,7 @@
 
       <!-- User Constraint -->
       <label for="userConstraint" class="form-label lead mt-3">User Filter</label>
-      <div id="userConstraint" class="btn-group ms-1 mb-2">
+      <div id="userConstraint" class="btn-group ms-1 mb-4">
         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">Select Included
           Users</button>
         <ul class="dropdown-menu">
@@ -21,9 +21,10 @@
           <li>
             <div class="form-check ms-2">
               <label class="form-check-label" for="{{ employee[1] }}">{{ employee[1] }}</label>
-              <input class="form-check-input employeeSheetCheck" type="checkbox" value="{{ employee[1] }}" id="{{ employee[1] }}" checked>
+              <input class="form-check-input employeeSheetCheck" type="checkbox" value="{{ employee[1] }}"
+                id="{{ employee[1] }}">
             </div>
-          </li>         
+          </li>
           {% endfor %}
         </ul>
       </div>
@@ -34,22 +35,22 @@
 
       <!-- Sup Code Constraint -->
       <label for="supCodeConstraints" class="form-label lead">Sup Code Filters</label>
-      <div id="supCodeConstraints" class="ms-2 mb-3">
+      <div id="supCodeConstraints" class="ms-2 mb-4">
         <div class="form-check">
           <label class="form-check-label" for="oCheck">Include Code O</label>
-          <input class="form-check-input supCodeCheck" type="checkbox" value="O" id="oCheck" checked>
+          <input class="form-check-input supCodeCheck" type="checkbox" value="O" id="oCheck">
         </div>
         <div class="form-check">
           <label class="form-check-label" for="cCheck">Include Code C</label>
-          <input class="form-check-input supCodeCheck" type="checkbox" value="C" id="cCheck" checked>
+          <input class="form-check-input supCodeCheck" type="checkbox" value="C" id="cCheck">
         </div>
         <div class="form-check">
           <label class="form-check-label" for="fCheck">Include Code F</label>
-          <input class="form-check-input supCodeCheck" type="checkbox" value="F" id="fCheck" checked>
+          <input class="form-check-input supCodeCheck" type="checkbox" value="F" id="fCheck">
         </div>
         <div class="form-check">
           <label class="form-check-label" for="sCheck">Include Code S</label>
-          <input class="form-check-input supCodeCheck" type="checkbox" value="S" id="sCheck" checked>
+          <input class="form-check-input supCodeCheck" type="checkbox" value="S" id="sCheck">
         </div>
         <div class="form-check">
           <label class="form-check-label" for="wCheck">Include Code W</label>
@@ -63,18 +64,18 @@
 
       <!-- Sub Dept Constraint -->
       <label for="subDeptConstraints" class="form-label lead">Sub Dept Filters</label>
-      <div id="subDeptConstraints" class="ms-2 mb-3">
+      <div id="subDeptConstraints" class="ms-2 mb-4">
         <div class="form-check">
           <label class="form-check-label" for="softwareCheck">Include Software</label>
-          <input class="form-check-input subDeptCheck" type="checkbox" id="softwareCheck" checked>
+          <input class="form-check-input subDeptCheck" value="S" type="checkbox" id="softwareCheck">
         </div>
         <div class="form-check">
           <label class="form-check-label" for="hardwareCheck">Include Hardware</label>
-          <input class="form-check-input subDeptCheck" type="checkbox" id="hardwareCheck" checked>
+          <input class="form-check-input subDeptCheck" value="H" type="checkbox" id="hardwareCheck">
         </div>
         <div class="form-check">
           <label class="form-check-label" for="otherCheck">Include Other</label>
-          <input class="form-check-input subDeptCheck" type="checkbox" id="otherCheck" checked>
+          <input class="form-check-input subDeptCheck" value="O" type="checkbox" id="otherCheck">
         </div>
       </div>
 
@@ -87,7 +88,7 @@
         </div>
         <div class="form-check">
           <label class="form-check-label" for="flexRadioDefault2">Disregard Emails</label>
-          <input class="form-check-input emailRadioButton" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+          <input class="form-check-input emailRadioButton" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
         </div>
       </div>
     </div>
@@ -102,10 +103,11 @@
             <th scope="col">Sup Code</th>
             <th scope="col">Sub Dept</th>
             <th scope="col">Email</th>
-            <th scope="col">Employee ID</th>
+            <th scope="col">Emp ID</th>
             <th scope="col">Last User</th>
             <th scope="col">Original User</th>
-            <th scope="col">Last Changed</th>
+            <th scope="col">Time</th>
+            <th scope="col">DEL</th>
           </tr>
         </thead>
         <tbody>
@@ -120,6 +122,10 @@
             <td>{{ call[6] }}</td>
             <td>{{ call[7] }}</td>
             <td>{{ call[8] }}</td>
+            <td>
+              <a>
+                <i class="fas fa-trash-alt text-warning"></i>
+              </a>
           </tr>
           {% endfor %}
         </tbody>

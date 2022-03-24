@@ -11,7 +11,7 @@ PythonShell.run(__dirname + '/src/main.py', null, function (err, results) {
 function createWindow() {
     // create window
     const mainWindow = new BrowserWindow({
-        width: 1500,
+        width: 1600,
         height: 1000,
     });
     mainWindow.loadURL('http://127.0.0.1:5000');
