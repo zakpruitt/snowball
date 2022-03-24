@@ -7,10 +7,21 @@ $(document).ready(function () {
     sheetTable.dataTable({
         dom: 'Bfrtip',
         buttons: [
-            'csv', 'excel', 'pdf'
+            {
+                extend: 'excel',
+                text: '<i class="fas fa-file-excel"></i>',
+                className: 'btn btn-outline btn-success export-btn'
+            },
+            {
+                extend: 'pdf',
+                text: '<i class="fas fa-file-pdf"></i>',
+                className: 'btn btn-outline btn-danger export-btn'
+            },
         ],
         "lengthMenu": [[15, -1], [15, "All"]],
     });
+
+    $('input[name="dates"]').daterangepicker();
 });
 
 allFilePath.addEventListener("change", (e) => {
@@ -30,4 +41,3 @@ dailyFilePath.addEventListener("change", (e) => {
     }
     fr.readAsText(dailyFilePath.files[0]);
 });
-

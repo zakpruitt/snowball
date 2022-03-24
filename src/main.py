@@ -36,7 +36,7 @@ def parse():
 
 @app.route('/sheets', methods=["GET"])
 def sheets():
-    return render_template('sheets.html', calls=calls_db.read())
+    return render_template('sheets.html', calls=calls_db.read(), employees=employees_db.read())
 
 
 @app.route('/employees',  methods=["GET", "POST"])

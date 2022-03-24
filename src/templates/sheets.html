@@ -4,45 +4,127 @@
 
 {% block content %}
 <div class="container">
-    <div class="row mt-5">
-        <!-- Inputs -->
-        <div class="col-2 border-end">
-            
-        </div>
+  <div class="row mt-5">
+    <!-- Inputs -->
+    <div class="col-2 border-end">
+      <h2 class="display-6 text-center">Sheet Filters</h2>
 
-        <!-- Previews-->
-        <div class="col-10">
-            <table class="table table-striped dataTable text-center" id="sheetTable">
-                <thead>
-                  <tr>
-                    <th scope="col">Supp #</th>
-                    <th scope="col">Date Created</th>
-                    <th scope="col">Sup Code</th>
-                    <th scope="col">Sub Dept</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Employee ID</th>
-                    <th scope="col">Last User</th>
-                    <th scope="col">Original User</th>
-                    <th scope="col">Last Changed</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for call in calls %}
-                  <tr>
-                    <td>{{ call[0] }}</td>
-                    <td>{{ call[1] }}</td>
-                    <td>{{ call[2] }}</td>
-                    <td>{{ call[3] }}</td>
-                    <td>{{ call[4] }}</td>
-                    <td>{{ call[5] }}</td>
-                    <td>{{ call[6] }}</td>
-                    <td>{{ call[7] }}</td>
-                    <td>{{ call[8] }}</td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
+      <div class="dropdown-divider mt-1"></div>
+
+      <!-- User Constraint -->
+      <label for="userConstraint" class="form-label lead mt-3">User Filter</label>
+      <div id="userConstraint" class="btn-group ms-1 mb-2">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">Select Included
+          Users</button>
+        <ul class="dropdown-menu">
+          {% for employee in employees %}
+          <li>
+            <div class="form-check ms-2">
+              <label class="form-check-label" for="{{ employee[1] }}">{{ employee[1] }}</label>
+              <input class="form-check-input" type="checkbox" value="{{ employee[1] }}" id="{{ employee[1] }}" checked>
+            </div>
+          </li>         
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Date Constraint -->
+      <label for="dateConstraint" class="form-label lead mt-3">Date Range Filter</label>
+      <input id="dateConstraint" type="text" name="dates" class="form-control mb-4">
+
+      <!-- Sup Code Constraint -->
+      <label for="supCodeConstraints" class="form-label lead">Sup Code Filters</label>
+      <div id="supCodeConstraints" class="ms-2 mb-3">
+        <div class="form-check">
+          <label class="form-check-label" for="oCheck">Include Code O</label>
+          <input class="form-check-input" type="checkbox" value="O" id="oCheck" checked>
         </div>
+        <div class="form-check">
+          <label class="form-check-label" for="cCheck">Include Code C</label>
+          <input class="form-check-input" type="checkbox" value="C" id="cCheck" checked>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label" for="fCheck">Include Code F</label>
+          <input class="form-check-input" type="checkbox" value="F" id="fCheck" checked>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label" for="sCheck">Include Code S</label>
+          <input class="form-check-input" type="checkbox" value="S" id="sCheck" checked>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label" for="wCheck">Include Code W</label>
+          <input class="form-check-input" type="checkbox" value="W" id="wCheck">
+        </div>
+        <div class="form-check">
+          <label class="form-check-label" for="nCheck">Include Code N</label>
+          <input class="form-check-input" type="checkbox" value="N" id="nCheck">
+        </div>
+      </div>
+
+      <!-- Sub Dept Constraint -->
+      <label for="subDeptConstraints" class="form-label lead">Sub Dept Filters</label>
+      <div id="subDeptConstraints" class="ms-2 mb-3">
+        <div class="form-check">
+          <label class="form-check-label" for="softwareCheck">Include Software</label>
+          <input class="form-check-input" type="checkbox" id="softwareCheck" checked>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label" for="hardwareCheck">Include Hardware</label>
+          <input class="form-check-input" type="checkbox" id="hardwareCheck" checked>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label" for="otherCheck">Include Other</label>
+          <input class="form-check-input" type="checkbox" id="otherCheck" checked>
+        </div>
+      </div>
+
+      <!-- Email Constraint -->
+      <label for="emailConstraint" class="form-label lead">Email Constraint</label>
+      <div id="emailConstraint" class="ms-2">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+          <label class="form-check-label" for="flexRadioDefault1">Include Emails</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+          <label class="form-check-label" for="flexRadioDefault2">Disregard Emails</label>
+        </div>
+      </div>
     </div>
+
+    <!-- Previews-->
+    <div class="col-10">
+      <table class="table table-striped dataTable text-center" id="sheetTable">
+        <thead>
+          <tr>
+            <th scope="col">Supp #</th>
+            <th scope="col">Date Created</th>
+            <th scope="col">Sup Code</th>
+            <th scope="col">Sub Dept</th>
+            <th scope="col">Email</th>
+            <th scope="col">Employee ID</th>
+            <th scope="col">Last User</th>
+            <th scope="col">Original User</th>
+            <th scope="col">Last Changed</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for call in calls %}
+          <tr>
+            <td>{{ call[0] }}</td>
+            <td>{{ call[1] }}</td>
+            <td>{{ call[2] }}</td>
+            <td>{{ call[3] }}</td>
+            <td>{{ call[4] }}</td>
+            <td>{{ call[5] }}</td>
+            <td>{{ call[6] }}</td>
+            <td>{{ call[7] }}</td>
+            <td>{{ call[8] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 {% endblock %}

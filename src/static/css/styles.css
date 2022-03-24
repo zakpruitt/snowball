@@ -33,6 +33,15 @@ textarea {
   height: 300px;
 }
 
+.display-6 {
+  font-size: 2rem !important;
+}
+
+.export-btn {
+  position: relative;
+  top: 35px;
+}
+
 .card-bg-1 {
   background-image: url("../images/Untitled.png");
 }

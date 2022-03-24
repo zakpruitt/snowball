@@ -31,7 +31,6 @@ class Employee:
 
     def find_employee(self, name):
         name = name.upper()
-        print(name)
         self.cursor.execute(f'''
                             SELECT * 
                             FROM employees
