@@ -1,7 +1,14 @@
 
 const allFilePath = document.getElementById("formFileAll")
 const dailyFilePath = document.getElementById("formFileDaily")
+
 const sheetTable = $("#sheetTable")
+const employeeSheetChecks = $(".employeeSheetCheck")
+const dateConstraint = $('#dateConstraint')
+const supCodeChecks = $(".supCodeCheck")
+const subDeptChecks = $(".subDeptCheck")
+const emailRadioButtons = $(".emailRadioButton")
+
 
 $(document).ready(function () {
     sheetTable.dataTable({
@@ -21,10 +28,12 @@ $(document).ready(function () {
         "lengthMenu": [[15, -1], [15, "All"]],
     });
 
-    $('input[name="dates"]').daterangepicker();
+    dateConstraint.daterangepicker();
 });
 
-allFilePath.addEventListener("change", (e) => {
+// PARSE FILE FUNCTIONS 
+
+allFilePath && allFilePath.addEventListener("change", (e) => {
     var fr = new FileReader();
     fr.onload = function () {
         var text = fr.result;
@@ -33,7 +42,7 @@ allFilePath.addEventListener("change", (e) => {
     fr.readAsText(allFilePath.files[0]);
 });
 
-dailyFilePath.addEventListener("change", (e) => {
+dailyFilePath && dailyFilePath.addEventListener("change", (e) => {
     var fr = new FileReader();
     fr.onload = function () {
         var text = fr.result;
@@ -41,3 +50,47 @@ dailyFilePath.addEventListener("change", (e) => {
     }
     fr.readAsText(dailyFilePath.files[0]);
 });
+
+// SHEET TABLE FUNCTIONS
+
+employeeSheetChecks && employeeSheetChecks.each(function(i, element) {
+    element.addEventListener("change", (e) => {
+        if (e.target.checked) {
+            alert('hello');
+        }
+    })
+});
+
+dateConstraint && dateConstraint.each(function(i, element) {
+    element.addEventListener("change", (e) => {
+        if (e.target.checked) {
+            alert('hello');
+        }
+    })
+});
+
+subDeptChecks && subDeptChecks.each(function(i, element) {
+    element.addEventListener("change", (e) => {
+        if (e.target.checked) {
+            alert('hello');
+        }
+    })
+});
+
+supCodeChecks && supCodeChecks.each(function(i, element) {
+    element.addEventListener("change", (e) => {
+        if (e.target.checked) {
+            alert('hello');
+        }
+    })
+});
+
+emailRadioButtons && emailRadioButtons.each(function(i, element) {
+    element.addEventListener("change", (e) => {
+        if (e.target.checked) {
+            alert('hello');
+        }
+    })
+});
+
+

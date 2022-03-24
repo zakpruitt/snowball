@@ -21,7 +21,7 @@
           <li>
             <div class="form-check ms-2">
               <label class="form-check-label" for="{{ employee[1] }}">{{ employee[1] }}</label>
-              <input class="form-check-input" type="checkbox" value="{{ employee[1] }}" id="{{ employee[1] }}" checked>
+              <input class="form-check-input employeeSheetCheck" type="checkbox" value="{{ employee[1] }}" id="{{ employee[1] }}" checked>
             </div>
           </li>         
           {% endfor %}
@@ -37,27 +37,27 @@
       <div id="supCodeConstraints" class="ms-2 mb-3">
         <div class="form-check">
           <label class="form-check-label" for="oCheck">Include Code O</label>
-          <input class="form-check-input" type="checkbox" value="O" id="oCheck" checked>
+          <input class="form-check-input supCodeCheck" type="checkbox" value="O" id="oCheck" checked>
         </div>
         <div class="form-check">
           <label class="form-check-label" for="cCheck">Include Code C</label>
-          <input class="form-check-input" type="checkbox" value="C" id="cCheck" checked>
+          <input class="form-check-input supCodeCheck" type="checkbox" value="C" id="cCheck" checked>
         </div>
         <div class="form-check">
           <label class="form-check-label" for="fCheck">Include Code F</label>
-          <input class="form-check-input" type="checkbox" value="F" id="fCheck" checked>
+          <input class="form-check-input supCodeCheck" type="checkbox" value="F" id="fCheck" checked>
         </div>
         <div class="form-check">
           <label class="form-check-label" for="sCheck">Include Code S</label>
-          <input class="form-check-input" type="checkbox" value="S" id="sCheck" checked>
+          <input class="form-check-input supCodeCheck" type="checkbox" value="S" id="sCheck" checked>
         </div>
         <div class="form-check">
           <label class="form-check-label" for="wCheck">Include Code W</label>
-          <input class="form-check-input" type="checkbox" value="W" id="wCheck">
+          <input class="form-check-input supCodeCheck" type="checkbox" value="W" id="wCheck">
         </div>
         <div class="form-check">
           <label class="form-check-label" for="nCheck">Include Code N</label>
-          <input class="form-check-input" type="checkbox" value="N" id="nCheck">
+          <input class="form-check-input supCodeCheck" type="checkbox" value="N" id="nCheck">
         </div>
       </div>
 
@@ -66,15 +66,15 @@
       <div id="subDeptConstraints" class="ms-2 mb-3">
         <div class="form-check">
           <label class="form-check-label" for="softwareCheck">Include Software</label>
-          <input class="form-check-input" type="checkbox" id="softwareCheck" checked>
+          <input class="form-check-input subDeptCheck" type="checkbox" id="softwareCheck" checked>
         </div>
         <div class="form-check">
           <label class="form-check-label" for="hardwareCheck">Include Hardware</label>
-          <input class="form-check-input" type="checkbox" id="hardwareCheck" checked>
+          <input class="form-check-input subDeptCheck" type="checkbox" id="hardwareCheck" checked>
         </div>
         <div class="form-check">
           <label class="form-check-label" for="otherCheck">Include Other</label>
-          <input class="form-check-input" type="checkbox" id="otherCheck" checked>
+          <input class="form-check-input subDeptCheck" type="checkbox" id="otherCheck" checked>
         </div>
       </div>
 
@@ -82,12 +82,12 @@
       <label for="emailConstraint" class="form-label lead">Email Constraint</label>
       <div id="emailConstraint" class="ms-2">
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
           <label class="form-check-label" for="flexRadioDefault1">Include Emails</label>
+          <input class="form-check-input emailRadioButton" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
           <label class="form-check-label" for="flexRadioDefault2">Disregard Emails</label>
+          <input class="form-check-input emailRadioButton" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
         </div>
       </div>
     </div>
