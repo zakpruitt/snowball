@@ -16,9 +16,15 @@ $(document).ready(function () {
         // dom: 'lfrtip',
         buttons: [
             {
-                extend: 'excel',
+                extend: 'excelHtml5',
+                customize: function(xlsx){
+                    customFormating(xlsx);
+                },
+                
+                
                 text: '<i class="fas fa-file-excel"></i>',
                 className: 'btn btn-outline btn-success'
+                
             },
             {
                 extend: 'pdf',
@@ -31,6 +37,36 @@ $(document).ready(function () {
 
     dateConstraint.daterangepicker();
 });
+
+function customFormating(xlsx){
+    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+    var count = 0;
+    var columns = ['A','B','C','D','E','F','G','H','I']
+    var skippedHeader = false;
+    var skippedTitle = false;
+    for (let i = 0; i<columns.length;i++){
+        $('row c[r*="'+columns[i] +'"]', sheet).each(function(){
+        if (skippedHeader&skippedTitle){
+            if (count % 2 === 0){
+                $(this).attr('s','35');
+            }
+            else{
+                $(this).attr('s','40');
+            }
+            count++;
+
+        }
+        else if(skippedTitle){
+
+            skippedHeader=true;
+        }else{
+            skippedTitle=true;
+        }
+    });
+    skippedHeader = false;
+    
+}
+}
 
 // PARSE FILE FUNCTIONS 
 
