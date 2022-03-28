@@ -1,71 +1,18 @@
 
-const allFilePath = document.getElementById("formFileAll")
-const dailyFilePath = document.getElementById("formFileDaily")
+const allFilePath = document.getElementById("formFileAll");
+const dailyFilePath = document.getElementById("formFileDaily");
 
-const sheetTable = $("#sheetTable")
-const employeeSheetChecks = $(".employeeSheetCheck")
-const dateConstraint = $('#dateConstraint')
-const supCodeChecks = $(".supCodeCheck")
-const subDeptChecks = $(".subDeptCheck")
-const emailRadioButtons = $(".emailRadioButton")
+const sheetTable = $("#sheetTable");
+const employeeSheetChecks = $(".employeeSheetCheck");
+const dateConstraint = $('#dateConstraint');
+const supCodeChecks = $(".supCodeCheck");
+const subDeptChecks = $(".subDeptCheck");
+const emailRadioButtons = $(".emailRadioButton");
 
-//#region GENERAL FUNCTIONS
-
-$(document).ready(function () {
-    sheetTable.dataTable({
-        dom: '<<Bft>ip>',
-        buttons: [
-            {
-                extend: 'excelHtml5',
-                customize: function (xlsx) {
-                    customFormating(xlsx);
-                },
-                text: '<i class="fas fa-file-excel"></i>',
-                className: 'btn btn-outline btn-success',
-            },
-            {
-                extend: 'pdf',
-                text: '<i class="fas fa-file-pdf"></i>',
-                className: 'btn btn-outline btn-danger'
-            },
-        ],
-        "lengthMenu": [[15, -1], [15, "All"]],
-    });
-
-    dateConstraint.daterangepicker();
-});
-
-function customFormating(xlsx) {
-    var sheet = xlsx.xl.worksheets['sheet1.xml'];
-    var count = 0;
-    var columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
-    var skippedHeader = false;
-    var skippedTitle = false;
-    for (let i = 0; i < columns.length; i++) {
-        $('row c[r*="' + columns[i] + '"]', sheet).each(function () {
-            if (skippedHeader & skippedTitle) {
-                if (count % 2 === 0) {
-                    $(this).attr('s', '35');
-                }
-                else {
-                    $(this).attr('s', '40');
-                }
-                count++;
-
-            }
-            else if (skippedTitle) {
-
-                skippedHeader = true;
-            } else {
-                skippedTitle = true;
-            }
-        });
-        skippedHeader = false;
-
-    }
-}
-
-//#endregion
+const firstChart = $("#firstChart");
+const secondChart = $("#secondChart");
+const thirdChart = $("#thirdChart");
+const fourthChart = $("#fourthChart");
 
 //#region PARSE FILE FUNCTIONS 
 
@@ -90,6 +37,30 @@ dailyFilePath && dailyFilePath.addEventListener("change", (e) => {
 //#endregion
 
 //#region SHEET TABLE FUNCTIONS
+
+$(document).ready(function () {
+    sheetTable && sheetTable.dataTable({
+        dom: '<<Bft>ip>',
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                customize: function (xlsx) {
+                    customFormating(xlsx);
+                },
+                text: '<i class="fas fa-file-excel"></i>',
+                className: 'btn btn-outline btn-success',
+            },
+            {
+                extend: 'pdf',
+                text: '<i class="fas fa-file-pdf"></i>',
+                className: 'btn btn-outline btn-danger'
+            },
+        ],
+        "lengthMenu": [[15, -1], [15, "All"]],
+    });
+
+    dateConstraint && dateConstraint.daterangepicker();
+});
 
 function DTFilter() {
     this.searches = new Array();
@@ -140,15 +111,15 @@ employeeSheetChecks && employeeSheetChecks.each(function (i, element) {
     employeeFilter.addSearch(element.id);
 });
 
-dateConstraint && dateConstraint.on('apply.daterangepicker', function(ev, picker) {
+dateConstraint && dateConstraint.on('apply.daterangepicker', function (ev, picker) {
     // clear searches and show formatted value on picker
     dateFilter.clearSearches();
     $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-    
+
     // get dates from picker
     var startDate = picker.startDate.format('MM-DD-YYYY').toString();
     var endDate = picker.endDate.format('MM-DD-YYYY').toString();
-    
+
     // get all dates (inclusive) inbetween start and end. loop through them and add to filter.
     getDates(new Date(startDate), new Date(endDate)).forEach(date => {
         dateFilter.addSearch(date.toString());
@@ -198,15 +169,84 @@ function getDates(startDate, stopDate) {
     var currentDate = moment(startDate);
     var stopDate = moment(stopDate);
     while (currentDate <= stopDate) {
-        dateArray.push( moment(currentDate).format('YYYYMMDD') )
+        dateArray.push(moment(currentDate).format('YYYYMMDD'))
         currentDate = moment(currentDate).add(1, 'days');
     }
     return dateArray;
+}
+
+function customFormating(xlsx) {
+    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+    var count = 0;
+    var columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
+    var skippedHeader = false;
+    var skippedTitle = false;
+    for (let i = 0; i < columns.length; i++) {
+        $('row c[r*="' + columns[i] + '"]', sheet).each(function () {
+            if (skippedHeader & skippedTitle) {
+                if (count % 2 === 0) {
+                    $(this).attr('s', '35');
+                }
+                else {
+                    $(this).attr('s', '40');
+                }
+                count++;
+
+            }
+            else if (skippedTitle) {
+
+                skippedHeader = true;
+            } else {
+                skippedTitle = true;
+            }
+        });
+        skippedHeader = false;
+
+    }
 }
 
 //#endregion
 
 //#region VISUALIZE FUNCTIONS
 
+$(document).ready(function () {
+    firstChart && renderChart(firstChart);
+    secondChart && renderChart(secondChart);
+    thirdChart && renderChart(thirdChart);
+    fourthChart && renderChart(fourthChart);
+
+});
+
+function renderChart(chart) {
+    const labels = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+    ];
+
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: 'My First dataset',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [0, 10, 5, 2, 20, 30, 45],
+        }]
+    };
+
+    const config = {
+        type: 'line',
+        data: data,
+        options: {}
+    };
+
+    const newChart = new Chart(
+        chart,
+        config
+    );
+}
 
 //#endregion

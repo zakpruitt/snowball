@@ -5,8 +5,63 @@
 {% block content %}
 <div class="container">
   <div class="row mt-5">
-    <div class="col-12">
-      
+    <!-- Title-->
+    <div class="col-6">
+      <h1 class="display-6">Visualize Data</h1>
+    </div>
+    <!-- Employee Select -->
+    <div class="col-6">
+      <button type="button" class="float-end btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">Select
+        Specific
+        Employee</button>
+      <ul class="dropdown-menu text-center">
+        {% for employee in employees %}
+        <li>
+          <a class="link-primary" href="{{ url_for('visualize', employee=employee[0]) }}">{{ employee[1] }}</a>
+          {% if not loop.last %}
+          <div class="dropdown-divider mt-1 mb-1"></div>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="dropdown-divider mt-1"></div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-6">
+
+      <!-- First Chart -->
+      <div class="card">
+        <div class="card-body">
+          <canvas id="firstChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Second Chart (Vertically) -->
+      <div class="card">
+        <div class="card-body">
+          <canvas id="secondChart"></canvas>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-6">
+
+      <!-- Third Chart (Vertically) -->
+      <div class="card">
+        <div class="card-body">
+          <canvas id="thirdChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Fourth Chart (Vertically) -->
+      <div class="card">
+        <div class="card-body">
+          <canvas id="fourthChart"></canvas>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
