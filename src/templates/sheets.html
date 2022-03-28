@@ -20,9 +20,9 @@
           {% for employee in employees %}
           <li>
             <div class="form-check ms-2">
-              <label class="form-check-label" for="{{ employee[1] }}">{{ employee[1] }}</label>
+              <label class="form-check-label" for="{{ employee[0] }}">{{ employee[1] }}</label>
               <input class="form-check-input employeeSheetCheck" type="checkbox" value="{{ employee[1] }}"
-                id="{{ employee[1] }}">
+                id="{{ employee[0] }}" checked>
             </div>
           </li>
           {% endfor %}
@@ -83,12 +83,16 @@
       <label for="emailConstraint" class="form-label lead">Email Constraint</label>
       <div id="emailConstraint" class="ms-2">
         <div class="form-check">
-          <label class="form-check-label" for="flexRadioDefault1">Include Emails</label>
-          <input class="form-check-input emailRadioButton" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+          <label class="form-check-label" for="includeCallsAndEmailsCheck">Show Calls & Emails</label>
+          <input class="form-check-input emailRadioButton" value="1|0" type="radio" name="flexRadioDefault" id="includeCallsAndEmailsCheck" checked>
         </div>
         <div class="form-check">
-          <label class="form-check-label" for="flexRadioDefault2">Disregard Emails</label>
-          <input class="form-check-input emailRadioButton" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+          <label class="form-check-label" for="includeEmailsCheck">Show Only Emails</label>
+          <input class="form-check-input emailRadioButton" value="1" type="radio" name="flexRadioDefault" id="includeEmailsCheck">
+        </div>
+        <div class="form-check">
+          <label class="form-check-label" for="excludeEmailsCheck">Don't Show Emails</label>
+          <input class="form-check-input emailRadioButton" value="0" type="radio" name="flexRadioDefault" id="excludeEmailsCheck">
         </div>
       </div>
     </div>
