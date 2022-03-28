@@ -38,6 +38,10 @@ def parse():
 def sheets():
     return render_template('sheets.html', calls=calls_db.read(), employees=employees_db.read())
 
+@app.route('/visualize', methods=["GET"])
+def visualize():
+    return render_template('visualize.html', calls=calls_db.read(), employees=employees_db.read())
+
 
 @app.route('/employees',  methods=["GET", "POST"])
 def employees():

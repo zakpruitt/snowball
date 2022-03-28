@@ -9,6 +9,7 @@ const supCodeChecks = $(".supCodeCheck")
 const subDeptChecks = $(".subDeptCheck")
 const emailRadioButtons = $(".emailRadioButton")
 
+//#region GENERAL FUNCTIONS
 
 $(document).ready(function () {
     sheetTable.dataTable({
@@ -64,7 +65,9 @@ function customFormating(xlsx) {
     }
 }
 
-// PARSE FILE FUNCTIONS 
+//#endregion
+
+//#region PARSE FILE FUNCTIONS 
 
 allFilePath && allFilePath.addEventListener("change", (e) => {
     var fr = new FileReader();
@@ -84,7 +87,9 @@ dailyFilePath && dailyFilePath.addEventListener("change", (e) => {
     fr.readAsText(dailyFilePath.files[0]);
 });
 
-// SHEET TABLE FUNCTIONS
+//#endregion
+
+//#region SHEET TABLE FUNCTIONS
 
 function DTFilter() {
     this.searches = new Array();
@@ -198,3 +203,10 @@ function getDates(startDate, stopDate) {
     }
     return dateArray;
 }
+
+//#endregion
+
+//#region VISUALIZE FUNCTIONS
+
+
+//#endregion
