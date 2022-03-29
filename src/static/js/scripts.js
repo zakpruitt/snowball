@@ -13,6 +13,8 @@ const firstChart = $("#firstChart");
 const secondChart = $("#secondChart");
 const thirdChart = $("#thirdChart");
 const fourthChart = $("#fourthChart");
+const fifthChart = $("#fifthChart");
+const sixthChart = $("#sixthChart");
 
 //#region PARSE FILE FUNCTIONS 
 
@@ -214,33 +216,68 @@ $(document).ready(function () {
     secondChart && renderChart(secondChart);
     thirdChart && renderChart(thirdChart);
     fourthChart && renderChart(fourthChart);
+    fifthChart && renderChart(fifthChart);
+    sixthChart && renderChart(sixthChart);
 
 });
 
 function renderChart(chart) {
     const labels = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
+        'O',
+        'C',
+        'F',
+        'S',
+        'W',
+        'N',
     ];
 
     const data = {
         labels: labels,
-        datasets: [{
-            label: 'My First dataset',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: [0, 10, 5, 2, 20, 30, 45],
-        }]
+        datasets: [
+            {
+                label: 'January',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [4, 76, 4, 2, 1, 7, 0],
+            },
+            {
+                label: 'February',
+                backgroundColor: 'rgb(54, 162, 235)',
+                borderColor: 'rgb(54, 162, 235)',
+                data: [0, 20, 15, 12, 30, 10, 25],
+            },
+            {
+                label: 'March',
+                backgroundColor: 'rgb(255, 205, 86)',
+                borderColor: 'rgb(255, 205, 86)',
+                data: [12, 30, 10, 25, 0, 20, 15],
+            },
+            {
+                label: 'April',
+                backgroundColor: 'rgb(75, 192, 192)',
+                borderColor: 'rgb(75, 192, 192)',
+                data: [25, 0, 20, 15, 12, 30, 10],
+            },
+            {
+                label: 'May',
+                backgroundColor: 'rgb(153, 102, 255)',
+                borderColor: 'rgb(153, 102, 255)',
+                data: [10, 25, 0, 20, 15, 12, 30],
+            },
+        ]
     };
 
     const config = {
-        type: 'line',
+        type: 'bar',
         data: data,
-        options: {}
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Custom Chart Title'
+                }
+            }
+        }
     };
 
     const newChart = new Chart(
