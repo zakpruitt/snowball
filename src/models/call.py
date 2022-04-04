@@ -3,7 +3,8 @@ import sqlite3
 
 class Call:
     def __init__(self) -> None:
-        self.conn = sqlite3.connect('data/snowball.db', check_same_thread=False)
+        self.conn = sqlite3.connect(
+            'data/snowball.db', check_same_thread=False)
         self.cursor = self.conn.cursor()
         self.create_table()
 
@@ -32,6 +33,25 @@ class Call:
     def read(self):
         self.cursor.execute('''
                             SELECT * FROM calls
+                            ''')
+        return self.cursor.fetchall()
+
+    def get_calls_and_email_count(self, start=None, end=None):
+        if start == None and end == None:
+            self.cursor.execute(f'''
+                                SELECT email, count (email) as 'Calls and Emails'
+                                FROM calls
+                                WHERE calls.sup_code != 'W' or 'N' 
+                                GROUP BY email
+                                ''')
+            return self.cursor.fetchall()
+
+        self.cursor.execute(f'''
+                            SELECT email, count (email) as 'Calls and Emails'
+                            FROM calls
+                            WHERE date_created BETWEEN '{start}' and '{end}'
+                            AND calls.sup_code != 'W' or 'N' 
+                            GROUP BY email
                             ''')
         return self.cursor.fetchall()
 

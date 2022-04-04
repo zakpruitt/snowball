@@ -42,7 +42,6 @@ class Parser:
         #self.sub_dept_flag = line_array[2]
         #self.emp_flag = line_array[4]
 
-
         for element in line_array:
             if element in symbols:
                if self.email_flag == False and element == "E":
@@ -54,9 +53,12 @@ class Parser:
 
         #hydrate call with actual values
         call_array[0] = line_array[length - 4]
-        call_array[1] = line_array[0]
+        call_array[1] = self.__format_parsed_date(line_array[0])
         call_array[2] = line_array[1]
-        call_array[3] = self.sub_dept_flag
+        if self.sub_dept_flag == None:
+            call_array[3] = 'O'
+        else:
+            call_array[3] = self.sub_dept_flag
         call_array[4] = self.email_flag
         call_array[5] = self.emp_flag
         call_array[6] = line_array[length - 3]
@@ -71,3 +73,6 @@ class Parser:
         self.emp_flag = None
         self.sub_dept_flag = None
         self.email_flag = False
+
+    def __format_parsed_date(self, date):
+        return date[0:4] + "-" + date[4:6] + "-" + date[6:8]
