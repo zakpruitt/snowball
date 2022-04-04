@@ -180,32 +180,18 @@ function getDates(startDate, stopDate) {
 
 function customFormating(xlsx) {
     var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
     var count = 0;
-    var columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
-    var skippedHeader = false;
-    var skippedTitle = false;
-    for (let i = 0; i < columns.length; i++) {
-        $('row c[r*="' + columns[i] + '"]', sheet).each(function () {
-            if (skippedHeader & skippedTitle) {
-                if (count % 2 === 0) {
-                    $(this).attr('s', '35');
-                }
-                else {
-                    $(this).attr('s', '40');
-                }
-                count++;
-
-            }
-            else if (skippedTitle) {
-
-                skippedHeader = true;
-            } else {
-                skippedTitle = true;
-            }
-        });
-        skippedHeader = false;
-
-    }
+    $('row', sheet).each(function () {
+        if (count % 2 == 0 && count > 1) {
+            $(this).find("c").attr('s', '45');
+        }
+        else {
+            $(this).find("c").attr('s', '25');
+        }
+        count++;
+    });
+    $('row:first c', sheet).attr('s', '42');
 }
 
 //#endregion
@@ -222,7 +208,7 @@ $(document).ready(function () {
 
 });
 
-function renderChart(chart) {    
+function renderChart(chart) {
     const labels = [
         'O',
         'C',
