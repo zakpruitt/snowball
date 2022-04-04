@@ -54,25 +54,29 @@ class Call:
                             GROUP BY strftime('%m', date_created)
                             ''')
         return self.cursor.fetchall()
-
-    def get_calls_and_email_count(self, start=None, end=None):
+    
+    def get_calls_and_email_count_by_sub_dept(self, start=None, end=None):
         if start == None and end == None:
             self.cursor.execute('''
-                                SELECT strftime('%m', date_created), count (*) as 'Calls and Emails'
+                                SELECT strftime('%m', date_created) AS month, sub_dept, count(sub_dept)
                                 FROM calls
                                 WHERE calls.sup_code != 'W' or 'N' 
-                                GROUP BY strftime('%m', date_created)
+                                GROUP BY sub_dept, strftime('%m', date_created)
                                 ''')
             return self.cursor.fetchall()
 
-        self.cursor.execute(f'''
-                            SELECT strftime('%m', date_created), count (*) as 'Calls and Emails'
-                            FROM calls
-                            WHERE date_created BETWEEN '{start}' and '{end}'
-                            AND calls.sup_code != 'W' or 'N' 
-                            GROUP BY strftime('%m', date_created)
-                            ''')
-        return self.cursor.fetchall()
+    def get_total_calls_emails_counts(self, start=None, end=None):
+        if start == None and end == None:
+            self.cursor.execute('''
+                                SELECT strftime('%m', date_created) AS month,
+                                COUNT(*) AS Total,
+                                SUM(CASE WHEN calls.email = 0 THEN 1 ELSE 0 END) "Calls Count",
+                                SUM(CASE WHEN calls.email = 1 THEN 1 ELSE 0 END) "Emails Total"
+                                FROM calls
+                                WHERE calls.sup_code != 'W' or 'N'
+                                GROUP BY strftime('%m', date_created);
+                                ''')
+            return self.cursor.fetchall()
 
     def close(self):
         self.cursor.close()

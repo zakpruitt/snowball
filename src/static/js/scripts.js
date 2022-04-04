@@ -9,8 +9,8 @@ const supCodeChecks = $(".supCodeCheck");
 const subDeptChecks = $(".subDeptCheck");
 const emailRadioButtons = $(".emailRadioButton");
 
-const firstChart = $("#firstChart");
-const secondChart = $("#secondChart");
+const allTotalChart = $("#allTotalChart");
+const allTotalSDChart = $("#allTotalSDChart");
 const thirdChart = $("#thirdChart");
 const fourthChart = $("#fourthChart");
 const fifthChart = $("#fifthChart");
@@ -199,14 +199,38 @@ function customFormating(xlsx) {
 //#region VISUALIZE FUNCTIONS
 
 $(document).ready(function () {
-    firstChart && renderChart(firstChart);
-    secondChart && renderChart(secondChart);
+    allTotalChart && renderLineGraph(allTotalChart, '/all-count');
+    allTotalSDChart && renderChart(allTotalSDChart);
     thirdChart && renderChart(thirdChart);
     fourthChart && renderChart(fourthChart);
     fifthChart && renderChart(fifthChart);
     sixthChart && renderChart(sixthChart);
 
 });
+
+function renderLineGraph(chart, endpoint) {
+    fetch('/data/' + endpoint)
+        .then(response => response.json())
+        .then(data => {
+            const config = {
+                type: 'line',
+                data: data,
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Call and Email Count by Month'
+                        }
+                    }
+                }
+            };
+        
+            const newChart = new Chart(
+                chart,
+                config
+            );
+        });
+}
 
 function renderChart(chart) {
     const labels = [
