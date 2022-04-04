@@ -49,6 +49,7 @@ $(document).ready(function () {
                 customize: function (xlsx) {
                     customFormating(xlsx);
                 },
+                title: '',
                 text: '<i class="fas fa-file-excel"></i>',
                 className: 'btn btn-outline btn-success',
             },
@@ -221,7 +222,7 @@ $(document).ready(function () {
 
 });
 
-function renderChart(chart) {
+function renderChart(chart) {    
     const labels = [
         'O',
         'C',
