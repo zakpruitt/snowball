@@ -38,20 +38,39 @@ class Call:
 
     def get_calls_and_email_count(self, start=None, end=None):
         if start == None and end == None:
-            self.cursor.execute(f'''
-                                SELECT email, count (email) as 'Calls and Emails'
+            self.cursor.execute('''
+                                SELECT strftime('%m', date_created), count (*) as 'Calls and Emails'
                                 FROM calls
                                 WHERE calls.sup_code != 'W' or 'N' 
-                                GROUP BY email
+                                GROUP BY strftime('%m', date_created)
                                 ''')
             return self.cursor.fetchall()
 
         self.cursor.execute(f'''
-                            SELECT email, count (email) as 'Calls and Emails'
+                            SELECT strftime('%m', date_created), count (*) as 'Calls and Emails'
                             FROM calls
                             WHERE date_created BETWEEN '{start}' and '{end}'
                             AND calls.sup_code != 'W' or 'N' 
-                            GROUP BY email
+                            GROUP BY strftime('%m', date_created)
+                            ''')
+        return self.cursor.fetchall()
+
+    def get_calls_and_email_count(self, start=None, end=None):
+        if start == None and end == None:
+            self.cursor.execute('''
+                                SELECT strftime('%m', date_created), count (*) as 'Calls and Emails'
+                                FROM calls
+                                WHERE calls.sup_code != 'W' or 'N' 
+                                GROUP BY strftime('%m', date_created)
+                                ''')
+            return self.cursor.fetchall()
+
+        self.cursor.execute(f'''
+                            SELECT strftime('%m', date_created), count (*) as 'Calls and Emails'
+                            FROM calls
+                            WHERE date_created BETWEEN '{start}' and '{end}'
+                            AND calls.sup_code != 'W' or 'N' 
+                            GROUP BY strftime('%m', date_created)
                             ''')
         return self.cursor.fetchall()
 
