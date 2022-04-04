@@ -17,7 +17,7 @@
       <ul class="dropdown-menu text-center">
         {% for employee in employees %}
         <li>
-          <a class="link-primary" href="{{ url_for('visualize', employee=employee[0]) }}">{{ employee[1] }}</a>
+          <a class="link-primary" href="{{ url_for('visualize.visualize', employee=employee[0]) }}">{{ employee[1] }}</a>
           {% if not loop.last %}
           <div class="dropdown-divider mt-1 mb-1"></div>
           {% endif %}

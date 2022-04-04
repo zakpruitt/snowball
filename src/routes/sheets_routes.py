@@ -6,7 +6,7 @@ calls_db = Call()
 employees_db = Employee()
 
 sheets_bp = Blueprint('sheets', __name__, url_prefix='/sheets',
-                   template_folder='templates')
+                      template_folder='templates')
 
 
 @sheets_bp.route('/', methods=["GET"])

@@ -6,7 +6,7 @@ calls_db = Call()
 employees_db = Employee()
 
 visualize_bp = Blueprint('visualize', __name__,
-                      url_prefix='/visualize', template_folder='templates')
+                         url_prefix='/visualize', template_folder='templates')
 
 
 @visualize_bp.route('/', methods=["GET"])

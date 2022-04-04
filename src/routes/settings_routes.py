@@ -4,7 +4,7 @@ from models.employee import Employee
 employees_db = Employee()
 
 settings_bp = Blueprint('settings', __name__,
-                     url_prefix='/settings', template_folder='templates')
+                        url_prefix='/settings', template_folder='templates')
 
 
 @settings_bp.route('/employees',  methods=["GET", "POST"])
