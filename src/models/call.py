@@ -168,6 +168,73 @@ class Call:
                                 ''')
             return self.cursor.fetchall()
 
+    def get_total_email_counts(self, start=None, end=None, sup_dept=None):
+        if start == None and end == None and sup_dept == None:
+            self.cursor.execute('''
+                                SELECT COUNT(*) as "Email Total"
+                                FROM calls
+                                LEFT JOIN employees ON calls.last_user = employees.name
+                                WHERE calls.email = 1
+                                AND calls.sup_code != 'W' or 'N'
+                                ''')
+            return self.cursor.fetchall()
+        elif start == None and end == None and sup_dept != None:
+            self.cursor.execute(f'''
+                                SELECT COUNT(*) as "Email Total"
+                                FROM calls
+                                LEFT JOIN employees ON calls.last_user = employees.name
+                                WHERE calls.email = 1
+                                AND employees.sub_dept = "{sup_dept}"
+                                AND calls.sup_code != 'W' or 'N'
+                                ''')
+            return self.cursor.fetchall()
+        else:
+            self.cursor.execute(f'''
+                                SELECT COUNT(*) as "Email Total"
+                                FROM calls
+                                LEFT JOIN employees ON calls.last_user = employees.name
+                                WHERE calls.email = 1
+                                AND employees.sub_dept = "{sup_dept}"
+                                AND calls.date_created BETWEEN '{start}' and '{end}'
+                                AND calls.sup_code != 'W' or 'N'
+                                ''')
+            return self.cursor.fetchall()
+
+    def get_total_email_counts_per_employee(self, start=None, end=None, sup_dept=None):
+        if start == None and end == None and sup_dept == None:
+            self.cursor.execute('''
+                                SELECT employees.name, COUNT(*)
+                                FROM calls
+                                LEFT JOIN employees ON calls.last_user = employees.name
+                                WHERE calls.email = 1
+                                AND calls.sup_code != 'W' or 'N' 
+                                GROUP BY employees.name
+                                ''')
+            return self.cursor.fetchall()
+        elif start == None and end == None and sup_dept != None:
+            self.cursor.execute(f'''
+                                SELECT employees.name, COUNT(*)
+                                FROM calls
+                                LEFT JOIN employees ON calls.last_user = employees.name
+                                WHERE calls.email = 1
+                                AND employees.sub_dept = "{sup_dept}"
+                                AND calls.sup_code != 'W' or 'N' 
+                                GROUP BY employees.name
+                                ''')
+            return self.cursor.fetchall()
+        else:
+            self.cursor.execute(f'''
+                                SELECT employees.name, COUNT(*)
+                                FROM calls
+                                LEFT JOIN employees ON calls.last_user = employees.name
+                                WHERE calls.email = 1
+                                AND employees.sub_dept = "{sup_dept}"
+                                AND calls.date_created BETWEEN '{start}' and '{end}'
+                                AND calls.sup_code != 'W' or 'N' 
+                                GROUP BY employees.name
+                                ''')
+            return self.cursor.fetchall()
+
     def close(self):
         self.cursor.close()
         self.conn.close()

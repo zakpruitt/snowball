@@ -17,8 +17,8 @@ months = {"01": "January", "02": "February", "03": "March", "04": "April", "05":
 
 @data_bp.route('/all-count', methods=["GET"])
 def all_count():
-    args = request.args
-    print(args['time'])
+    # args = request.args
+    # print(args['time'])
 
     # get data and transform dates into string dates
     data = calls_db.get_total_calls_emails_counts()
