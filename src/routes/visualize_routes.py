@@ -14,6 +14,8 @@ visualize_bp = Blueprint('visualize', __name__,
 @visualize_bp.route('/', methods=["GET"])
 def visualize():
     software_table = TableHandler(sub_dept="S")
+
+    return str(software_table.emp_email_totals)
     software_table.generate_table()
     software_table.print_table()
     return str(software_table.table)

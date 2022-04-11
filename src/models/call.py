@@ -200,7 +200,7 @@ class Call:
                                 ''')
             return self.cursor.fetchall()
 
-    def get_total_email_counts_per_employee(self, start=None, end=None, sup_dept=None):
+    def get_email_counts_per_employee(self, start=None, end=None, sup_dept=None):
         if start == None and end == None and sup_dept == None:
             self.cursor.execute('''
                                 SELECT employees.name, COUNT(*)
