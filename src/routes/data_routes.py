@@ -34,20 +34,20 @@ def all_count():
         "datasets": [
             {
                 "label": "Call and Email Count",
-                "backgroundColor": chart_handler.generate_random_color(),
-                "borderColor": chart_handler.color,
+                "backgroundColor": "rgb(70,60,220)",
+                "borderColor": "rgb(70,60,220)",
                 "data": get_concurrent_data(data_dict, "Total"),
             },
             {
                 "label": "Calls Count",
-                "backgroundColor": chart_handler.generate_random_color(),
-                "borderColor": chart_handler.color,
+                "backgroundColor": "rgb(60,220,100)",
+                "borderColor": "rgb(60,220,100)",
                 "data": get_concurrent_data(data_dict, "Calls"),
             },
             {
                 "label": "Email Count",
-                "backgroundColor": chart_handler.generate_random_color(),
-                "borderColor": chart_handler.color,
+                "backgroundColor": "rgb(240,190,50)",
+                "borderColor": "rgb(240,190,50)",
                 "data": get_concurrent_data(data_dict, "Emails"),
             },
         ]
