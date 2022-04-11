@@ -78,8 +78,10 @@ class Call:
                                 ''')
             return self.cursor.fetchall()
 
-    def get_total_immediate_and_later_count(self, start=None, end=None, sup_code=None):
-        if start == None and end == None and sup_code == None:
+    # table
+
+    def get_total_immediate_and_later_counts(self, start=None, end=None, sup_dept=None):
+        if start == None and end == None and sup_dept == None:
             self.cursor.execute('''
                                 SELECT 
                                     COUNT(*) AS Total,
@@ -91,7 +93,7 @@ class Call:
                                 AND calls.sup_code != 'W' or 'N' 
                                 ''')
             return self.cursor.fetchall()
-        elif start == None and end == None and sup_code != None:
+        elif start == None and end == None and sup_dept != None:
             self.cursor.execute(f'''
                                 SELECT 
                                     COUNT(*) AS Total,
@@ -100,7 +102,7 @@ class Call:
                                 FROM calls
                                 LEFT JOIN employees ON calls.original_user = employees.name
                                 WHERE calls.email = 0
-                                AND employees.sub_dept = "{sup_code}"
+                                AND employees.sub_dept = "{sup_dept}"
                                 AND calls.sup_code != 'W' or 'N' 
                                 ''')
             return self.cursor.fetchall()
@@ -113,14 +115,14 @@ class Call:
                                 FROM calls
                                 LEFT JOIN employees ON calls.original_user = employees.name
                                 WHERE calls.email = 0
-                                AND employees.sub_dept = "{sup_code}"
+                                AND employees.sub_dept = "{sup_dept}"
                                 AND calls.sup_code != 'W' or 'N' 
                                 AND calls.date_created BETWEEN '{start}' and '{end}'
                                 ''')
             return self.cursor.fetchall()
 
-    def get_immediate_and_later_count_per_employee(self, start=None, end=None, sup_code=None):
-        if start == None and end == None and sup_code == None:
+    def get_immediate_and_later_count_per_employee(self, start=None, end=None, sup_dept=None):
+        if start == None and end == None and sup_dept == None:
             self.cursor.execute('''
                                 SELECT 
                                     employees.name,
@@ -133,7 +135,8 @@ class Call:
                                 AND calls.sup_code != 'W' or 'N' 
                                 GROUP BY employees.name
                                 ''')
-        elif start == None and end == None and sup_code != None:
+            return self.cursor.fetchall()
+        elif start == None and end == None and sup_dept != None:
             self.cursor.execute(f'''
                                 SELECT 
                                     employees.name,
@@ -143,7 +146,7 @@ class Call:
                                 FROM calls
                                 LEFT JOIN employees ON calls.original_user = employees.name
                                 WHERE calls.email = 0
-                                AND employees.sub_dept = "{sup_code}"
+                                AND employees.sub_dept = "{sup_dept}"
                                 AND calls.sup_code != 'W' or 'N' 
                                 GROUP BY employees.name
                                 ''')
@@ -158,7 +161,7 @@ class Call:
                                 FROM calls
                                 LEFT JOIN employees ON calls.original_user = employees.name
                                 WHERE calls.email = 0
-                                AND employees.sub_dept = "{sup_code}"
+                                AND employees.sub_dept = "{sup_dept}"
                                 AND calls.sup_code != 'W' or 'N'
                                 AND calls.date_created BETWEEN '{start}' and '{end}' 
                                 GROUP BY employees.name

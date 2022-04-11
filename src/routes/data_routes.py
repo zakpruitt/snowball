@@ -1,6 +1,5 @@
 import json
 from flask import Blueprint, request
-from numpy import char
 from chart_handler import ChartHandler
 from models.call import Call
 from models.employee import Employee
