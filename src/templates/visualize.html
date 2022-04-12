@@ -32,6 +32,7 @@
   <!-- Software -->
   <div class="row mt-3">
     <div class="col-12">
+      <h1>Software</h1>
       <table class="table table-striped text-center">
         <thead>
           <tr>
@@ -52,6 +53,86 @@
         </thead>
         <tbody>
           {% for row in software_table %}
+          <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+            <td>{{ row[4] }}</td>
+            <td>{{ row[5] }}</td>
+            <td>{{ row[6] }}</td>
+            <td>{{ row[7] }}</td>
+            <td>{{ row[8] }}</td>
+            <td>{{ row[9] }}</td>
+            <td>{{ row[10] }}</td>
+            <td>{{ row[11] }}</td>
+            <td>{{ row[12] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <h1>Hardware</h1>
+      <table class="table table-striped text-center">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">New Imm</th>
+            <th scope="col">% of Imm</th>
+            <th scope="col">New Later</th>
+            <th scope="col">% of Later</th>
+            <th scope="col">Total Calls</th>
+            <th scope="col">% of Immed Total</th>
+            <th scope="col">New Email</th>
+            <th scope="col">New Calls & Emails</th>
+            <th scope="col">% Support</th>
+            <th scope="col">% Immed</th>
+            <th scope="col">% Later</th>
+            <th scope="col">% Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in hardware_table %}
+          <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+            <td>{{ row[4] }}</td>
+            <td>{{ row[5] }}</td>
+            <td>{{ row[6] }}</td>
+            <td>{{ row[7] }}</td>
+            <td>{{ row[8] }}</td>
+            <td>{{ row[9] }}</td>
+            <td>{{ row[10] }}</td>
+            <td>{{ row[11] }}</td>
+            <td>{{ row[12] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <h1>Other</h1>
+      <table class="table table-striped text-center">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">New Imm</th>
+            <th scope="col">% of Imm</th>
+            <th scope="col">New Later</th>
+            <th scope="col">% of Later</th>
+            <th scope="col">Total Calls</th>
+            <th scope="col">% of Immed Total</th>
+            <th scope="col">New Email</th>
+            <th scope="col">New Calls & Emails</th>
+            <th scope="col">% Support</th>
+            <th scope="col">% Immed</th>
+            <th scope="col">% Later</th>
+            <th scope="col">% Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in other_table %}
           <tr>
             <td>{{ row[0] }}</td>
             <td>{{ row[1] }}</td>

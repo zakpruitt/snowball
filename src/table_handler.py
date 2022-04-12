@@ -16,7 +16,10 @@ class TableHandler:
         self.table = []
 
     def generate_table(self):
-        # add all regularly appearing employees to the table
+        self.__add_employees()
+        self.__add_outlier_employees()
+
+    def __add_employees(self):
         for i in range(len(self.emp_call_totals)):
             # region DF Anatomy
 
@@ -82,7 +85,8 @@ class TableHandler:
             # Add row to table
             self.table.append(row)
 
-        # add all outlier employees to the table
+    def __add_outlier_employees(self):
+        # an outlier employee is an employee that only appears in the emails tuple
         outliers = self.__get_only_email_emps()
         for employee in outliers:
             # Initialize the row
@@ -130,6 +134,8 @@ class TableHandler:
         return None
 
     def __percent_format(self, dividend, divisor):
+        if divisor == 0:
+            return "{:.0%}".format(0.00)
         return "{:.0%}".format(float(dividend) / float(divisor))
 
     def print_table(self):

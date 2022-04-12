@@ -14,4 +14,18 @@ visualize_bp = Blueprint('visualize', __name__,
 def visualize():
     software_table = TableHandler(sub_dept="S")
     software_table.generate_table()
-    return render_template('visualize.html', software_table=software_table.table, employees=employees_db.read())
+    hardware_table = TableHandler(sub_dept="H")
+    hardware_table.generate_table()
+    other_table = TableHandler(sub_dept="O")
+    other_table.generate_table()
+
+    random_table = TableHandler(start="2022-01-04", end="2022-02-14", sub_dept="O")
+    random_table.generate_table()
+
+    return render_template(
+        'visualize.html', 
+        software_table=software_table.table, 
+        hardware_table=hardware_table.table,
+        other_table=other_table.table,
+        employees=employees_db.read()
+    )
