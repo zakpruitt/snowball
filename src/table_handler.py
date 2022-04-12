@@ -16,6 +16,7 @@ class TableHandler:
         self.table = []
 
     def generate_table(self):
+        # add all regularly appearing employees to the table
         for i in range(len(self.emp_call_totals)):
             # region DF Anatomy
 
@@ -55,14 +56,14 @@ class TableHandler:
             # Add call related data
             row.append(self.emp_call_totals[i][0])  # 0
             row.append(self.emp_call_totals[i][2])  # 1
-            row.append(
-                float(self.emp_call_totals[i][2]) / float(self.call_totals[0][1]))  # 2
+            row.append(self.__percent_format(
+                self.emp_call_totals[i][2], self.call_totals[0][1]))  # 2
             row.append(self.emp_call_totals[i][3])  # 3
-            row.append(
-                float(self.emp_call_totals[i][3]) / float(self.call_totals[0][2]))  # 4
+            row.append(self.__percent_format(
+                self.emp_call_totals[i][3], self.call_totals[0][2]))  # 4
             row.append(self.emp_call_totals[i][1])  # 5
-            row.append(
-                float(self.emp_call_totals[i][2]) / float(self.call_totals[0][0]))  # 6
+            row.append(self.__percent_format(
+                self.emp_call_totals[i][2], self.call_totals[0][0]))  # 6
 
             # Add email related data
             email_tuple = self.__get_email_tuple(self.emp_call_totals[i][0])
@@ -73,20 +74,63 @@ class TableHandler:
 
             # Add aggregated related data
             row.append(row[5] + row[7])  # 8
-            row.append(row[8] / (float(self.call_totals[0][0]) +
-                       float(self.email_totals[0][0])))  # 9
-            row.append(row[1] / row[8])  # 10
-            row.append(row[3] / row[8])  # 11
-            row.append(row[7] / row[8])  # 12
+            row.append(self.__percent_format(row[8], ((float(self.call_totals[0][0]) + float(self.email_totals[0][0]))))) # 9
+            row.append(self.__percent_format(row[1], row[8]))  # 10
+            row.append(self.__percent_format(row[3], row[8]))  # 11
+            row.append(self.__percent_format(row[7], row[8]))  # 12
 
             # Add row to table
             self.table.append(row)
 
+        # add all outlier employees to the table
+        outliers = self.__get_only_email_emps()
+        for employee in outliers:
+            # Initialize the row
+            row = []
+            
+            # Add data that is incalculable
+            row.append(employee)  # 0
+            row.append(0)  # 1
+            row.append("{:.0%}".format(0.00))  # 2
+            row.append(0) # 3
+            row.append("{:.0%}".format(0.00))   # 4
+            row.append(0)  # 5
+            row.append("{:.0%}".format(0.00))   # 6
+
+            # Add email related data
+            email_tuple = self.__get_email_tuple(employee)
+            if (email_tuple is not None):
+                row.append(email_tuple[1])
+            else:
+                row.append(0)
+
+            # Add aggregated related data
+            row.append(row[5] + row[7])  # 8
+            row.append(self.__percent_format(row[8], ((float(self.call_totals[0][0]) + float(self.email_totals[0][0]))))) # 9
+            row.append(self.__percent_format(row[1], row[8]))  # 10
+            row.append(self.__percent_format(row[3], row[8]))  # 11
+            row.append(self.__percent_format(row[7], row[8]))  # 12
+
+            # Add row to table
+            self.table.append(row)
+
+    def __get_only_email_emps(self):
+        names_in_email_totals = []
+        for i in range(len(self.emp_email_totals)):
+            names_in_email_totals.append(self.emp_email_totals[i][0])
+        names_in_call_totals = []
+        for i in range(len(self.emp_call_totals)):
+            names_in_call_totals.append(self.emp_call_totals[i][0])
+        return list(set(names_in_email_totals) - set(names_in_call_totals))
+        
     def __get_email_tuple(self, name):
         for tuple in self.emp_email_totals:
             if tuple[0] == name:
                 return tuple
         return None
+
+    def __percent_format(self, dividend, divisor):
+        return "{:.0%}".format(float(dividend) / float(divisor))
 
     def print_table(self):
         for row in self.table:
