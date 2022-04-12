@@ -199,9 +199,9 @@ function customFormating(xlsx) {
 //#region VISUALIZE FUNCTIONS
 
 $(document).ready(function () {
-    allTotalChart && renderLineGraph(allTotalChart, '/all-count');
+    allTotalChart && renderLineGraph(allTotalChart, 'all-count');
     allTotalSDChart && renderChart(allTotalSDChart);
-    thirdChart && renderChart(thirdChart);
+    thirdChart && renderLineGraph(thirdChart, 'all-count');;
     fourthChart && renderChart(fourthChart);
     fifthChart && renderChart(fifthChart);
     sixthChart && renderChart(sixthChart);
