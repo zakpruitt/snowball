@@ -10,8 +10,9 @@ const subDeptChecks = $(".subDeptCheck");
 const emailRadioButtons = $(".emailRadioButton");
 
 const allTotalChart = $("#allTotalChart");
-const SoftwareImmLaterChart = $("#SoftwareImmLaterChart");
-const HardwareImmLaterChart = $("#HardwareImmLaterChart");
+const softwareImmLaterChart = $("#SoftwareImmLaterChart");
+const hardwareImmLaterChart = $("#HardwareImmLaterChart");
+
 //#region PARSE FILE FUNCTIONS 
 
 allFilePath && allFilePath.addEventListener("change", (e) => {
@@ -196,8 +197,8 @@ function customFormating(xlsx) {
 
 $(document).ready(function () {
     allTotalChart && renderLineGraph(allTotalChart, 'all-count', 'All Count');
-    SoftwareImmLaterChart && renderChart(SoftwareImmLaterChart,'imm_later_software', 'Software Immediate vs. Later', dis_legend=false);
-    HardwareImmLaterChart && renderChart(HardwareImmLaterChart,'imm_later_hardware', 'Hardware Immediate vs. Later', dis_legend=false);
+    softwareImmLaterChart && renderChart(softwareImmLaterChart, 'imm_later_software', 'Software Immediate vs. Later', dis_legend = false);
+    hardwareImmLaterChart && renderChart(hardwareImmLaterChart, 'imm_later_hardware', 'Hardware Immediate vs. Later', dis_legend = false);
 });
 
 function renderLineGraph(chart, endpoint, title, dis_legend = true) {
@@ -208,8 +209,8 @@ function renderLineGraph(chart, endpoint, title, dis_legend = true) {
                 type: 'line',
                 data: data,
                 options: {
-                    scales:{
-                        y:{
+                    scales: {
+                        y: {
                             beginAtZero: true
                         }
                     },
@@ -218,13 +219,13 @@ function renderLineGraph(chart, endpoint, title, dis_legend = true) {
                             display: true,
                             text: title
                         },
-                        legend:{
-                            display:dis_legend
+                        legend: {
+                            display: dis_legend
                         }
                     }
                 }
             };
-        
+
             const newChart = new Chart(
                 chart,
                 config
@@ -232,7 +233,7 @@ function renderLineGraph(chart, endpoint, title, dis_legend = true) {
         });
 }
 
-function renderChart(chart,endpoint,title, dis_legend = true) {
+function renderChart(chart, endpoint, title, dis_legend = true) {
     fetch('/data/' + endpoint)
         .then(response => response.json())
         .then(data => {
@@ -245,13 +246,13 @@ function renderChart(chart,endpoint,title, dis_legend = true) {
                             display: true,
                             text: title
                         },
-                        legend:{
-                            display:dis_legend
+                        legend: {
+                            display: dis_legend
                         }
                     }
                 }
             };
-        
+
             const newChart = new Chart(
                 chart,
                 config
