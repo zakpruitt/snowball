@@ -65,8 +65,74 @@ def all_count_by_sub_dept():
         if tuple[0] not in json_data:
             json_data[tuple[0]] = {"H": 0, "S": 0, "O": 0}
         json_data[tuple[0]][tuple[1]] += tuple[2]
+    
+
+
+        
+
+@data_bp.route('/imm_later_software', methods=["GET"])
+def get_imm_later_software():
+    data = calls_db.get_total_immediate_and_later_counts(sup_dept='S')
+    json_data = dict()
+    
+    data_dict = {"Total":data[0][0], "Immediate":data[0][1], "Later":data[0][2]}
+
+    json_data = {
+        "labels":["Counts"],
+        "datasets": [
+            {
+                "label": "Total",
+                "backgroundColor": "rgb(70,60,220)",
+                "borderColor": "rgb(70,60,220)",
+                "data": [data_dict["Total"]]
+            },
+            {
+                "label": "Immediate Count",
+                "backgroundColor": "rgb(60,220,100)",
+                "borderColor": "rgb(60,220,100)",
+                "data":[data_dict["Immediate"]]
+            },
+            {
+                "label": "Later Count",
+                "backgroundColor": "rgb(240,190,50)",
+                "borderColor": "rgb(240,190,50)",
+                "data": [data_dict["Later"]]
+            },
+        ]
+    }
     return json.dumps(json_data)
 
+@data_bp.route('/imm_later_hardware', methods=["GET"])
+def get_imm_later_hardware():
+    data = calls_db.get_total_immediate_and_later_counts(sup_dept='H')
+    json_data = dict()
+    
+    data_dict = {"Total":data[0][0], "Immediate":data[0][1], "Later":data[0][2]}
+
+    json_data = {
+        "labels":["Counts"],
+        "datasets": [
+            {
+                "label": "Total",
+                "backgroundColor": "rgb(70,60,220)",
+                "borderColor": "rgb(70,60,220)",
+                "data": [data_dict["Total"]]
+            },
+            {
+                "label": "Immediate Count",
+                "backgroundColor": "rgb(60,220,100)",
+                "borderColor": "rgb(60,220,100)",
+                "data": [data_dict["Immediate"]]
+            },
+            {
+                "label": "Later Count",
+                "backgroundColor": "rgb(240,190,50)",
+                "borderColor": "rgb(240,190,50)",
+                "data":[data_dict["Later"]]
+            },
+        ]
+    }
+    return json.dumps(json_data)
 
 def get_concurrent_data(dict, column_name):
     concurrent_list = []
