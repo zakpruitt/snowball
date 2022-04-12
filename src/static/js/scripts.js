@@ -209,6 +209,11 @@ function renderLineGraph(chart, endpoint, title) {
                 type: 'line',
                 data: data,
                 options: {
+                    scales:{
+                        y:{
+                            beginAtZero: true
+                        }
+                    },
                     plugins: {
                         title: {
                             display: title
