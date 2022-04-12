@@ -72,6 +72,16 @@
         </tbody>
       </table>
 
+      <div class="row mt-3">
+        <div id="chart-col-2" class="col-6">
+          <!-- Software Imm vs Later Chart -->
+          <div  class="card mb-3">
+            <div class="card-body">
+              <canvas id="SoftwareImmLaterChart" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+
       <h1>Hardware</h1>
       <table class="table table-striped text-center">
         <thead>
@@ -111,6 +121,18 @@
           {% endfor %}
         </tbody>
       </table>
+
+      <div class="row mt-3">
+        <div id="chart-col-1" class="col-6">
+      <!--HardWare Imm vs Later Chart-->
+          
+          <div  class="card mb-3">
+            <div class="card-body">
+              <canvas id="HardwareImmLaterChart" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <h1>Other</h1>
       <table class="table table-striped text-center">
@@ -164,20 +186,9 @@
           <canvas id="allTotalChart" height="200"></canvas>
         </div>
       </div>
-      <div  class="card mb-3">
-        <div class="card-body">
-          <canvas id="HardwareImmLaterChart" height="200"></canvas>
-        </div>
-      </div>
+      
     </div>
-    <div id="chart-col-2" class="col-6">
-      <!-- Second Chart (Horizontal) -->
-      <div  class="card mb-3">
-        <div class="card-body">
-          <canvas id="SoftwareImmLaterChart" height="200"></canvas>
-        </div>
-      </div>
-    </div>
+   
   </div>
 </div>
 {% endblock %}

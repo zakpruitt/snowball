@@ -79,26 +79,14 @@ def get_imm_later_software():
     data_dict = {"Total":data[0][0], "Immediate":data[0][1], "Later":data[0][2]}
 
     json_data = {
-        "labels":["Counts"],
+        "labels":["Total","Immediate","Later"],
         "datasets": [
             {
-                "label": "Total",
+                "label": "Counts",
                 "backgroundColor": "rgb(70,60,220)",
                 "borderColor": "rgb(70,60,220)",
-                "data": [data_dict["Total"]]
-            },
-            {
-                "label": "Immediate Count",
-                "backgroundColor": "rgb(60,220,100)",
-                "borderColor": "rgb(60,220,100)",
-                "data":[data_dict["Immediate"]]
-            },
-            {
-                "label": "Later Count",
-                "backgroundColor": "rgb(240,190,50)",
-                "borderColor": "rgb(240,190,50)",
-                "data": [data_dict["Later"]]
-            },
+                "data": [data_dict["Total"], data_dict["Immediate"], data_dict["Later"] ]
+            }
         ]
     }
     return json.dumps(json_data)
@@ -110,27 +98,16 @@ def get_imm_later_hardware():
     
     data_dict = {"Total":data[0][0], "Immediate":data[0][1], "Later":data[0][2]}
 
+    
     json_data = {
-        "labels":["Counts"],
+        "labels":["Total","Immediate","Later"],
         "datasets": [
             {
-                "label": "Total",
+                "label": "Counts",
                 "backgroundColor": "rgb(70,60,220)",
                 "borderColor": "rgb(70,60,220)",
-                "data": [data_dict["Total"]]
-            },
-            {
-                "label": "Immediate Count",
-                "backgroundColor": "rgb(60,220,100)",
-                "borderColor": "rgb(60,220,100)",
-                "data": [data_dict["Immediate"]]
-            },
-            {
-                "label": "Later Count",
-                "backgroundColor": "rgb(240,190,50)",
-                "borderColor": "rgb(240,190,50)",
-                "data":[data_dict["Later"]]
-            },
+                "data": [data_dict["Total"], data_dict["Immediate"], data_dict["Later"] ]
+            }
         ]
     }
     return json.dumps(json_data)

@@ -196,12 +196,12 @@ function customFormating(xlsx) {
 
 $(document).ready(function () {
     allTotalChart && renderLineGraph(allTotalChart, 'all-count', 'All Count');
-    SoftwareImmLaterChart && renderChart(SoftwareImmLaterChart,'imm_later_software', 'Software Immediate vs. Later');
-    HardwareImmLaterChart && renderChart(HardwareImmLaterChart,'imm_later_hardware', 'Hardware Immediate vs. Later');
+    SoftwareImmLaterChart && renderChart(SoftwareImmLaterChart,'imm_later_software', 'Software Immediate vs. Later', dis_legend=false);
+    HardwareImmLaterChart && renderChart(HardwareImmLaterChart,'imm_later_hardware', 'Hardware Immediate vs. Later', dis_legend=false);
 
 });
 
-function renderLineGraph(chart, endpoint, title) {
+function renderLineGraph(chart, endpoint, title, dis_legend = true) {
     fetch('/data/' + endpoint)
         .then(response => response.json())
         .then(data => {
@@ -216,7 +216,11 @@ function renderLineGraph(chart, endpoint, title) {
                     },
                     plugins: {
                         title: {
-                            display: title
+                            display: true,
+                            text: title
+                        },
+                        legend:{
+                            display:dis_legend
                         }
                     }
                 }
@@ -229,7 +233,7 @@ function renderLineGraph(chart, endpoint, title) {
         });
 }
 
-function renderChart(chart,endpoint,title) {
+function renderChart(chart,endpoint,title, dis_legend = true) {
     fetch('/data/' + endpoint)
         .then(response => response.json())
         .then(data => {
@@ -241,6 +245,9 @@ function renderChart(chart,endpoint,title) {
                         title: {
                             display: true,
                             text: title
+                        },
+                        legend:{
+                            display:dis_legend
                         }
                     }
                 }
