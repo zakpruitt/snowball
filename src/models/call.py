@@ -89,9 +89,9 @@ class Call:
             if start == None and end == None:
                 self.cursor.execute('''
                                     SELECT strftime('%m', date_created) AS month,
-                                    COUNT(*) AS Total,
-                                    SUM(CASE WHEN calls.email = 0 THEN 1 ELSE 0 END) "Calls Count",
-                                    SUM(CASE WHEN calls.email = 1 THEN 1 ELSE 0 END) "Emails Total"
+                                        COUNT(*) AS Total,
+                                        SUM(CASE WHEN calls.email = 0 THEN 1 ELSE 0 END) "Calls Count",
+                                        SUM(CASE WHEN calls.email = 1 THEN 1 ELSE 0 END) "Emails Total"
                                     FROM calls
                                     WHERE calls.sup_code != 'W' or 'N'
                                     GROUP BY strftime('%m', date_created);
@@ -102,10 +102,10 @@ class Call:
 
     # table
 
-    def get_total_immediate_and_later_counts(self, start=None, end=None, sup_dept=None):
+    def get_total_immediate_and_later_counts(self, start=None, end=None, sub_dept=None):
         try:
             self.lock.acquire(True)
-            if start == None and end == None and sup_dept == None:
+            if start == None and end == None and sub_dept == None:
                 self.cursor.execute('''
                                     SELECT 
                                         COUNT(*) AS Total,
@@ -117,7 +117,7 @@ class Call:
                                     AND calls.sup_code != 'W' or 'N' 
                                     ''')
                 return self.cursor.fetchall()
-            elif start == None and end == None and sup_dept != None:
+            elif start == None and end == None and sub_dept != None:
                 self.cursor.execute(f'''
                                     SELECT 
                                         COUNT(*) AS Total,
@@ -126,7 +126,7 @@ class Call:
                                     FROM calls
                                     LEFT JOIN employees ON calls.original_user = employees.name
                                     WHERE calls.email = 0
-                                    AND employees.sub_dept = "{sup_dept}"
+                                    AND employees.sub_dept = "{sub_dept}"
                                     AND calls.sup_code != 'W' or 'N' 
                                     ''')
                 return self.cursor.fetchall()
@@ -139,7 +139,7 @@ class Call:
                                     FROM calls
                                     LEFT JOIN employees ON calls.original_user = employees.name
                                     WHERE calls.email = 0
-                                    AND employees.sub_dept = "{sup_dept}"
+                                    AND employees.sub_dept = "{sub_dept}"
                                     AND calls.sup_code != 'W' or 'N' 
                                     AND calls.date_created BETWEEN '{start}' and '{end}'
                                     ''')
@@ -147,10 +147,10 @@ class Call:
         finally:
             self.lock.release()
 
-    def get_immediate_and_later_count_per_employee(self, start=None, end=None, sup_dept=None):
+    def get_immediate_and_later_count_per_employee(self, start=None, end=None, sub_dept=None):
         try:
             self.lock.acquire(True)
-            if start == None and end == None and sup_dept == None:
+            if start == None and end == None and sub_dept == None:
                 self.cursor.execute('''
                                     SELECT 
                                         employees.name,
@@ -164,7 +164,7 @@ class Call:
                                     GROUP BY employees.name
                                     ''')
                 return self.cursor.fetchall()
-            elif start == None and end == None and sup_dept != None:
+            elif start == None and end == None and sub_dept != None:
                 self.cursor.execute(f'''
                                     SELECT 
                                         employees.name,
@@ -174,7 +174,7 @@ class Call:
                                     FROM calls
                                     LEFT JOIN employees ON calls.original_user = employees.name
                                     WHERE calls.email = 0
-                                    AND employees.sub_dept = "{sup_dept}"
+                                    AND employees.sub_dept = "{sub_dept}"
                                     AND calls.sup_code != 'W' or 'N' 
                                     GROUP BY employees.name
                                     ''')
@@ -189,7 +189,7 @@ class Call:
                                     FROM calls
                                     LEFT JOIN employees ON calls.original_user = employees.name
                                     WHERE calls.email = 0
-                                    AND employees.sub_dept = "{sup_dept}"
+                                    AND employees.sub_dept = "{sub_dept}"
                                     AND calls.sup_code != 'W' or 'N'
                                     AND calls.date_created BETWEEN '{start}' and '{end}' 
                                     GROUP BY employees.name
@@ -198,10 +198,10 @@ class Call:
         finally:
             self.lock.release()
 
-    def get_total_email_counts(self, start=None, end=None, sup_dept=None):
+    def get_total_email_counts(self, start=None, end=None, sub_dept=None):
         try:
             self.lock.acquire(True)
-            if start == None and end == None and sup_dept == None:
+            if start == None and end == None and sub_dept == None:
                 self.cursor.execute('''
                                     SELECT COUNT(*) as "Email Total"
                                     FROM calls
@@ -210,13 +210,13 @@ class Call:
                                     AND calls.sup_code != 'W' or 'N'
                                     ''')
                 return self.cursor.fetchall()
-            elif start == None and end == None and sup_dept != None:
+            elif start == None and end == None and sub_dept != None:
                 self.cursor.execute(f'''
                                     SELECT COUNT(*) as "Email Total"
                                     FROM calls
                                     LEFT JOIN employees ON calls.last_user = employees.name
                                     WHERE calls.email = 1
-                                    AND employees.sub_dept = "{sup_dept}"
+                                    AND employees.sub_dept = "{sub_dept}"
                                     AND calls.sup_code != 'W' or 'N'
                                     ''')
                 return self.cursor.fetchall()
@@ -226,7 +226,7 @@ class Call:
                                     FROM calls
                                     LEFT JOIN employees ON calls.last_user = employees.name
                                     WHERE calls.email = 1
-                                    AND employees.sub_dept = "{sup_dept}"
+                                    AND employees.sub_dept = "{sub_dept}"
                                     AND calls.date_created BETWEEN '{start}' and '{end}'
                                     AND calls.sup_code != 'W' or 'N'
                                     ''')
@@ -234,10 +234,10 @@ class Call:
         finally:
             self.lock.release()
 
-    def get_email_counts_per_employee(self, start=None, end=None, sup_dept=None):
+    def get_email_counts_per_employee(self, start=None, end=None, sub_dept=None):
         try:
             self.lock.acquire(True)
-            if start == None and end == None and sup_dept == None:
+            if start == None and end == None and sub_dept == None:
                 self.cursor.execute('''
                                     SELECT employees.name, COUNT(*)
                                     FROM calls
@@ -247,13 +247,13 @@ class Call:
                                     GROUP BY employees.name
                                     ''')
                 return self.cursor.fetchall()
-            elif start == None and end == None and sup_dept != None:
+            elif start == None and end == None and sub_dept != None:
                 self.cursor.execute(f'''
                                     SELECT employees.name, COUNT(*)
                                     FROM calls
                                     LEFT JOIN employees ON calls.last_user = employees.name
                                     WHERE calls.email = 1
-                                    AND employees.sub_dept = "{sup_dept}"
+                                    AND employees.sub_dept = "{sub_dept}"
                                     AND calls.sup_code != 'W' or 'N' 
                                     GROUP BY employees.name
                                     ''')
@@ -264,7 +264,7 @@ class Call:
                                     FROM calls
                                     LEFT JOIN employees ON calls.last_user = employees.name
                                     WHERE calls.email = 1
-                                    AND employees.sub_dept = "{sup_dept}"
+                                    AND employees.sub_dept = "{sub_dept}"
                                     AND calls.date_created BETWEEN '{start}' and '{end}'
                                     AND calls.sup_code != 'W' or 'N' 
                                     GROUP BY employees.name

@@ -68,12 +68,9 @@ def all_count_by_sub_dept():
         json_data[tuple[0]][tuple[1]] += tuple[2]
     
 
-
-        
-
 @data_bp.route('/imm_later_software', methods=["GET"])
 def get_imm_later_software():
-    data = calls_db.get_total_immediate_and_later_counts(sup_dept='S')
+    data = calls_db.get_total_immediate_and_later_counts(sub_dept='S')
     json_data = dict()
     
     data_dict = {"Total":data[0][0], "Immediate":data[0][1], "Later":data[0][2]}
@@ -93,7 +90,7 @@ def get_imm_later_software():
 
 @data_bp.route('/imm_later_hardware', methods=["GET"])
 def get_imm_later_hardware():
-    data = calls_db.get_total_immediate_and_later_counts(sup_dept='H')
+    data = calls_db.get_total_immediate_and_later_counts(sub_dept='H')
     json_data = dict()
     
     data_dict = {"Total":data[0][0], "Immediate":data[0][1], "Later":data[0][2]}
@@ -111,6 +108,43 @@ def get_imm_later_hardware():
         ]
     }
     return json.dumps(json_data)
+
+
+@data_bp.route('/immediate-data', methods=["GET"])
+def get_immediate_data():
+    # retrieve data from database
+    sub_dept = request.args.get('sub_dept')
+    data = calls_db.get_immediate_and_later_count_per_employee(sub_dept=sub_dept)
+    
+    # create dict
+    data_dict = dict()
+    for tuple in data:
+        data_dict[tuple[0]] = tuple[2]
+
+    # create json response
+    json_data = {
+        "labels": [key for key in data_dict.keys() if data_dict[key] > 0],
+        "datasets": [
+            {
+                "label": "Immediate Calls Dataset",
+                "backgroundColor": [],
+                "borderColor": [],
+                "data": [value for value in data_dict.values() if value > 0]
+            }
+        ]
+    }
+
+    # populate colors
+    for _ in range(len(json_data["labels"])):
+        chart_handler.generate_random_color()
+        json_data["datasets"][0]["backgroundColor"].append(chart_handler.color)
+        json_data["datasets"][0]["borderColor"].append(chart_handler.color)
+    chart_handler.reset_colors()
+
+    # return chart json
+    return json.dumps(json_data)
+
+
 
 def get_concurrent_data(dict, column_name):
     concurrent_list = []

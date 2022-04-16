@@ -197,7 +197,7 @@ function customFormating(xlsx) {
 
 $(document).ready(function () {
     allTotalChart && renderLineGraph(allTotalChart, 'all-count', 'All Count');
-    softwareImmLaterChart && renderChart(softwareImmLaterChart, 'imm_later_software', 'Software Immediate vs. Later', dis_legend = false);
+    softwareImmLaterChart && renderChart(softwareImmLaterChart, 'immediate-data?sub_dept=S', 'Software Immediate Distribution');
     hardwareImmLaterChart && renderChart(hardwareImmLaterChart, 'imm_later_hardware', 'Hardware Immediate vs. Later', dis_legend = false);
 });
 
@@ -238,7 +238,7 @@ function renderChart(chart, endpoint, title, dis_legend = true) {
         .then(response => response.json())
         .then(data => {
             const config = {
-                type: 'bar',
+                type: 'pie',
                 data: data,
                 options: {
                     plugins: {
@@ -248,6 +248,11 @@ function renderChart(chart, endpoint, title, dis_legend = true) {
                         },
                         legend: {
                             display: dis_legend
+                        },
+                        datalabels: {
+                            display: function(context) {
+                                return context.dataset.data[context.dataIndex] > 1;
+                            }
                         }
                     }
                 }
