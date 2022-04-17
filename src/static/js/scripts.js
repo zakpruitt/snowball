@@ -241,6 +241,8 @@ function renderChart(chart, endpoint, title, dis_legend = true) {
                 type: 'pie',
                 data: data,
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
                     plugins: {
                         title: {
                             display: true,

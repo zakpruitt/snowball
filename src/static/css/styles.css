@@ -45,3 +45,7 @@ textarea {
 .card-bg-1 {
   background-image: url("../images/Untitled.png");
 }
+
+.card-body{
+  min-height: 500px;
+}
