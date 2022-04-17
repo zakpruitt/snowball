@@ -10,8 +10,10 @@ const subDeptChecks = $(".subDeptCheck");
 const emailRadioButtons = $(".emailRadioButton");
 
 const allTotalChart = $("#allTotalChart");
-const softwareImmLaterChart = $("#SoftwareImmLaterChart");
-const hardwareImmLaterChart = $("#HardwareImmLaterChart");
+const softwareImmPieChart = $("#SoftwareImmPieChart");
+const hardwareImmPieChart = $("#HardwareImmPieChart");
+const softwareLaterPieChart = $("#SoftwareLaterPieChart");
+const hardwareLaterPieChart = $("#HardwareLaterPieChart");
 
 //#region PARSE FILE FUNCTIONS 
 
@@ -197,8 +199,10 @@ function customFormating(xlsx) {
 
 $(document).ready(function () {
     allTotalChart && renderLineGraph(allTotalChart, 'all-count', 'All Count');
-    softwareImmLaterChart && renderChart(softwareImmLaterChart, 'immediate-data?sub_dept=S', 'Software Immediate Distribution');
-    hardwareImmLaterChart && renderChart(hardwareImmLaterChart, 'imm_later_hardware', 'Hardware Immediate vs. Later', dis_legend = false);
+    softwareImmPieChart && renderChart(softwareImmPieChart, 'pie-data?sub_dept=S&category=imm', 'Software Immediate Distribution');
+    hardwareImmPieChart && renderChart(hardwareImmPieChart, 'pie-data?sub_dept=H&category=imm', 'Hardware Immediate Distibutiuon');
+    softwareLaterPieChart && renderChart(softwareLaterPieChart, 'pie-data?sub_dept=S&category=later', 'Software Later Distribution');
+    hardwareLaterPieChart && renderChart(hardwareLaterPieChart, 'pie-data?sub_dept=H&category=later', 'Hardware Later Distibutiuon');
 });
 
 function renderLineGraph(chart, endpoint, title, dis_legend = true) {

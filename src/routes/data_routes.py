@@ -110,23 +110,29 @@ def get_imm_later_hardware():
     return json.dumps(json_data)
 
 
-@data_bp.route('/immediate-data', methods=["GET"])
-def get_immediate_data():
+@data_bp.route('/pie-data', methods=["GET"])
+def get_pie_data():
     # retrieve data from database
     sub_dept = request.args.get('sub_dept')
+    category = request.args.get('category')
     data = calls_db.get_immediate_and_later_count_per_employee(sub_dept=sub_dept)
     
     # create dict
     data_dict = dict()
-    for tuple in data:
-        data_dict[tuple[0]] = tuple[2]
-
+    if category == 'imm':
+        label = 'Immediate Calls Dataset'
+        for tuple in data:
+            data_dict[tuple[0]] = tuple[2]
+    elif category == 'later':
+        label = 'Later Calls Dataset'
+        for tuple in data:
+            data_dict[tuple[0]] = tuple[3]
     # create json response
     json_data = {
         "labels": [key for key in data_dict.keys() if data_dict[key] > 0],
         "datasets": [
             {
-                "label": "Immediate Calls Dataset",
+                "label": label,
                 "backgroundColor": [],
                 "borderColor": [],
                 "data": [value for value in data_dict.values() if value > 0]
