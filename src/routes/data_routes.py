@@ -127,9 +127,10 @@ def get_pie_data():
         label = 'Later Calls Dataset'
         for tuple in data:
             data_dict[tuple[0]] = tuple[3]
+    employees = [key for key in data_dict.keys() if data_dict[key] > 0]
     # create json response
     json_data = {
-        "labels": [key for key in data_dict.keys() if data_dict[key] > 0],
+        "labels": employees,
         "datasets": [
             {
                 "label": label,
@@ -141,11 +142,12 @@ def get_pie_data():
     }
 
     # populate colors
-    for _ in range(len(json_data["labels"])):
-        chart_handler.generate_random_color()
-        json_data["datasets"][0]["backgroundColor"].append(chart_handler.color)
-        json_data["datasets"][0]["borderColor"].append(chart_handler.color)
-    chart_handler.reset_colors()
+    chart_handler.map_employees(employees)
+    for employee in json_data["labels"]:
+        color = chart_handler.get_color(employee)
+        json_data["datasets"][0]["backgroundColor"].append(color)
+        json_data["datasets"][0]["borderColor"].append(color)
+    #chart_handler.reset_colors()
 
     # return chart json
     return json.dumps(json_data)
