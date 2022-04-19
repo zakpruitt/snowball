@@ -5,205 +5,210 @@
 {% block content %}
 <div class="container">
   <!-- Header and Buttons -->
-  <div class="row mt-5">
+  <div class="row mt-4">
     <!-- Title-->
-    <div class="col-9">
-      <h1 class="display-6">Visualize Data</h1>
-    </div>
-    <!-- Employee Select -->
-    <div class="col-3">
+    <div class="col-12">
+      <button id="downloadReportButton">Download Report</button>
       <div id="visualize-date-picker" class="visualize-date-picker float-end">
         <i class="fa fa-calendar"></i>&nbsp;
         <span></span>&nbsp; <i class="fa fa-caret-down"></i>
       </div>
     </div>
-    <div class="dropdown-divider mt-1"></div>
   </div>
 
   <!-- ####### TABLES ####### -->
 
-  <!-- Software Table -->
-  <div class="row mt-3">
-    <div class="col-12">
-      <h2 class="display-5 text-decoration-underline mb-4">Software Data</h2>
-      <table class="table table-bordered table-striped table-hover text-center">
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Imm. Calls</th>
-            <th scope="col">% of Imm.</th>
-            <th scope="col">Later Calls</th>
-            <th scope="col">% of Later</th>
-            <th scope="col">Total Calls</th>
-            <th scope="col">% of Total Imm.</th>
-            <th scope="col">Emails</th>
-            <th scope="col">Calls & Emails</th>
-            <th scope="col">Support %</th>
-            <th scope="col">Imm. %</th>
-            <th scope="col">Later %</th>
-            <th scope="col">Email %</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for row in software_table %}
-          <tr>
-            <td>{{ row[0] }}</td>
-            <td>{{ row[1] }}</td>
-            <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
-            <td>{{ row[4] }}</td>
-            <td>{{ row[5] }}</td>
-            <td>{{ row[6] }}</td>
-            <td>{{ row[7] }}</td>
-            <td>{{ row[8] }}</td>
-            <td>{{ row[9] }}</td>
-            <td>{{ row[10] }}</td>
-            <td>{{ row[11] }}</td>
-            <td>{{ row[12] }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Software Charts -->
-  <div class="row mt-3">
-    <div class="col-6">
-      <!-- Software Imm Pie Chart -->
-      <div class="card mb-3">
-        <div class="card-body">
-          <canvas id="SoftwareImmPieChart" height="200"></canvas>
-        </div>
+  <div id="software-data">
+    <!-- Software Table -->
+    <div class="row mt-4">
+      <div class="col-12">
+        <h2 class="display-5">Software Data</h2>
+        <div class="dropdown-divider mb-4"></div>
+        <table class="table table-bordered table-striped table-hover text-center">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Imm. Calls</th>
+              <th scope="col">% of Imm.</th>
+              <th scope="col">Later Calls</th>
+              <th scope="col">% of Later</th>
+              <th scope="col">Total Calls</th>
+              <th scope="col">% of Total Imm.</th>
+              <th scope="col">Emails</th>
+              <th scope="col">Calls & Emails</th>
+              <th scope="col">Support %</th>
+              <th scope="col">Imm. %</th>
+              <th scope="col">Later %</th>
+              <th scope="col">Email %</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in software_table %}
+            <tr>
+              <td>{{ row[0] }}</td>
+              <td>{{ row[1] }}</td>
+              <td>{{ row[2] }}</td>
+              <td>{{ row[3] }}</td>
+              <td>{{ row[4] }}</td>
+              <td>{{ row[5] }}</td>
+              <td>{{ row[6] }}</td>
+              <td>{{ row[7] }}</td>
+              <td>{{ row[8] }}</td>
+              <td>{{ row[9] }}</td>
+              <td>{{ row[10] }}</td>
+              <td>{{ row[11] }}</td>
+              <td>{{ row[12] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
     </div>
-    <div class="col-6">
-      <!-- Software Later Pie Chart -->
-      <div class="card mb-3">
-        <div class="card-body">
-          <canvas id="SoftwareLaterPieChart" height="200"></canvas>
+
+    <!-- Software Charts -->
+    <div class="row mt-2">
+      <div class="col-6">
+        <!-- Software Imm Pie Chart -->
+        <div class="card">
+          <div class="card-body">
+            <canvas id="SoftwareImmPieChart" height="200"></canvas>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- Hardware Table -->
-  <div class="row mt-3">
-    <div class="col-12">
-      <h1>Hardware</h1>
-      <table class="table table-bordered table-striped table-hover text-center">
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Imm. Calls</th>
-            <th scope="col">% of Imm.</th>
-            <th scope="col">Later Calls</th>
-            <th scope="col">% of Later</th>
-            <th scope="col">Total Calls</th>
-            <th scope="col">% of Total Imm.</th>
-            <th scope="col">Emails</th>
-            <th scope="col">Calls & Emails</th>
-            <th scope="col">Support %</th>
-            <th scope="col">Imm. %</th>
-            <th scope="col">Later %</th>
-            <th scope="col">Email %</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for row in hardware_table %}
-          <tr>
-            <td>{{ row[0] }}</td>
-            <td>{{ row[1] }}</td>
-            <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
-            <td>{{ row[4] }}</td>
-            <td>{{ row[5] }}</td>
-            <td>{{ row[6] }}</td>
-            <td>{{ row[7] }}</td>
-            <td>{{ row[8] }}</td>
-            <td>{{ row[9] }}</td>
-            <td>{{ row[10] }}</td>
-            <td>{{ row[11] }}</td>
-            <td>{{ row[12] }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Hardware Charts -->
-  <div class="row mt-3">
-    <!-- Hardware Imm Pie Chart -->
-    <div class="col-6">
-      <div class="card mb-3">
-        <div class="card-body">
-          <canvas id="HardwareImmPieChart" height="200"></canvas>
-        </div>
-      </div>
-    </div>
-    <!-- Hardware Later Pie Charts -->
-    <div class="col-6">
-      <div class="card mb-3">
-        <div class="card-body">
-          <canvas id="HardwareLaterPieChart" height="200"></canvas>
+      <div class="col-6">
+        <!-- Software Later Pie Chart -->
+        <div class="card">
+          <div class="card-body">
+            <canvas id="SoftwareLaterPieChart" height="200"></canvas>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Other Table -->
-  <div class="row mt-3">
-    <div class="col-12">
-      <h1>Other</h1>
-      <table class="table table-bordered table-striped table-hover text-center">
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Imm. Calls</th>
-            <th scope="col">% of Imm.</th>
-            <th scope="col">Later Calls</th>
-            <th scope="col">% of Later</th>
-            <th scope="col">Total Calls</th>
-            <th scope="col">% of Total Imm.</th>
-            <th scope="col">Emails</th>
-            <th scope="col">Calls & Emails</th>
-            <th scope="col">Support %</th>
-            <th scope="col">Imm. %</th>
-            <th scope="col">Later %</th>
-            <th scope="col">Email %</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for row in other_table %}
-          <tr>
-            <td>{{ row[0] }}</td>
-            <td>{{ row[1] }}</td>
-            <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
-            <td>{{ row[4] }}</td>
-            <td>{{ row[5] }}</td>
-            <td>{{ row[6] }}</td>
-            <td>{{ row[7] }}</td>
-            <td>{{ row[8] }}</td>
-            <td>{{ row[9] }}</td>
-            <td>{{ row[10] }}</td>
-            <td>{{ row[11] }}</td>
-            <td>{{ row[12] }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+  <div id="hardware-data">
+    <!-- Hardware Table -->
+    <div class="row mt-5">
+      <div class="col-12">
+        <h2 class="display-5">Hardware Data</h2>
+        <div class="dropdown-divider mb-4"></div>
+        <table class="table table-bordered table-striped table-hover text-center">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Imm. Calls</th>
+              <th scope="col">% of Imm.</th>
+              <th scope="col">Later Calls</th>
+              <th scope="col">% of Later</th>
+              <th scope="col">Total Calls</th>
+              <th scope="col">% of Total Imm.</th>
+              <th scope="col">Emails</th>
+              <th scope="col">Calls & Emails</th>
+              <th scope="col">Support %</th>
+              <th scope="col">Imm. %</th>
+              <th scope="col">Later %</th>
+              <th scope="col">Email %</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in hardware_table %}
+            <tr>
+              <td>{{ row[0] }}</td>
+              <td>{{ row[1] }}</td>
+              <td>{{ row[2] }}</td>
+              <td>{{ row[3] }}</td>
+              <td>{{ row[4] }}</td>
+              <td>{{ row[5] }}</td>
+              <td>{{ row[6] }}</td>
+              <td>{{ row[7] }}</td>
+              <td>{{ row[8] }}</td>
+              <td>{{ row[9] }}</td>
+              <td>{{ row[10] }}</td>
+              <td>{{ row[11] }}</td>
+              <td>{{ row[12] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Hardware Charts -->
+    <div class="row mt-2">
+      <!-- Hardware Imm Pie Chart -->
+      <div class="col-6">
+        <div class="card">
+          <div class="card-body">
+            <canvas id="HardwareImmPieChart" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+      <!-- Hardware Later Pie Charts -->
+      <div class="col-6">
+        <div class="card">
+          <div class="card-body">
+            <canvas id="HardwareLaterPieChart" height="200"></canvas>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Other Charts -->
-  <div class="row mt-3">
-    <div class="col-6">
-      <!-- First Chart -->
-      <div class="card mb-3">
-        <div class="card-body">
-          <canvas id="allTotalChart" height="200"></canvas>
+  <div id="other-data">
+    <!-- Other Table -->
+    <div class="row mt-5">
+      <div class="col-12">
+        <h2 class="display-5">Other Data</h2>
+        <div class="dropdown-divider mb-4"></div>
+        <table class="table table-bordered table-striped table-hover text-center">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Imm. Calls</th>
+              <th scope="col">% of Imm.</th>
+              <th scope="col">Later Calls</th>
+              <th scope="col">% of Later</th>
+              <th scope="col">Total Calls</th>
+              <th scope="col">% of Total Imm.</th>
+              <th scope="col">Emails</th>
+              <th scope="col">Calls & Emails</th>
+              <th scope="col">Support %</th>
+              <th scope="col">Imm. %</th>
+              <th scope="col">Later %</th>
+              <th scope="col">Email %</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in other_table %}
+            <tr>
+              <td>{{ row[0] }}</td>
+              <td>{{ row[1] }}</td>
+              <td>{{ row[2] }}</td>
+              <td>{{ row[3] }}</td>
+              <td>{{ row[4] }}</td>
+              <td>{{ row[5] }}</td>
+              <td>{{ row[6] }}</td>
+              <td>{{ row[7] }}</td>
+              <td>{{ row[8] }}</td>
+              <td>{{ row[9] }}</td>
+              <td>{{ row[10] }}</td>
+              <td>{{ row[11] }}</td>
+              <td>{{ row[12] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Other Charts -->
+    <div class="row mt-2">
+      <div class="col-6">
+        <!-- First Chart -->
+        <div class="card">
+          <div class="card-body">
+            <canvas id="allTotalChart" height="200"></canvas>
+          </div>
         </div>
       </div>
     </div>
