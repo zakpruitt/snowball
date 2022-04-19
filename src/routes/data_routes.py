@@ -128,6 +128,7 @@ def get_pie_data():
         for tuple in data:
             data_dict[tuple[0]] = tuple[3]
     employees = [key for key in data_dict.keys() if data_dict[key] > 0]
+    
     # create json response
     json_data = {
         "labels": employees,

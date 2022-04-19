@@ -51,10 +51,6 @@ textarea {
   background-image: url("../images/Untitled.png");
 }
 
-.card-body {
-  min-height: 500px;
-}
-
 .visualize-date-picker {
   background: #fff;
   cursor: pointer;

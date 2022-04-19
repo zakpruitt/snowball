@@ -27,7 +27,6 @@ class ChartHandler:
         return self.color_map[employee]
 
     
-
     def generate_random_color(self):
         color = random.choice(self.colors)
         self.colors.remove(color)
