@@ -14,6 +14,7 @@ const softwareImmPieChart = $("#SoftwareImmPieChart");
 const hardwareImmPieChart = $("#HardwareImmPieChart");
 const softwareLaterPieChart = $("#SoftwareLaterPieChart");
 const hardwareLaterPieChart = $("#HardwareLaterPieChart");
+const downloadReportButton = $("#downloadReportButton");
 
 //#region PARSE FILE FUNCTIONS 
 
@@ -204,27 +205,43 @@ $(document).ready(function () {
     softwareLaterPieChart && renderChart(softwareLaterPieChart, 'pie-data?sub_dept=S&category=later', 'Software Later Distribution');
     hardwareLaterPieChart && renderChart(hardwareLaterPieChart, 'pie-data?sub_dept=H&category=later', 'Hardware Later Distibutiuon');
 
+    // initialize date picker
     var start = moment().subtract(29, 'days');
     var end = moment();
-
     function cb(start, end) {
         $('#visualize-date-picker span').html(start.format('MM/DD/YYYY') + ' - ' + end.format('MM/D/YYYY'));
     }
-
     $('#visualize-date-picker').daterangepicker({
         startDate: start,
         endDate: end,
         ranges: {
-           'Today': [moment(), moment()],
-           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-           'This Month': [moment().startOf('month'), moment().endOf('month')],
-           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
         }
     }, cb);
-
     cb(start, end);
+});
+
+downloadReportButton.on("click", function () {
+    var doc = new jsPDF('landscape');
+    var options = {
+        'background': '#fff',
+    };
+
+    
+    doc.addHTML($('#software-data')[0], 0, 0, options, function () {
+        doc.addPage();
+    });
+    doc.addHTML($('#hardware-data')[0], 0, 0, options, function () {
+        doc.addPage();
+    });
+    doc.addHTML($('#other-data')[0], 0, 0, options, function () {
+        doc.save('sample-file.pdf');
+    });
 });
 
 function renderLineGraph(chart, endpoint, title, dis_legend = true) {
@@ -278,7 +295,7 @@ function renderChart(chart, endpoint, title, dis_legend = true) {
                             display: dis_legend
                         },
                         datalabels: {
-                            display: function(context) {
+                            display: function (context) {
                                 return context.dataset.data[context.dataIndex] > 1;
                             }
                         }
