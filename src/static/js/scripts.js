@@ -10,10 +10,16 @@ const subDeptChecks = $(".subDeptCheck");
 const emailRadioButtons = $(".emailRadioButton");
 
 const allTotalChart = $("#allTotalChart");
+
 const softwareImmPieChart = $("#SoftwareImmPieChart");
 const hardwareImmPieChart = $("#HardwareImmPieChart");
+
+const softwareEmailPieChart = $("#SoftwareEmailPieChart");
+const hardwareEmailPieChart = $("#HardwareEmailPieChart");
+
 const softwareLaterPieChart = $("#SoftwareLaterPieChart");
 const hardwareLaterPieChart = $("#HardwareLaterPieChart");
+
 const downloadReportButton = $("#downloadReportButton");
 
 //#region PARSE FILE FUNCTIONS 
@@ -202,6 +208,8 @@ $(document).ready(function () {
     allTotalChart && renderLineGraph(allTotalChart, 'all-count', 'All Count');
     softwareImmPieChart && renderChart(softwareImmPieChart, 'pie-data?sub_dept=S&category=imm', 'Software Immediate Distribution');
     hardwareImmPieChart && renderChart(hardwareImmPieChart, 'pie-data?sub_dept=H&category=imm', 'Hardware Immediate Distibutiuon');
+    softwareEmailPieChart && renderChart(softwareEmailPieChart, '/pie-email-data?sub_dept=S','Software Email Distribution');
+    hardwareEmailPieChart && renderChart(hardwareEmailPieChart, '/pie-email-data?sub_dept=H','Hardware Email Distribution');
     softwareLaterPieChart && renderChart(softwareLaterPieChart, 'pie-data?sub_dept=S&category=later', 'Software Later Distribution');
     hardwareLaterPieChart && renderChart(hardwareLaterPieChart, 'pie-data?sub_dept=H&category=later', 'Hardware Later Distibutiuon');
 

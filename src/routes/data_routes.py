@@ -109,6 +109,42 @@ def get_imm_later_hardware():
     }
     return json.dumps(json_data)
 
+@data_bp.route('/pie-email-data',methods=["GET"])
+def get_pie_email_data():
+    #retrieve data from db
+    sub_dept = request.args.get('sub_dept')
+    data = calls_db.get_email_counts_per_employee(sub_dept=sub_dept)
+
+    #build data dict
+    data_dict = dict()
+    label = "Emails Dataset"
+    for tuple in data:
+        data_dict[tuple[0]]= tuple[1]
+    employees = [key for key in data_dict.keys() if data_dict[key] > 0]
+    json_data = {
+        "labels": employees,
+        "datasets": [
+            {
+                "label": label,
+                "backgroundColor": [],
+                "borderColor": [],
+                "data": [value for value in data_dict.values() if value > 0]
+            }
+        ]
+    }
+
+    # populate colors
+    chart_handler.map_employees(employees)
+    for employee in json_data["labels"]:
+        color = chart_handler.get_color(employee)
+        json_data["datasets"][0]["backgroundColor"].append(color)
+        json_data["datasets"][0]["borderColor"].append(color)
+    #chart_handler.reset_colors()
+
+    # return chart json
+    return json.dumps(json_data)
+
+
 
 @data_bp.route('/pie-data', methods=["GET"])
 def get_pie_data():
