@@ -36,6 +36,16 @@ class Call:
         finally:
             self.lock.release()
 
+    def delete(self, date, sup_num ):
+        try:
+            self.lock.acquire(True)
+            self.cursor.execute('''
+                                DELETE FROM calls WHERE date_created = {date} AND support_number = {sup_num}  
+                                ''')
+            self.conn.commit()
+        finally:
+            self.lock.release()
+
     def read(self):
         try:
             self.lock.acquire(True)
