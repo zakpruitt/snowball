@@ -144,8 +144,6 @@ def get_pie_email_data():
     # return chart json
     return json.dumps(json_data)
 
-
-
 @data_bp.route('/pie-data', methods=["GET"])
 def get_pie_data():
     # retrieve data from database

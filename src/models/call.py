@@ -150,8 +150,8 @@ class Call:
                                     LEFT JOIN employees ON calls.original_user = employees.name
                                     WHERE calls.email = 0
                                     AND employees.sub_dept = "{sub_dept}"
-                                    AND calls.sup_code != 'W' or 'N' 
                                     AND calls.date_created BETWEEN '{start}' and '{end}'
+                                    AND calls.sup_code != 'W' or 'N' 
                                     ''')
                 return self.cursor.fetchall()
         finally:
@@ -200,8 +200,8 @@ class Call:
                                     LEFT JOIN employees ON calls.original_user = employees.name
                                     WHERE calls.email = 0
                                     AND employees.sub_dept = "{sub_dept}"
-                                    AND calls.sup_code != 'W' or 'N'
                                     AND calls.date_created BETWEEN '{start}' and '{end}' 
+                                    AND calls.sup_code != 'W' or 'N'
                                     GROUP BY employees.name
                                     ''')
                 return self.cursor.fetchall()

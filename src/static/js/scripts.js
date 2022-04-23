@@ -9,18 +9,16 @@ const supCodeChecks = $(".supCodeCheck");
 const subDeptChecks = $(".subDeptCheck");
 const emailRadioButtons = $(".emailRadioButton");
 
-const allTotalChart = $("#allTotalChart");
+const downloadReportButton = $("#downloadReportButton");
+const visualizeDateConstraint = $('#visualize-date-picker');
 
+const allTotalChart = $("#allTotalChart");
 const softwareImmPieChart = $("#SoftwareImmPieChart");
 const hardwareImmPieChart = $("#HardwareImmPieChart");
-
 const softwareEmailPieChart = $("#SoftwareEmailPieChart");
 const hardwareEmailPieChart = $("#HardwareEmailPieChart");
-
 const softwareLaterPieChart = $("#SoftwareLaterPieChart");
 const hardwareLaterPieChart = $("#HardwareLaterPieChart");
-
-const downloadReportButton = $("#downloadReportButton");
 
 //#region PARSE FILE FUNCTIONS 
 
@@ -206,50 +204,39 @@ function customFormating(xlsx) {
 
 $(document).ready(function () {
     allTotalChart && renderLineGraph(allTotalChart, 'all-count', 'All Count');
-    softwareImmPieChart && renderChart(softwareImmPieChart, 'pie-data?sub_dept=S&category=imm', 'Software Immediate Distribution');
-    hardwareImmPieChart && renderChart(hardwareImmPieChart, 'pie-data?sub_dept=H&category=imm', 'Hardware Immediate Distibutiuon');
-    softwareEmailPieChart && renderChart(softwareEmailPieChart, '/pie-email-data?sub_dept=S','Software Email Distribution');
-    hardwareEmailPieChart && renderChart(hardwareEmailPieChart, '/pie-email-data?sub_dept=H','Hardware Email Distribution');
-    softwareLaterPieChart && renderChart(softwareLaterPieChart, 'pie-data?sub_dept=S&category=later', 'Software Later Distribution');
-    hardwareLaterPieChart && renderChart(hardwareLaterPieChart, 'pie-data?sub_dept=H&category=later', 'Hardware Later Distibutiuon');
+    softwareImmPieChart && renderChart(softwareImmPieChart, '/pie-data?sub_dept=S&category=imm', 'Software Immediate Distribution');
+    hardwareImmPieChart && renderChart(hardwareImmPieChart, '/pie-data?sub_dept=H&category=imm', 'Hardware Immediate Distibutiuon');
+    softwareEmailPieChart && renderChart(softwareEmailPieChart, '/pie-email-data?sub_dept=S', 'Software Email Distribution');
+    hardwareEmailPieChart && renderChart(hardwareEmailPieChart, '/pie-email-data?sub_dept=H', 'Hardware Email Distribution');
+    softwareLaterPieChart && renderChart(softwareLaterPieChart, '/pie-data?sub_dept=S&category=later', 'Software Later Distribution');
+    hardwareLaterPieChart && renderChart(hardwareLaterPieChart, '/pie-data?sub_dept=H&category=later', 'Hardware Later Distibutiuon');
 
     // initialize date picker
-    var start = moment().subtract(29, 'days');
-    var end = moment();
-    function cb(start, end) {
-        $('#visualize-date-picker span').html(start.format('MM/DD/YYYY') + ' - ' + end.format('MM/D/YYYY'));
-    }
-    $('#visualize-date-picker').daterangepicker({
-        startDate: start,
-        endDate: end,
-        ranges: {
-            'Today': [moment(), moment()],
-            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-            'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        }
-    }, cb);
-    cb(start, end);
+    initializeVisualizeDatePicker();
+});
+
+visualizeDateConstraint && visualizeDateConstraint.on('apply.daterangepicker', function (ev, picker) {
+    var startDate = picker.startDate.format('YYYY-MM-DD').toString();
+    var endDate = picker.endDate.format('YYYY-MM-DD').toString();
+    window.location.href = "/visualize?start=" + startDate + "&end=" + endDate;
 });
 
 downloadReportButton.on("click", function () {
-    var doc = new jsPDF('landscape');
-    var options = {
-        'background': '#fff',
-    };
+    // var doc = new jsPDF('landscape');
+    // var options = {
+    //     'background': '#fff',
+    // };
 
-    
-    doc.addHTML($('#software-data')[0], 0, 0, options, function () {
-        doc.addPage();
-    });
-    doc.addHTML($('#hardware-data')[0], 0, 0, options, function () {
-        doc.addPage();
-    });
-    doc.addHTML($('#other-data')[0], 0, 0, options, function () {
-        doc.save('sample-file.pdf');
-    });
+
+    // doc.addHTML($('#software-data')[0], 0, 0, options, function () {
+    //     doc.addPage();
+    // });
+    // doc.addHTML($('#hardware-data')[0], 0, 0, options, function () {
+    //     doc.addPage();
+    // });
+    // doc.addHTML($('#other-data')[0], 0, 0, options, function () {
+    //     doc.save('sample-file.pdf');
+    // });
 });
 
 function renderLineGraph(chart, endpoint, title, dis_legend = true) {
@@ -316,6 +303,38 @@ function renderChart(chart, endpoint, title, dis_legend = true) {
                 config
             );
         });
+}
+
+function initializeVisualizeDatePicker() {
+    var start;
+    var end;
+    try {
+        start = window.location.href.split('start=')[1].split('&')[0];
+        end = window.location.href.split('end=')[1];
+        start = moment(start);
+        end = moment(end);
+    } catch (e) {
+        start = moment().subtract(29, 'days');
+        end = moment();
+    }
+
+    function cb(start, end) {
+        $('#visualize-date-picker span').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+    }
+
+    visualizeDateConstraint.daterangepicker({
+        startDate: start,
+        endDate: end,
+        ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+    }, cb);
+    cb(start, end);
 }
 
 //#endregion

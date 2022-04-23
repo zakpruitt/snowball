@@ -5,6 +5,8 @@ calls_db = Call()
 
 class TableHandler:
     def __init__(self, start=None, end=None, sub_dept=None) -> None:
+        print(start)
+        print(end)
         self.call_totals = calls_db.get_total_immediate_and_later_counts(
             start, end, sub_dept)
         self.emp_call_totals = calls_db.get_immediate_and_later_count_per_employee(
