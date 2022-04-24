@@ -53,7 +53,7 @@ def all_count():
                 "data": get_concurrent_data(data_dict, "Emails")
             }
         ]
-        
+
     }
     return json.dumps(json_data)
 
@@ -66,60 +66,21 @@ def all_count_by_sub_dept():
         if tuple[0] not in json_data:
             json_data[tuple[0]] = {"H": 0, "S": 0, "O": 0}
         json_data[tuple[0]][tuple[1]] += tuple[2]
-    
 
-@data_bp.route('/imm_later_software', methods=["GET"])
-def get_imm_later_software():
-    data = calls_db.get_total_immediate_and_later_counts(sub_dept='S')
-    json_data = dict()
-    
-    data_dict = {"Total":data[0][0], "Immediate":data[0][1], "Later":data[0][2]}
 
-    json_data = {
-        "labels":["Total","Immediate","Later"],
-        "datasets": [
-            {
-                "label": "Counts",
-                "backgroundColor": "rgb(70,60,220)",
-                "borderColor": "rgb(70,60,220)",
-                "data": [data_dict["Total"], data_dict["Immediate"], data_dict["Later"] ]
-            }
-        ]
-    }
-    return json.dumps(json_data)
-
-@data_bp.route('/imm_later_hardware', methods=["GET"])
-def get_imm_later_hardware():
-    data = calls_db.get_total_immediate_and_later_counts(sub_dept='H')
-    json_data = dict()
-    
-    data_dict = {"Total":data[0][0], "Immediate":data[0][1], "Later":data[0][2]}
-
-    
-    json_data = {
-        "labels":["Total","Immediate","Later"],
-        "datasets": [
-            {
-                "label": "Counts",
-                "backgroundColor": "rgb(70,60,220)",
-                "borderColor": "rgb(70,60,220)",
-                "data": [data_dict["Total"], data_dict["Immediate"], data_dict["Later"] ]
-            }
-        ]
-    }
-    return json.dumps(json_data)
-
-@data_bp.route('/pie-email-data',methods=["GET"])
+@data_bp.route('/pie-email-data', methods=["GET"])
 def get_pie_email_data():
-    #retrieve data from db
+    # retrieve data from db
+    start = request.args.get('start')
+    end = request.args.get('end')
     sub_dept = request.args.get('sub_dept')
-    data = calls_db.get_email_counts_per_employee(sub_dept=sub_dept)
+    data = calls_db.get_email_counts_per_employee(start, end, sub_dept)
 
-    #build data dict
+    # build data dict
     data_dict = dict()
     label = "Emails Dataset"
     for tuple in data:
-        data_dict[tuple[0]]= tuple[1]
+        data_dict[tuple[0]] = tuple[1]
     employees = [key for key in data_dict.keys() if data_dict[key] > 0]
     json_data = {
         "labels": employees,
@@ -139,18 +100,23 @@ def get_pie_email_data():
         color = chart_handler.get_color(employee)
         json_data["datasets"][0]["backgroundColor"].append(color)
         json_data["datasets"][0]["borderColor"].append(color)
-    #chart_handler.reset_colors()
+    # chart_handler.reset_colors()
 
     # return chart json
     return json.dumps(json_data)
+
 
 @data_bp.route('/pie-data', methods=["GET"])
 def get_pie_data():
     # retrieve data from database
     sub_dept = request.args.get('sub_dept')
     category = request.args.get('category')
-    data = calls_db.get_immediate_and_later_count_per_employee(sub_dept=sub_dept)
-    
+    start = request.args.get('start')
+    end = request.args.get('end')
+
+    data = calls_db.get_immediate_and_later_count_per_employee(
+        start, end, sub_dept)
+
     # create dict
     data_dict = dict()
     if category == 'imm':
@@ -162,7 +128,7 @@ def get_pie_data():
         for tuple in data:
             data_dict[tuple[0]] = tuple[3]
     employees = [key for key in data_dict.keys() if data_dict[key] > 0]
-    
+
     # create json response
     json_data = {
         "labels": employees,
@@ -182,11 +148,10 @@ def get_pie_data():
         color = chart_handler.get_color(employee)
         json_data["datasets"][0]["backgroundColor"].append(color)
         json_data["datasets"][0]["borderColor"].append(color)
-    #chart_handler.reset_colors()
+    # chart_handler.reset_colors()
 
     # return chart json
     return json.dumps(json_data)
-
 
 
 def get_concurrent_data(dict, column_name):
