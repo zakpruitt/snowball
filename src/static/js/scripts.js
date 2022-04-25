@@ -245,7 +245,7 @@ downloadReportButton.on("click", function () {
                 pdf.addImage(canvas.toDataURL("images/png", 1), 'PNG', 17, 2);
 
                 if (i == divs.length - 1) {
-                    pdf.save('report.pdf');
+                    pdf.save(pdfTitle);
                 } else {
                     pdf.addPage();
                 }

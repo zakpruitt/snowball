@@ -1,3 +1,5 @@
+from pickle import FALSE, TRUE
+from sqlalchemy import false, true
 from models.call import Call
 
 calls_db = Call()
@@ -18,6 +20,7 @@ class TableHandler:
     def generate_table(self):
         self.__add_employees()
         self.__add_outlier_employees()
+        self.__compute_total_row()
 
     def __add_employees(self):
         for i in range(len(self.emp_call_totals)):
@@ -117,6 +120,33 @@ class TableHandler:
 
             # Add row to table
             self.table.append(row)
+
+    def __compute_total_row(self):
+        # Initialize the row
+        row = []
+        row.append("Total")
+        for i in range(1, 10):
+            row.append(self.__compute_total_col(i))
+        for _ in range (0, 3):
+            row.append("N/A")
+        self.table.append(row)
+
+    def __compute_total_col(self, col_num):
+        total = 0
+        percent = FALSE
+        for row in self.table:
+            if "%" in str(row[col_num]):
+                total += float(str(row[col_num]).replace("%", ""))
+                percent = TRUE
+                continue
+            total += float(row[col_num])
+        
+        if percent == TRUE:
+            # tenerary operator if total == 99
+            total = 100 if total == 99 else total
+            return "{:.0f}%".format(total)
+        return total
+
 
     def __get_only_email_emps(self):
         names_in_email_totals = []
