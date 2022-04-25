@@ -68,3 +68,27 @@ textarea {
   top: 200px;
   z-index: 20;
 }
+
+.bg-blue {
+  background-color: #005197;
+}
+
+.bg-red {
+  background-color: rgb(255, 154, 154);
+}
+
+.bg-purple {
+  background-color: rgb(170, 155, 255);
+}
+
+.bg-green {
+  background-color: rgb(171, 252, 155);
+}
+
+.bg-orange {
+  background-color: rgb(255, 205, 145);
+}
+
+.remove-underline {
+  text-decoration: none;
+}
