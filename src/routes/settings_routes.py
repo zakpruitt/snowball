@@ -7,6 +7,10 @@ settings_bp = Blueprint('settings', __name__,
                         url_prefix='/settings', template_folder='templates')
 
 
+@settings_bp.route("/", methods=['GET', 'POST'])
+def settings():
+    return render_template('settings.html', employees=employees_db.read())
+
 @settings_bp.route('/employees',  methods=["GET", "POST"])
 def employees():
     if request.method == "GET":
