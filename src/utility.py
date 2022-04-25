@@ -6,11 +6,6 @@ import random
 
 
 def create_dependencies(path):
-    if not path.exists('generated'):
-        os.makedirs('./generated')
-    if not path.exists('config'):
-        os.makedirs('./config')
-        write_format_json()
     if not path.exists('./data/temp'):
         os.makedirs('./data/temp')
 
@@ -18,6 +13,16 @@ def create_dependencies(path):
 def create_temp_files(*args):
     for file in args:
         file.save("./data/temp/" + file.filename)
+
+
+def get_file_date(file_path):
+    date = ntpath.basename(file_path)[:8]
+    formatted_date = date[4:6] + '-' + date[6:] + '-' + date[0:4]  # mm-dd-yyyy
+    return formatted_date
+
+
+def get_date_time():
+    return datetime.datetime.now().strftime("%m-%d-%Y %H:%M:%S")
 
 
 def write_format_json():
@@ -92,13 +97,3 @@ def write_format_json():
                 }
             ]
         }, f)
-
-
-def get_file_date(file_path):
-    date = ntpath.basename(file_path)[:8]
-    formatted_date = date[4:6] + '-' + date[6:] + '-' + date[0:4]  # mm-dd-yyyy
-    return formatted_date
-
-
-def get_date_time():
-    return datetime.datetime.now().strftime("%m-%d-%Y %H:%M:%S")

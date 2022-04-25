@@ -1,5 +1,4 @@
 from pickle import FALSE, TRUE
-from sqlalchemy import false, true
 from models.call import Call
 
 calls_db = Call()
@@ -146,7 +145,6 @@ class TableHandler:
             total = 100 if total == 99 else total
             return "{:.0f}%".format(total)
         return total
-
 
     def __get_only_email_emps(self):
         names_in_email_totals = []
