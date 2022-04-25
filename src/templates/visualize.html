@@ -17,239 +17,237 @@
   </div>
 
   <!-- ####### TABLES ####### -->
+    <div id="software-data">
+      <!-- Software Table -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <h2 class="display-5">Software Data</h2>
+          <div class="dropdown-divider mb-4"></div>
+          <table class="table table-bordered table-striped table-hover text-center">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Imm. Calls</th>
+                <th scope="col">% of Imm.</th>
+                <th scope="col">Later Calls</th>
+                <th scope="col">% of Later</th>
+                <th scope="col">Total Calls</th>
+                <th scope="col">% of Total Imm.</th>
+                <th scope="col">Emails</th>
+                <th scope="col">Calls & Emails</th>
+                <th scope="col">Support %</th>
+                <th scope="col">Imm. %</th>
+                <th scope="col">Later %</th>
+                <th scope="col">Email %</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in software_table %}
+              <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>{{ row[4] }}</td>
+                <td>{{ row[5] }}</td>
+                <td>{{ row[6] }}</td>
+                <td>{{ row[7] }}</td>
+                <td>{{ row[8] }}</td>
+                <td>{{ row[9] }}</td>
+                <td>{{ row[10] }}</td>
+                <td>{{ row[11] }}</td>
+                <td>{{ row[12] }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-  <div id="software-data">
-    <!-- Software Table -->
-    <div class="row mt-4">
-      <div class="col-12">
-        <h2 class="display-5">Software Data</h2>
-        <div class="dropdown-divider mb-4"></div>
-        <table class="table table-bordered table-striped table-hover text-center">
-          <thead>
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Imm. Calls</th>
-              <th scope="col">% of Imm.</th>
-              <th scope="col">Later Calls</th>
-              <th scope="col">% of Later</th>
-              <th scope="col">Total Calls</th>
-              <th scope="col">% of Total Imm.</th>
-              <th scope="col">Emails</th>
-              <th scope="col">Calls & Emails</th>
-              <th scope="col">Support %</th>
-              <th scope="col">Imm. %</th>
-              <th scope="col">Later %</th>
-              <th scope="col">Email %</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for row in software_table %}
-            <tr>
-              <td>{{ row[0] }}</td>
-              <td>{{ row[1] }}</td>
-              <td>{{ row[2] }}</td>
-              <td>{{ row[3] }}</td>
-              <td>{{ row[4] }}</td>
-              <td>{{ row[5] }}</td>
-              <td>{{ row[6] }}</td>
-              <td>{{ row[7] }}</td>
-              <td>{{ row[8] }}</td>
-              <td>{{ row[9] }}</td>
-              <td>{{ row[10] }}</td>
-              <td>{{ row[11] }}</td>
-              <td>{{ row[12] }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Software Charts -->
-    <div class="row mt-2">
-      <div class="col-4">
-        <!-- Software Imm Pie Chart -->
-        <div class="card">
-          <div class="card-body">
-            <div class="no-data-display-message">
-              <b class="display-6">No applicable data.</b>
-            </div>  
-            <canvas id="SoftwareImmPieChart" height="300"></canvas>
+      <!-- Software Charts -->
+      <div class="row mt-2">
+        <div class="col-4">
+          <!-- Software Imm Pie Chart -->
+          <div class="card">
+            <div class="card-body">
+              <div class="no-data-display-message">
+                <b class="display-6">No applicable data.</b>
+              </div>
+              <canvas id="SoftwareImmPieChart" height="300"></canvas>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-4">
-        <!-- Software Later Pie Chart -->
-        <div class="card">
-          <div class="card-body">
-            <div class="no-data-display-message">
-              <b class="display-6">No applicable data.</b>
-            </div>  
-            <canvas id="SoftwareLaterPieChart" height="300"></canvas>
+        <div class="col-4">
+          <!-- Software Later Pie Chart -->
+          <div class="card">
+            <div class="card-body">
+              <div class="no-data-display-message">
+                <b class="display-6">No applicable data.</b>
+              </div>
+              <canvas id="SoftwareLaterPieChart" height="300"></canvas>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-4">
-        <!-- Software Email Pie Chart -->
-        <div class="card">
-          <div class="card-body">
-            <div class="no-data-display-message">
-              <b class="display-6">No applicable data.</b>
-            </div>  
-            <canvas id="SoftwareEmailPieChart" height="300"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="hardware-data">
-    <!-- Hardware Table -->
-    <div class="row mt-5">
-      <div class="col-12">
-        <h2 class="display-5">Hardware Data</h2>
-        <div class="dropdown-divider mb-4"></div>
-        <table class="table table-bordered table-striped table-hover text-center">
-          <thead>
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Imm. Calls</th>
-              <th scope="col">% of Imm.</th>
-              <th scope="col">Later Calls</th>
-              <th scope="col">% of Later</th>
-              <th scope="col">Total Calls</th>
-              <th scope="col">% of Total Imm.</th>
-              <th scope="col">Emails</th>
-              <th scope="col">Calls & Emails</th>
-              <th scope="col">Support %</th>
-              <th scope="col">Imm. %</th>
-              <th scope="col">Later %</th>
-              <th scope="col">Email %</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for row in hardware_table %}
-            <tr>
-              <td>{{ row[0] }}</td>
-              <td>{{ row[1] }}</td>
-              <td>{{ row[2] }}</td>
-              <td>{{ row[3] }}</td>
-              <td>{{ row[4] }}</td>
-              <td>{{ row[5] }}</td>
-              <td>{{ row[6] }}</td>
-              <td>{{ row[7] }}</td>
-              <td>{{ row[8] }}</td>
-              <td>{{ row[9] }}</td>
-              <td>{{ row[10] }}</td>
-              <td>{{ row[11] }}</td>
-              <td>{{ row[12] }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Hardware Charts -->
-    <div class="row mt-2">
-      <!-- Hardware Imm Pie Chart -->
-      <div class="col-4">
-        <div class="card">
-          <div class="card-body">
-            <div class="no-data-display-message">
-              <b class="display-6">No applicable data.</b>
-            </div>  
-            <canvas id="HardwareImmPieChart" height="300"></canvas>
-          </div>
-        </div>
-      </div>
-      <!-- Hardware Later Pie Charts -->
-      <div class="col-4">
-        <div class="card">
-          <div class="card-body">
-            <div class="no-data-display-message">
-              <b class="display-6">No applicable data.</b>
-            </div>  
-            <canvas id="HardwareLaterPieChart" height="300"></canvas>
-          </div>
-        </div>
-      </div>
-      <div class="col-4">
-        <!-- Hardware Email Pie Chart -->
-        <div class="card">
-          <div class="card-body">
-            <div class="no-data-display-message">
-              <b class="display-6">No applicable data.</b>
-            </div>  
-            <canvas id="HardwareEmailPieChart" height="300"></canvas>
+        <div class="col-4">
+          <!-- Software Email Pie Chart -->
+          <div class="card">
+            <div class="card-body">
+              <div class="no-data-display-message">
+                <b class="display-6">No applicable data.</b>
+              </div>
+              <canvas id="SoftwareEmailPieChart" height="300"></canvas>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div id="other-data">
-    <!-- Other Table -->
-    <div class="row mt-5">
-      <div class="col-12">
-        <h2 class="display-5">Other Data</h2>
-        <div class="dropdown-divider mb-4"></div>
-        <table class="table table-bordered table-striped table-hover text-center">
-          <thead>
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Imm. Calls</th>
-              <th scope="col">% of Imm.</th>
-              <th scope="col">Later Calls</th>
-              <th scope="col">% of Later</th>
-              <th scope="col">Total Calls</th>
-              <th scope="col">% of Total Imm.</th>
-              <th scope="col">Emails</th>
-              <th scope="col">Calls & Emails</th>
-              <th scope="col">Support %</th>
-              <th scope="col">Imm. %</th>
-              <th scope="col">Later %</th>
-              <th scope="col">Email %</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for row in other_table %}
-            <tr>
-              <td>{{ row[0] }}</td>
-              <td>{{ row[1] }}</td>
-              <td>{{ row[2] }}</td>
-              <td>{{ row[3] }}</td>
-              <td>{{ row[4] }}</td>
-              <td>{{ row[5] }}</td>
-              <td>{{ row[6] }}</td>
-              <td>{{ row[7] }}</td>
-              <td>{{ row[8] }}</td>
-              <td>{{ row[9] }}</td>
-              <td>{{ row[10] }}</td>
-              <td>{{ row[11] }}</td>
-              <td>{{ row[12] }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+    <div id="hardware-data">
+      <!-- Hardware Table -->
+      <div class="row mt-5">
+        <div class="col-12">
+          <h2 class="display-5">Hardware Data</h2>
+          <div class="dropdown-divider mb-4"></div>
+          <table class="table table-bordered table-striped table-hover text-center">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Imm. Calls</th>
+                <th scope="col">% of Imm.</th>
+                <th scope="col">Later Calls</th>
+                <th scope="col">% of Later</th>
+                <th scope="col">Total Calls</th>
+                <th scope="col">% of Total Imm.</th>
+                <th scope="col">Emails</th>
+                <th scope="col">Calls & Emails</th>
+                <th scope="col">Support %</th>
+                <th scope="col">Imm. %</th>
+                <th scope="col">Later %</th>
+                <th scope="col">Email %</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in hardware_table %}
+              <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>{{ row[4] }}</td>
+                <td>{{ row[5] }}</td>
+                <td>{{ row[6] }}</td>
+                <td>{{ row[7] }}</td>
+                <td>{{ row[8] }}</td>
+                <td>{{ row[9] }}</td>
+                <td>{{ row[10] }}</td>
+                <td>{{ row[11] }}</td>
+                <td>{{ row[12] }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
 
-    <!-- Other Charts -->
-    <div class="row mt-2">
-      <div class="col-6">
-        <!-- First Chart -->
-        <div class="card">
-          <div class="card-body">
-            <div class="no-data-display-message">
-              <b class="display-6">No applicable data.</b>
-            </div>  
-            <canvas id="allTotalChart" height="200"></canvas>
+      <!-- Hardware Charts -->
+      <div class="row mt-2">
+        <!-- Hardware Imm Pie Chart -->
+        <div class="col-4">
+          <div class="card">
+            <div class="card-body">
+              <div class="no-data-display-message">
+                <b class="display-6">No applicable data.</b>
+              </div>
+              <canvas id="HardwareImmPieChart" height="300"></canvas>
+            </div>
+          </div>
+        </div>
+        <!-- Hardware Later Pie Charts -->
+        <div class="col-4">
+          <div class="card">
+            <div class="card-body">
+              <div class="no-data-display-message">
+                <b class="display-6">No applicable data.</b>
+              </div>
+              <canvas id="HardwareLaterPieChart" height="300"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <!-- Hardware Email Pie Chart -->
+          <div class="card">
+            <div class="card-body">
+              <div class="no-data-display-message">
+                <b class="display-6">No applicable data.</b>
+              </div>
+              <canvas id="HardwareEmailPieChart" height="300"></canvas>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
+    <div id="other-data">
+      <!-- Other Table -->
+      <div class="row mt-5">
+        <div class="col-12">
+          <h2 class="display-5">Other Data</h2>
+          <div class="dropdown-divider mb-4"></div>
+          <table class="table table-bordered table-striped table-hover text-center">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Imm. Calls</th>
+                <th scope="col">% of Imm.</th>
+                <th scope="col">Later Calls</th>
+                <th scope="col">% of Later</th>
+                <th scope="col">Total Calls</th>
+                <th scope="col">% of Total Imm.</th>
+                <th scope="col">Emails</th>
+                <th scope="col">Calls & Emails</th>
+                <th scope="col">Support %</th>
+                <th scope="col">Imm. %</th>
+                <th scope="col">Later %</th>
+                <th scope="col">Email %</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in other_table %}
+              <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>{{ row[4] }}</td>
+                <td>{{ row[5] }}</td>
+                <td>{{ row[6] }}</td>
+                <td>{{ row[7] }}</td>
+                <td>{{ row[8] }}</td>
+                <td>{{ row[9] }}</td>
+                <td>{{ row[10] }}</td>
+                <td>{{ row[11] }}</td>
+                <td>{{ row[12] }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Other Charts -->
+      <div class="row mt-2">
+        <div class="col-6">
+          <!-- First Chart -->
+          <div class="card">
+            <div class="card-body">
+              <div class="no-data-display-message">
+                <b class="display-6">No applicable data.</b>
+              </div>
+              <canvas id="allTotalChart" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 </div>
 {% endblock %}

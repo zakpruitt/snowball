@@ -224,21 +224,33 @@ visualizeDateConstraint.on('apply.daterangepicker', function (ev, picker) {
 });
 
 downloadReportButton.on("click", function () {
-    // var doc = new jsPDF('landscape');
-    // var options = {
-    //     'background': '#fff',
-    // };
+    var pdfTitle;
+    try {
+        start = window.location.href.split('start=')[1].split('&')[0];
+        end = window.location.href.split('end=')[1];
+        pdfTitle = "Report " + start + " - " + end;
+    } catch (e) {
+        pdfTitle = "Report All Dates";
+    }
+    
+    var divs = ["#software-data", "#hardware-data", "#other-data"]
+    var pdf = new jsPDF('l', 'mm', [350, 380]);
 
+    for (let i = 0; i <= divs.length; i++) {
+        html2canvas($(divs[i])[0],
+            {
+                dpi: 300,
+                scale: 1
+            }).then(canvas => {
+                pdf.addImage(canvas.toDataURL("images/png", 1), 'PNG', 17, 2);
 
-    // doc.addHTML($('#software-data')[0], 0, 0, options, function () {
-    //     doc.addPage();
-    // });
-    // doc.addHTML($('#hardware-data')[0], 0, 0, options, function () {
-    //     doc.addPage();
-    // });
-    // doc.addHTML($('#other-data')[0], 0, 0, options, function () {
-    //     doc.save('sample-file.pdf');
-    // });
+                if (i == divs.length - 1) {
+                    pdf.save('report.pdf');
+                } else {
+                    pdf.addPage();
+                }
+            });
+    }
 });
 
 function renderLineGraph(chart, endpoint, title, dis_legend = true) {
@@ -294,7 +306,8 @@ function renderPieChart(chart, endpoint, title, dis_legend = true) {
                             text: title
                         },
                         legend: {
-                            display: dis_legend
+                            display: dis_legend,
+                            position: 'left'
                         },
                         datalabels: {
                             display: function (context) {
