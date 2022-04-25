@@ -210,7 +210,7 @@ $(document).ready(function () {
     } catch (e) {
         loadGraphs();
     }
-    initializeVisualizeDatePicker();
+    visualizeDateConstraint && initializeVisualizeDatePicker();
 });
 
 visualizeDateConstraint && visualizeDateConstraint.on('apply.daterangepicker', function (ev, picker) {
@@ -273,15 +273,17 @@ function renderPieChart(chart, endpoint, title, dis_legend = true) {
     fetch('/data/' + endpoint)
         .then(response => response.json())
         .then(data => {
-            if (data.datasets[0].data.length == 0) {
-                alert(chart.previousElementSibling.className.contains("no-data-display-message"));
+            if (data.datasets[0].data.length != 0) {
+                var parent = chart.parent();
+                var div = parent.children().first();
+                div.remove();
             }
             const config = {
                 type: 'pie',
                 data: data,
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false,
+                    maintainAspectRatio: true,
                     plugins: {
                         title: {
                             display: true,
