@@ -45,28 +45,30 @@ dailyFilePath && dailyFilePath.addEventListener("change", (e) => {
 //#region SHEET TABLE FUNCTIONS
 
 $(document).ready(function () {
-    sheetTable && sheetTable.dataTable({
-        dom: '<<Bft>ip>',
-        buttons: [
-            {
-                extend: 'excelHtml5',
-                customize: function (xlsx) {
-                    customFormating(xlsx);
+    if (top.location.pathname.includes('/sheets')) {
+        sheetTable && sheetTable.dataTable({
+            dom: '<<Bft>ip>',
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    customize: function (xlsx) {
+                        customFormating(xlsx);
+                    },
+                    title: '',
+                    text: '<i class="fas fa-file-excel"></i>',
+                    className: 'btn btn-outline btn-success',
                 },
-                title: '',
-                text: '<i class="fas fa-file-excel"></i>',
-                className: 'btn btn-outline btn-success',
-            },
-            {
-                extend: 'pdf',
-                text: '<i class="fas fa-file-pdf"></i>',
-                className: 'btn btn-outline btn-danger'
-            },
-        ],
-        "lengthMenu": [[15, -1], [15, "All"]],
-    });
+                {
+                    extend: 'pdf',
+                    text: '<i class="fas fa-file-pdf"></i>',
+                    className: 'btn btn-outline btn-danger'
+                },
+            ],
+            "lengthMenu": [[15, -1], [15, "All"]],
+        });
 
-    dateConstraint && dateConstraint.daterangepicker();
+        dateConstraint && dateConstraint.daterangepicker();
+    }
 });
 
 function DTFilter() {
@@ -101,7 +103,7 @@ const dateFilter = new DTFilter();
 const subDeptFilter = new DTFilter();
 const supCodeFilter = new DTFilter();
 
-employeeSheetChecks && employeeSheetChecks.each(function (i, element) {
+employeeSheetChecks.each(function (i, element) {
     element.addEventListener("change", (e) => {
         if (e.target.checked) {
             employeeFilter.addSearch(e.target.value);
@@ -118,7 +120,7 @@ employeeSheetChecks && employeeSheetChecks.each(function (i, element) {
     employeeFilter.addSearch(element.id);
 });
 
-dateConstraint && dateConstraint.on('apply.daterangepicker', function (ev, picker) {
+dateConstraint.on('apply.daterangepicker', function (ev, picker) {
     // clear searches and show formatted value on picker
     dateFilter.clearSearches();
     $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
@@ -136,7 +138,7 @@ dateConstraint && dateConstraint.on('apply.daterangepicker', function (ev, picke
     search(1, dateFilter.buildSearchString());
 });
 
-subDeptChecks && subDeptChecks.each(function (i, element) {
+subDeptChecks.each(function (i, element) {
     element.addEventListener("change", (e) => {
         if (e.target.checked) {
             subDeptFilter.addSearch(e.target.value);
@@ -147,7 +149,7 @@ subDeptChecks && subDeptChecks.each(function (i, element) {
     })
 });
 
-supCodeChecks && supCodeChecks.each(function (i, element) {
+supCodeChecks.each(function (i, element) {
     element.addEventListener("change", (e) => {
         if (e.target.checked) {
             supCodeFilter.addSearch(e.target.value);
@@ -158,7 +160,7 @@ supCodeChecks && supCodeChecks.each(function (i, element) {
     })
 });
 
-emailRadioButtons && emailRadioButtons.each(function (i, element) {
+emailRadioButtons.each(function (i, element) {
     element.addEventListener("change", (e) => {
         if (e.target.checked) {
             search(4, e.target.value);
@@ -203,17 +205,19 @@ function customFormating(xlsx) {
 //#region VISUALIZE FUNCTIONS
 
 $(document).ready(function () {
-    try {
-        start = window.location.href.split('start=')[1].split('&')[0];
-        end = window.location.href.split('end=')[1];
-        loadGraphsWithTimeConstraint(start, end);
-    } catch (e) {
-        loadGraphs();
+    if (top.location.pathname.includes('/visualize')) {
+        try {
+            start = window.location.href.split('start=')[1].split('&')[0];
+            end = window.location.href.split('end=')[1];
+            loadGraphsWithTimeConstraint(start, end);
+        } catch (e) {
+            loadGraphs();
+        }
+        visualizeDateConstraint && initializeVisualizeDatePicker();
     }
-    visualizeDateConstraint && initializeVisualizeDatePicker();
 });
 
-visualizeDateConstraint && visualizeDateConstraint.on('apply.daterangepicker', function (ev, picker) {
+visualizeDateConstraint.on('apply.daterangepicker', function (ev, picker) {
     var startDate = picker.startDate.format('YYYY-MM-DD').toString();
     var endDate = picker.endDate.format('YYYY-MM-DD').toString();
     window.location.href = "/visualize?start=" + startDate + "&end=" + endDate;
@@ -336,27 +340,30 @@ function initializeVisualizeDatePicker() {
             'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
         }
     }, cb);
-    cb(start, end);
+
+    if (start && end) {
+        cb(start, end);
+    }
 }
 
 function loadGraphs() {
-    allTotalChart && renderLineGraph(allTotalChart, 'all-count', 'All Count');
-    softwareImmPieChart && renderPieChart(softwareImmPieChart, '/pie-data?sub_dept=S&category=imm', 'Software Immediate Distribution');
-    hardwareImmPieChart && renderPieChart(hardwareImmPieChart, '/pie-data?sub_dept=H&category=imm', 'Hardware Immediate Distibutiuon');
-    softwareEmailPieChart && renderPieChart(softwareEmailPieChart, '/pie-email-data?sub_dept=S', 'Software Email Distribution');
-    hardwareEmailPieChart && renderPieChart(hardwareEmailPieChart, '/pie-email-data?sub_dept=H', 'Hardware Email Distribution');
-    softwareLaterPieChart && renderPieChart(softwareLaterPieChart, '/pie-data?sub_dept=S&category=later', 'Software Later Distribution');
-    hardwareLaterPieChart && renderPieChart(hardwareLaterPieChart, '/pie-data?sub_dept=H&category=later', 'Hardware Later Distibutiuon');
+    renderLineGraph(allTotalChart, 'all-count', 'All Count');
+    renderPieChart(softwareImmPieChart, '/pie-data?sub_dept=S&category=imm', 'Software Immediate Distribution');
+    renderPieChart(hardwareImmPieChart, '/pie-data?sub_dept=H&category=imm', 'Hardware Immediate Distibutiuon');
+    renderPieChart(softwareEmailPieChart, '/pie-email-data?sub_dept=S', 'Software Email Distribution');
+    renderPieChart(hardwareEmailPieChart, '/pie-email-data?sub_dept=H', 'Hardware Email Distribution');
+    renderPieChart(softwareLaterPieChart, '/pie-data?sub_dept=S&category=later', 'Software Later Distribution');
+    renderPieChart(hardwareLaterPieChart, '/pie-data?sub_dept=H&category=later', 'Hardware Later Distibutiuon');
 }
 
 function loadGraphsWithTimeConstraint(start, end) {
-    allTotalChart && renderLineGraph(allTotalChart, 'all-count', 'All Count');
-    softwareImmPieChart && renderPieChart(softwareImmPieChart, '/pie-data?sub_dept=S&category=imm&start=' + start + '&end=' + end, 'Software Immediate Distribution');
-    hardwareImmPieChart && renderPieChart(hardwareImmPieChart, '/pie-data?sub_dept=H&category=imm&start=' + start + '&end=' + end, 'Hardware Immediate Distibutiuon');
-    softwareEmailPieChart && renderPieChart(softwareEmailPieChart, '/pie-email-data?sub_dept=S&start=' + start + '&end=' + end, 'Software Email Distribution');
-    hardwareEmailPieChart && renderPieChart(hardwareEmailPieChart, '/pie-email-data?sub_dept=H&start=' + start + '&end=' + end, 'Hardware Email Distribution');
-    softwareLaterPieChart && renderPieChart(softwareLaterPieChart, '/pie-data?sub_dept=S&category=later&start=' + start + '&end=' + end, 'Software Later Distribution');
-    hardwareLaterPieChart && renderPieChart(hardwareLaterPieChart, '/pie-data?sub_dept=H&category=later&start=' + start + '&end=' + end, 'Hardware Later Distibutiuon');
+    renderLineGraph(allTotalChart, 'all-count', 'All Count');
+    renderPieChart(softwareImmPieChart, '/pie-data?sub_dept=S&category=imm&start=' + start + '&end=' + end, 'Software Immediate Distribution');
+    renderPieChart(hardwareImmPieChart, '/pie-data?sub_dept=H&category=imm&start=' + start + '&end=' + end, 'Hardware Immediate Distibutiuon');
+    renderPieChart(softwareEmailPieChart, '/pie-email-data?sub_dept=S&start=' + start + '&end=' + end, 'Software Email Distribution');
+    renderPieChart(hardwareEmailPieChart, '/pie-email-data?sub_dept=H&start=' + start + '&end=' + end, 'Hardware Email Distribution');
+    renderPieChart(softwareLaterPieChart, '/pie-data?sub_dept=S&category=later&start=' + start + '&end=' + end, 'Software Later Distribution');
+    renderPieChart(hardwareLaterPieChart, '/pie-data?sub_dept=H&category=later&start=' + start + '&end=' + end, 'Hardware Later Distibutiuon');
 }
 
 //#endregion
