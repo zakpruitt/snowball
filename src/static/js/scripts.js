@@ -269,10 +269,13 @@ function renderLineGraph(chart, endpoint, title, dis_legend = true) {
         });
 }
 
-function renderChart(chart, endpoint, title, dis_legend = true) {
+function renderPieChart(chart, endpoint, title, dis_legend = true) {
     fetch('/data/' + endpoint)
         .then(response => response.json())
         .then(data => {
+            if (data.datasets[0].data.length == 0) {
+                alert(chart.previousElementSibling.className.contains("no-data-display-message"));
+            }
             const config = {
                 type: 'pie',
                 data: data,
@@ -336,22 +339,22 @@ function initializeVisualizeDatePicker() {
 
 function loadGraphs() {
     allTotalChart && renderLineGraph(allTotalChart, 'all-count', 'All Count');
-    softwareImmPieChart && renderChart(softwareImmPieChart, '/pie-data?sub_dept=S&category=imm', 'Software Immediate Distribution');
-    hardwareImmPieChart && renderChart(hardwareImmPieChart, '/pie-data?sub_dept=H&category=imm', 'Hardware Immediate Distibutiuon');
-    softwareEmailPieChart && renderChart(softwareEmailPieChart, '/pie-email-data?sub_dept=S', 'Software Email Distribution');
-    hardwareEmailPieChart && renderChart(hardwareEmailPieChart, '/pie-email-data?sub_dept=H', 'Hardware Email Distribution');
-    softwareLaterPieChart && renderChart(softwareLaterPieChart, '/pie-data?sub_dept=S&category=later', 'Software Later Distribution');
-    hardwareLaterPieChart && renderChart(hardwareLaterPieChart, '/pie-data?sub_dept=H&category=later', 'Hardware Later Distibutiuon');
+    softwareImmPieChart && renderPieChart(softwareImmPieChart, '/pie-data?sub_dept=S&category=imm', 'Software Immediate Distribution');
+    hardwareImmPieChart && renderPieChart(hardwareImmPieChart, '/pie-data?sub_dept=H&category=imm', 'Hardware Immediate Distibutiuon');
+    softwareEmailPieChart && renderPieChart(softwareEmailPieChart, '/pie-email-data?sub_dept=S', 'Software Email Distribution');
+    hardwareEmailPieChart && renderPieChart(hardwareEmailPieChart, '/pie-email-data?sub_dept=H', 'Hardware Email Distribution');
+    softwareLaterPieChart && renderPieChart(softwareLaterPieChart, '/pie-data?sub_dept=S&category=later', 'Software Later Distribution');
+    hardwareLaterPieChart && renderPieChart(hardwareLaterPieChart, '/pie-data?sub_dept=H&category=later', 'Hardware Later Distibutiuon');
 }
 
 function loadGraphsWithTimeConstraint(start, end) {
     allTotalChart && renderLineGraph(allTotalChart, 'all-count', 'All Count');
-    softwareImmPieChart && renderChart(softwareImmPieChart, '/pie-data?sub_dept=S&category=imm&start=' + start + '&end=' + end, 'Software Immediate Distribution');
-    hardwareImmPieChart && renderChart(hardwareImmPieChart, '/pie-data?sub_dept=H&category=imm&start=' + start + '&end=' + end, 'Hardware Immediate Distibutiuon');
-    softwareEmailPieChart && renderChart(softwareEmailPieChart, '/pie-email-data?sub_dept=S&start=' + start + '&end=' + end, 'Software Email Distribution');
-    hardwareEmailPieChart && renderChart(hardwareEmailPieChart, '/pie-email-data?sub_dept=H&start=' + start + '&end=' + end, 'Hardware Email Distribution');
-    softwareLaterPieChart && renderChart(softwareLaterPieChart, '/pie-data?sub_dept=S&category=later&start=' + start + '&end=' + end, 'Software Later Distribution');
-    hardwareLaterPieChart && renderChart(hardwareLaterPieChart, '/pie-data?sub_dept=H&category=later&start=' + start + '&end=' + end, 'Hardware Later Distibutiuon');
+    softwareImmPieChart && renderPieChart(softwareImmPieChart, '/pie-data?sub_dept=S&category=imm&start=' + start + '&end=' + end, 'Software Immediate Distribution');
+    hardwareImmPieChart && renderPieChart(hardwareImmPieChart, '/pie-data?sub_dept=H&category=imm&start=' + start + '&end=' + end, 'Hardware Immediate Distibutiuon');
+    softwareEmailPieChart && renderPieChart(softwareEmailPieChart, '/pie-email-data?sub_dept=S&start=' + start + '&end=' + end, 'Software Email Distribution');
+    hardwareEmailPieChart && renderPieChart(hardwareEmailPieChart, '/pie-email-data?sub_dept=H&start=' + start + '&end=' + end, 'Hardware Email Distribution');
+    softwareLaterPieChart && renderPieChart(softwareLaterPieChart, '/pie-data?sub_dept=S&category=later&start=' + start + '&end=' + end, 'Software Later Distribution');
+    hardwareLaterPieChart && renderPieChart(hardwareLaterPieChart, '/pie-data?sub_dept=H&category=later&start=' + start + '&end=' + end, 'Hardware Later Distibutiuon');
 }
 
 //#endregion

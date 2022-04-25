@@ -113,7 +113,6 @@ def get_pie_data():
     category = request.args.get('category')
     start = request.args.get('start')
     end = request.args.get('end')
-
     data = calls_db.get_immediate_and_later_count_per_employee(
         start, end, sub_dept)
 
