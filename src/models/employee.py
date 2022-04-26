@@ -12,12 +12,13 @@ class Employee:
                             CREATE TABLE IF NOT EXISTS employees(
                                     id TEXT PRIMARY KEY, 
                                     name TEXT, 
-                                    sub_dept TEXT)
+                                    sub_dept TEXT,
+                                    color TEXT)
                             ''')
 
     def insert(self, employee):
         self.cursor.execute('''
-                            INSERT OR IGNORE INTO employees VALUES(?, ?, ?)
+                            INSERT OR IGNORE INTO employees VALUES(?, ?, ?, ?)
                             ''', employee)
         self.conn.commit()
 

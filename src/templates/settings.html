@@ -46,7 +46,7 @@
                         <div class="mb-4 mt-2">
                             <label for="employeeChartColorInput" class="form-label">Employee Chart Color</label>
                             <input type="color" class="form-control form-control-color" id="employeeChartColorInput"
-                                value={{color}} title="Choose your color">
+                                value={{color}} name="color" title="Choose your color">
                         </div>
 
                         <button class="btn btn-primary float-end" type="submit">Submit</button>
@@ -63,6 +63,7 @@
                         <th>Name</th>
                         <th>Sub Dept</th>
                         <th>Color</th>
+                        <th>Del</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,7 +74,12 @@
                         <td>{{ employee[2] }}</td>
                         <td>
                             <input type="color" height="100" class="form-control color-picker form-control-color"
-                                value="#FFF4EC">
+                                value={{employee[3]}}>
+                        </td>
+                        <td>
+                            <!-- add delete icon -->
+                            <button class="btn btn-outline-danger border-0">
+                                <i class="fas fa-trash-alt"></i>
                         </td>
                     </tr>
                     {% endfor %}
