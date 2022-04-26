@@ -380,3 +380,9 @@ function loadGraphsWithTimeConstraint(start, end) {
 }
 
 //#endregion
+
+//#region SETTINGS FUNCTIONS
+
+newEmployeeButton
+
+//#endregion

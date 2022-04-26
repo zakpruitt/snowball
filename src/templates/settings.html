@@ -68,20 +68,24 @@
                 </thead>
                 <tbody>
                     {% for employee in employees %}
-                    <tr>
-                        <td>{{ employee[0] }}</td>
-                        <td>{{ employee[1] }}</td>
-                        <td>{{ employee[2] }}</td>
-                        <td>
-                            <input type="color" height="100" class="form-control color-picker form-control-color"
-                                value={{employee[3]}}>
-                        </td>
-                        <td>
-                            <!-- add delete icon -->
-                            <button class="btn btn-outline-danger border-0">
-                                <i class="fas fa-trash-alt"></i>
-                        </td>
-                    </tr>
+                    <form action="{{ url_for('settings.delete_employee') }}" method="post">
+                        <tr>
+                            <td>{{ employee[0] }}</td>
+                            <td>{{ employee[1] }}</td>
+                            <td>{{ employee[2] }}</td>
+                            <td>
+                                <input type="color" height="100" class="form-control color-picker form-control-color"
+                                    value={{employee[3]}}>
+                            </td>
+                            <td>
+                                <!-- Ignore below error -->
+                                <button type="submit" class="btn btn-outline-danger border-0" id="newEmployeeButton" onclick="return confirm('Do you want to delete {{ employee[1] }}?');">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <input type="hidden" name="id" value="{{employee[0]}}">
+                    </form>
                     {% endfor %}
                 </tbody>
             </table>

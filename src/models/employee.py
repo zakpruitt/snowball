@@ -28,6 +28,17 @@ class Employee:
         finally:
             self.lock.release()
 
+    def delete(self, id):
+        try:
+            self.lock.acquire(True)
+            self.cursor.execute(f'''
+                                DELETE FROM employees
+                                WHERE employees.id = "{id}"
+                                ''')
+            self.conn.commit()
+        finally:
+            self.lock.release()
+
     def read(self):
         try:
             self.lock.acquire(True)
