@@ -4,35 +4,65 @@
 
 {% block content %}
 <div class="container">
-    <div class="row mt-5 ">
-        <div class="col-6">
-            <h1 class="display-5">Settings</h1>
-        </div>
-        <div class="col-6">
-            <button class="btn btn-primary float-end mt-3">Snowball Documentation</button>
+    <div class="row mt-4">
+        <div class="col-12">
+            <button class="btn btn-primary float-end">Snowball Documentation</button>
         </div>
     </div>
-    <div class="dropdown-divider mb-4"></div>
 
-    <div class="row">
-        
-        <div class="col">
-            <form method="post">
-                <input type="text" name="id" placeholder="Id">
-                <input type="text" name="name" placeholder="Name">
-                <input type="text" name="sub_dept" placeholder="Sub Dept">
-                <label for="exampleColorInput" class="form-label">Color picker</label>
-                <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c" title="Choose your color">
-                <button type="submit">Submit</button>
-            </form>
+    <div class="row mt-4 gx-5">
+        <!-- New Employee Form -->
+        <div class="col-5">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="display-6 text-center">New Employee Form</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <!-- ID -->
+                        <div class="mb-4 mt-2">
+                            <label for="employeeIDInput" class="form-label">Employee ID</label>
+                            <input class="form-control" name="id" type="text" placeholder="Sam" id="employeeIDInput">
+                        </div>
+
+                        <!-- Name -->
+                        <div class="mb-4 mt-2">
+                            <label for="employeeNameInput" class="form-label">Employee Name</label>
+                            <input class="form-control" name="name" type="text" placeholder="U002SAM"
+                                id="employeeNameInput">
+                        </div>
+
+                        <!-- Sub Dept -->
+                        <div class="mb-4 mt-2">
+                            <label for="employeeSubDeptInput" class="form-label">Employee Sub Dept</label>
+                            <select class="form-select" name="sub_dept" id="employeeSubDeptInput">
+                                <option selected value="S">Software</option>
+                                <option value="H">Hardware</option>
+                                <option value="O">Other</option>
+                            </select>
+                        </div>
+
+                        <!-- Color -->
+                        <div class="mb-4 mt-2">
+                            <label for="employeeChartColorInput" class="form-label">Employee Chart Color</label>
+                            <input type="color" class="form-control form-control-color" id="employeeChartColorInput"
+                                value={{color}} title="Choose your color">
+                        </div>
+
+                        <button class="btn btn-primary float-end" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="col">
-            <table>
+
+        <div class="col-7">
+            <table class="table text-center align-middle">
                 <thead>
                     <tr>
-                        <th>id</th>
-                        <th>name</th>
-                        <th>sub_dept</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Sub Dept</th>
+                        <th>Color</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,6 +71,10 @@
                         <td>{{ employee[0] }}</td>
                         <td>{{ employee[1] }}</td>
                         <td>{{ employee[2] }}</td>
+                        <td>
+                            <input type="color" height="100" class="form-control color-picker form-control-color"
+                                value="#FFF4EC">
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

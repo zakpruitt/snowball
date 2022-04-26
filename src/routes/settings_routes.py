@@ -9,17 +9,14 @@ settings_bp = Blueprint('settings', __name__,
 
 @settings_bp.route("/", methods=['GET', 'POST'])
 def settings():
-    return render_template('settings.html', employees=employees_db.read())
-
-@settings_bp.route('/employees',  methods=["GET", "POST"])
-def employees():
     if request.method == "GET":
-        return render_template('employees.html', employees=employees_db.read())
+        return render_template('settings.html', employees=employees_db.read(), color=get_random_color())
     elif request.method == "POST":
-        employee = employees_db.build_employee(
-            request.form['employee_id'],
-            request.form['name'],
-            request.form['sub_dept']
-        )
+        employee = tuple(request.form.values())
         employees_db.insert(employee)
-        return redirect('/employees')
+        return redirect('/settings')
+
+def get_random_color():
+    import random
+    hexadecimal = "#"+''.join([random.choice('ABCDEF0123456789') for i in range(6)])
+    return hexadecimal

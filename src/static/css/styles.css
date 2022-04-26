@@ -93,3 +93,11 @@ textarea {
 .remove-underline {
   text-decoration: none;
 }
+
+.color-picker {
+  display: inline-block;
+}
+
+.report-button {
+  margin-right: 15px;
+}
