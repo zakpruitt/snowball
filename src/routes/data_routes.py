@@ -97,11 +97,10 @@ def get_pie_email_data():
     # populate colors
     chart_handler.map_employees(employees)
     for employee in json_data["labels"]:
-        color = chart_handler.get_color(employee)
+        color = employees_db.get_color_by_name(employee)
         json_data["datasets"][0]["backgroundColor"].append(color)
         json_data["datasets"][0]["borderColor"].append(color)
-    # chart_handler.reset_colors()
-
+        
     # return chart json
     return json.dumps(json_data)
 
@@ -144,10 +143,9 @@ def get_pie_data():
     # populate colors
     chart_handler.map_employees(employees)
     for employee in json_data["labels"]:
-        color = chart_handler.get_color(employee)
+        color = employees_db.get_color_by_name(employee)
         json_data["datasets"][0]["backgroundColor"].append(color)
         json_data["datasets"][0]["borderColor"].append(color)
-    # chart_handler.reset_colors()
 
     # return chart json
     return json.dumps(json_data)
