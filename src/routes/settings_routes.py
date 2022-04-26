@@ -16,13 +16,16 @@ def settings():
         employees_db.insert(employee)
         return redirect('/settings')
 
+
 @settings_bp.route("/delete", methods=['POST'])
 def delete_employee():
     employee_id = request.form.get('id')
     employees_db.delete(employee_id)
     return redirect('/settings')
 
+
 def get_random_color():
     import random
-    hexadecimal = "#"+''.join([random.choice('ABCDEF0123456789') for i in range(6)])
+    hexadecimal = "#" + \
+        ''.join([random.choice('ABCDEF0123456789') for i in range(6)])
     return hexadecimal

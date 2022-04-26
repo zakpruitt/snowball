@@ -84,15 +84,18 @@
       <div id="emailConstraint" class="ms-2">
         <div class="form-check">
           <label class="form-check-label" for="includeCallsAndEmailsCheck">Show Calls & Emails</label>
-          <input class="form-check-input emailRadioButton" value="1|0" type="radio" name="flexRadioDefault" id="includeCallsAndEmailsCheck" checked>
+          <input class="form-check-input emailRadioButton" value="1|0" type="radio" name="flexRadioDefault"
+            id="includeCallsAndEmailsCheck" checked>
         </div>
         <div class="form-check">
           <label class="form-check-label" for="includeEmailsCheck">Show Only Emails</label>
-          <input class="form-check-input emailRadioButton" value="1" type="radio" name="flexRadioDefault" id="includeEmailsCheck">
+          <input class="form-check-input emailRadioButton" value="1" type="radio" name="flexRadioDefault"
+            id="includeEmailsCheck">
         </div>
         <div class="form-check">
           <label class="form-check-label" for="excludeEmailsCheck">Don't Show Emails</label>
-          <input class="form-check-input emailRadioButton" value="0" type="radio" name="flexRadioDefault" id="excludeEmailsCheck">
+          <input class="form-check-input emailRadioButton" value="0" type="radio" name="flexRadioDefault"
+            id="excludeEmailsCheck">
         </div>
       </div>
     </div>
@@ -116,21 +119,28 @@
         </thead>
         <tbody>
           {% for call in calls %}
-          <tr>
-            <td>{{ call[0] }}</td>
-            <td>{{ call[1] }}</td>
-            <td>{{ call[2] }}</td>
-            <td>{{ call[3] }}</td>
-            <td>{{ call[4] }}</td>
-            <td>{{ call[5] }}</td>
-            <td>{{ call[6] }}</td>
-            <td>{{ call[7] }}</td>
-            <td>{{ call[8] }}</td>
-            <td>
-              <a>
-                <i class="fas fa-trash-alt text-warning"></i>
-              </a>
-          </tr>
+          <form action="{{ url_for('sheets.delete_call') }}" method="post">
+            <tr>
+              <td>{{ call[0] }}</td>
+              <td>{{ call[1] }}</td>
+              <td>{{ call[2] }}</td>
+              <td>{{ call[3] }}</td>
+              <td>{{ call[4] }}</td>
+              <td>{{ call[5] }}</td>
+              <td>{{ call[6] }}</td>
+              <td>{{ call[7] }}</td>
+              <td>{{ call[8] }}</td>
+              <td>
+                <button type="submit"
+                  onclick="return confirm('Do you want to permanently delete call number {{ call[0] }} on {{ call[1] }} ?');"
+                  class="sheets-delete-button ">
+                  <i class="fas fa-trash-alt text-warning"></i>
+                </button>
+              </td>
+              <input type="hidden" name="callNumber" value="{{ call[0] }}">
+              <input type="hidden" name="dateCreated" value="{{ call[1] }}">
+            </tr>
+          </form>
           {% endfor %}
         </tbody>
       </table>

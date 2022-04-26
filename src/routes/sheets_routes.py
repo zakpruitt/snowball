@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template
+from flask import Blueprint, request, render_template, redirect
 from models.call import Call
 from models.employee import Employee
 
@@ -12,3 +12,12 @@ sheets_bp = Blueprint('sheets', __name__, url_prefix='/sheets',
 @sheets_bp.route('/', methods=["GET"])
 def sheets():
     return render_template('sheets.html', calls=calls_db.read(), employees=employees_db.read())
+
+
+@sheets_bp.route('/delete', methods=["POST"])
+def delete_call():
+    date = request.form["callNumber"]
+    sup_num = request.form["dateCreated"]
+    print(date + " " + sup_num)
+    calls_db.delete(date, sup_num)
+    return redirect('/sheets')
