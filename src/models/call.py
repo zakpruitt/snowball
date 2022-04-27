@@ -63,25 +63,26 @@ class Call:
             self.lock.acquire(True)
             if start == None and end == None and sub_dept==None:
                 self.cursor.execute('''
-                                    SELECT name,
+                                    SELECT employees.name,
                                     count (*) as 'Calls and Emails', 
                                     SUM(CASE WHEN calls.email = 0 THEN 1 ELSE 0 END) "Calls Count",
-                                    SUM(CASE WHEN calls.email = 1 THEN 1 ELSE 0 END) "Emails Total"
+                                    SUM(CASE WHEN calls.email = 1 THEN 1 ELSE 0 END) "Emails Count"
                                     FROM calls
-                                    LEFT JOIN employees ON calls.original_user = employees.name
+                                    LEFT JOIN employees ON calls.employee_id = employees.id
                                     WHERE calls.sup_code != 'W' or 'N' 
                                     GROUP BY employees.name
                                     ''')
                 return self.cursor.fetchall()
             elif start == None and end == None:
-                self.cursor.execute('''SELECT name,
+                self.cursor.execute(f'''
+                                    SELECT employees.name,
                                     count (*) as 'Calls and Emails', 
                                     SUM(CASE WHEN calls.email = 0 THEN 1 ELSE 0 END) "Calls Count",
-                                    SUM(CASE WHEN calls.email = 1 THEN 1 ELSE 0 END) "Emails Total"
+                                    SUM(CASE WHEN calls.email = 1 THEN 1 ELSE 0 END) "Emails Count"
                                     FROM calls
-                                    LEFT JOIN employees ON calls.original_user = employees.name
-                                    WHERE calls.sup_code != 'W' or 'N' 
-                                    AND calls.sub_dept = "{sub_dept}"
+                                    LEFT JOIN employees ON calls.employee_id = employees.id
+                                    WHERE employees.sub_dept = '{sub_dept}'
+                                    AND calls.sup_code != 'W' or 'N' 
                                     GROUP BY employees.name
                                     ''')
                 return self.cursor.fetchall()
@@ -90,12 +91,13 @@ class Call:
                                     SELECT name,
                                     count (*) as 'Calls and Emails', 
                                     SUM(CASE WHEN calls.email = 0 THEN 1 ELSE 0 END) "Calls Count",
-                                    SUM(CASE WHEN calls.email = 1 THEN 1 ELSE 0 END) "Emails Total"
+                                    SUM(CASE WHEN calls.email = 1 THEN 1 ELSE 0 END) "Emails Count"
                                     FROM calls
-                                    LEFT JOIN employees ON calls.original_user = employees.name
+                                    LEFT JOIN employees ON calls.employee_id = employees.id
                                     WHERE date_created BETWEEN '{start}' and '{end}'
+                                    AND employees.sub_dept = '{sub_dept}'
                                     AND calls.sup_code != 'W' or 'N' 
-                                    AND calls.sub_dept = "{sub_dept}"
+                                    
                                     GROUP BY employees.name
                                     ''')
                 return self.cursor.fetchall()
