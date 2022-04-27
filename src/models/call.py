@@ -133,6 +133,19 @@ class Call:
         finally:
             self.lock.release()
 
+    def get_unregistered_employees(self):
+        try:
+            self.lock.acquire(True)
+            self.cursor.execute('''
+                                SELECT DISTINCT calls.original_user
+                                FROM calls
+                                LEFT JOIN employees on calls.original_user = employees.name
+                                WHERE employees.name IS NULL
+                                ''')
+            return self.cursor.fetchall()
+        finally:
+            self.lock.release()
+
     # table
 
     def get_total_immediate_and_later_counts(self, start=None, end=None, sub_dept=None):

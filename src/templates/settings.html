@@ -4,12 +4,34 @@
 
 {% block content %}
 <div class="container">
+    <!-- Buttons -->
     <div class="row mt-4">
         <div class="col-12">
             <button class="btn btn-primary float-end">Snowball Documentation</button>
+            <button class="btn btn-primary float-end top-buttons" data-bs-toggle="modal" data-bs-target="#unregisteredEmployeesModal">List Unregistered Employees</button>
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="unregisteredEmployeesModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Unregistered Employees</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <ul>
+                {% for employee in unregistered_employees %}
+                    <li>{{ employee }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- Content -->
     <div class="row mt-4 gx-5">
         <!-- New Employee Form -->
         <div class="col-5">
