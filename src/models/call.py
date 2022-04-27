@@ -58,24 +58,45 @@ class Call:
         finally:
             self.lock.release()
 
-    def get_calls_and_email_count(self, start=None, end=None):
+    def get_total_calls_and_email_count_by_employee(self, start=None, end=None, sub_dept = None):
         try:
             self.lock.acquire(True)
-            if start == None and end == None:
+            if start == None and end == None and sub_dept==None:
                 self.cursor.execute('''
-                                    SELECT strftime('%m', date_created), count (*) as 'Calls and Emails'
+                                    SELECT name,
+                                    count (*) as 'Calls and Emails', 
+                                    SUM(CASE WHEN calls.email = 0 THEN 1 ELSE 0 END) "Calls Count",
+                                    SUM(CASE WHEN calls.email = 1 THEN 1 ELSE 0 END) "Emails Total"
                                     FROM calls
+                                    LEFT JOIN employees ON calls.original_user = employees.name
                                     WHERE calls.sup_code != 'W' or 'N' 
-                                    GROUP BY strftime('%m', date_created)
+                                    GROUP BY employees.name
+                                    ''')
+                return self.cursor.fetchall()
+            elif start == None and end == None:
+                self.cursor.execute('''SELECT name,
+                                    count (*) as 'Calls and Emails', 
+                                    SUM(CASE WHEN calls.email = 0 THEN 1 ELSE 0 END) "Calls Count",
+                                    SUM(CASE WHEN calls.email = 1 THEN 1 ELSE 0 END) "Emails Total"
+                                    FROM calls
+                                    LEFT JOIN employees ON calls.original_user = employees.name
+                                    WHERE calls.sup_code != 'W' or 'N' 
+                                    AND calls.sub_dept = "{sub_dept}"
+                                    GROUP BY employees.name
                                     ''')
                 return self.cursor.fetchall()
             else:
                 self.cursor.execute(f'''
-                                    SELECT strftime('%m', date_created), count (*) as 'Calls and Emails'
+                                    SELECT name,
+                                    count (*) as 'Calls and Emails', 
+                                    SUM(CASE WHEN calls.email = 0 THEN 1 ELSE 0 END) "Calls Count",
+                                    SUM(CASE WHEN calls.email = 1 THEN 1 ELSE 0 END) "Emails Total"
                                     FROM calls
+                                    LEFT JOIN employees ON calls.original_user = employees.name
                                     WHERE date_created BETWEEN '{start}' and '{end}'
                                     AND calls.sup_code != 'W' or 'N' 
-                                    GROUP BY strftime('%m', date_created)
+                                    AND calls.sub_dept = "{sub_dept}"
+                                    GROUP BY employees.name
                                     ''')
                 return self.cursor.fetchall()
         finally:

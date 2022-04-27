@@ -15,6 +15,7 @@ class ChartHandler:
             'rgb(189, 178, 255)',
             'rgb(255, 198, 255)',
         ]
+        self.presetColors = {"Total":'rgb(150, 78, 6)', "Calls": 'rgb(3, 22, 148)', "Emails": 'rgb(66, 1, 120)'}
 
     def map_employees(self, employees):
         for employee in employees:
@@ -26,6 +27,8 @@ class ChartHandler:
     def get_color(self, employee):
         return self.color_map[employee]
 
+    def preset_color(self, color_id):
+        return self.presetColors[color_id]
     
     def generate_random_color(self):
         color = random.choice(self.colors)

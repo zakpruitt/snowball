@@ -19,6 +19,8 @@ const softwareEmailPieChart = $("#SoftwareEmailPieChart");
 const hardwareEmailPieChart = $("#HardwareEmailPieChart");
 const softwareLaterPieChart = $("#SoftwareLaterPieChart");
 const hardwareLaterPieChart = $("#HardwareLaterPieChart");
+const softwareBarChart = $('#SoftwareBarChart');
+const hardwareBarChart = $('#HardwareBarChart')
 
 //#region PARSE FILE FUNCTIONS 
 
@@ -284,6 +286,39 @@ function renderLineGraph(chart, endpoint, title, dis_legend = true) {
             );
         });
 }
+function renderBarGraph(chart, endpoint, title, dis_legend = true) {
+    fetch('/data/' + endpoint)
+        .then(response => response.json())
+        .then(data => {
+            const config = {
+                type: 'bar',
+                data: data,
+                options: {
+                    scales:{
+                        y:{
+                            beginAtZero: true
+                            
+                            
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: title
+                        },
+                        legend: {
+                            display: dis_legend
+                        }
+                    }
+                }
+            };
+
+            const newChart = new Chart(
+                chart,
+                config
+            );
+        });
+}
 
 function renderPieChart(chart, endpoint, title, dis_legend = true) {
     fetch('/data/' + endpoint)
@@ -367,6 +402,8 @@ function loadGraphs() {
     renderPieChart(hardwareEmailPieChart, '/pie-email-data?sub_dept=H', 'Hardware Email Distribution');
     renderPieChart(softwareLaterPieChart, '/pie-data?sub_dept=S&category=later', 'Software Later Distribution');
     renderPieChart(hardwareLaterPieChart, '/pie-data?sub_dept=H&category=later', 'Hardware Later Distibutiuon');
+    renderBarGraph(softwareBarChart, '/bar-data?sub_dept=S', 'Software Counts');
+    renderBarGraph(hardwareBarChart, '/bar-data?sub_dept=H', 'Hardware Counts');
 }
 
 function loadGraphsWithTimeConstraint(start, end) {
@@ -377,6 +414,8 @@ function loadGraphsWithTimeConstraint(start, end) {
     renderPieChart(hardwareEmailPieChart, '/pie-email-data?sub_dept=H&start=' + start + '&end=' + end, 'Hardware Email Distribution');
     renderPieChart(softwareLaterPieChart, '/pie-data?sub_dept=S&category=later&start=' + start + '&end=' + end, 'Software Later Distribution');
     renderPieChart(hardwareLaterPieChart, '/pie-data?sub_dept=H&category=later&start=' + start + '&end=' + end, 'Hardware Later Distibutiuon');
+    renderBarGraph(softwareBarChart, '/bar-data?sub_dept=S&start=' + start + '&end=' + end, 'Software Counts');
+    renderBarGraph(hardwareBarChart, '/bar-data?sub_dept=H&start=' + start + '&end=' + end, 'Hardware Counts');
 }
 
 //#endregion
