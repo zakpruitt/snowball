@@ -3,6 +3,7 @@ from flask import Blueprint, request
 from chart_handler import ChartHandler
 from models.call import Call
 from models.employee import Employee
+from PIL import ImageColor
 
 calls_db = Call()
 employees_db = Employee()
@@ -22,7 +23,7 @@ def all_count():
 
     # get data and transform dates into string dates
     data = calls_db.get_total_calls_emails_counts()
-    
+
     data_dict = {}
     for tuple in data:
         data_dict[months[tuple[0]]] = {
@@ -58,6 +59,7 @@ def all_count():
     }
     return json.dumps(json_data)
 
+
 @data_bp.route('/bar-data', methods=["GET"])
 def bar_data():
     start = request.args.get('start')
@@ -65,37 +67,39 @@ def bar_data():
     sub_dept = request.args.get('sub_dept')
 
     # get data and transform dates into string dates
-    data = calls_db. get_total_calls_and_email_count_by_employee(start, end, sub_dept)
+    data = calls_db.get_total_calls_and_email_count_by_employee(
+        start, end, sub_dept)
 
     data_dict = {}
     for tuple in data:
         data_dict[tuple[0]] = {
             "Total": tuple[1],
             "Calls": tuple[2],
-            "Emails": tuple[3] 
+            "Emails": tuple[3]
         }
 
     # define and return json response
     json_data = {
         "labels": [key for key in data_dict],
-        "datasets":[{
-            "label": "Total",
-            "backgroundColor": chart_handler.preset_color("Total"),
-            "borderColor": chart_handler.preset_color("Total"), 
-            "data": [data_dict[key]["Total"] for key in data_dict]
-        },
-        {
-            "label": "Calls",
-            "backgroundColor": chart_handler.preset_color("Calls"),
-            "borderColor": chart_handler.preset_color("Calls"), 
-            "data": [data_dict[key]["Calls"] for key in data_dict]
-        },
-        {
-            "label": "Emails",
-            "backgroundColor": chart_handler.preset_color("Emails"),
-            "borderColor": chart_handler.preset_color("Emails"), 
-            "data": [data_dict[key]["Emails"] for key in data_dict]
-        }
+        "datasets": [
+            {
+                "label": "Total",
+                "backgroundColor": chart_handler.preset_color("Total"),
+                "borderColor": chart_handler.preset_color("Total"),
+                "data": [data_dict[key]["Total"] for key in data_dict]
+            },
+            {
+                "label": "Calls",
+                "backgroundColor": chart_handler.preset_color("Calls"),
+                "borderColor": chart_handler.preset_color("Calls"),
+                "data": [data_dict[key]["Calls"] for key in data_dict]
+            },
+            {
+                "label": "Emails",
+                "backgroundColor": chart_handler.preset_color("Emails"),
+                "borderColor": chart_handler.preset_color("Emails"),
+                "data": [data_dict[key]["Emails"] for key in data_dict]
+            }
         ]
 
     }
@@ -142,9 +146,12 @@ def get_pie_email_data():
     chart_handler.map_employees(employees)
     for employee in json_data["labels"]:
         color = employees_db.get_color_by_name(employee)
-        json_data["datasets"][0]["backgroundColor"].append(color)
-        json_data["datasets"][0]["borderColor"].append(color)
-        
+        color = ImageColor.getcolor(color, "RGB")
+        color += (0.7,)
+        json_data["datasets"][0]["backgroundColor"].append("rgba" + str(color))
+        json_data["datasets"][0]["borderColor"].append("rgba" + str(color))
+
+
     # return chart json
     return json.dumps(json_data)
 
@@ -185,11 +192,12 @@ def get_pie_data():
     }
 
     # populate colors
-    chart_handler.map_employees(employees)
     for employee in json_data["labels"]:
         color = employees_db.get_color_by_name(employee)
-        json_data["datasets"][0]["backgroundColor"].append(color)
-        json_data["datasets"][0]["borderColor"].append(color)
+        color = ImageColor.getcolor(color, "RGB")
+        color += (0.7,)
+        json_data["datasets"][0]["backgroundColor"].append("rgba" + str(color))
+        json_data["datasets"][0]["borderColor"].append("rgba" + str(color))
 
     # return chart json
     return json.dumps(json_data)
@@ -200,12 +208,14 @@ def get_concurrent_data(dict, column_name):
     for values in dict.values():
         concurrent_list.append(values[column_name])
     return concurrent_list
+
+
 def gen_element(name, data):
     element = {
-        "label": name, 
+        "label": name,
         "backgroundColor": "rgb(70,60,220)",
         "borderColor": "rgb(70,60,220)",
-        "data":[data["Total"], data["Calls"], data["Emails"]]
+        "data": [data["Total"], data["Calls"], data["Emails"]]
     }
     print(element["data"])
     return element

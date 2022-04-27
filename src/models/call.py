@@ -97,7 +97,6 @@ class Call:
                                     WHERE date_created BETWEEN '{start}' and '{end}'
                                     AND employees.sub_dept = '{sub_dept}'
                                     AND calls.sup_code != 'W' or 'N' 
-                                    
                                     GROUP BY employees.name
                                     ''')
                 return self.cursor.fetchall()

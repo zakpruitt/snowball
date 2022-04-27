@@ -286,6 +286,7 @@ function renderLineGraph(chart, endpoint, title, dis_legend = true) {
             );
         });
 }
+
 function renderBarGraph(chart, endpoint, title, dis_legend = true) {
     fetch('/data/' + endpoint)
         .then(response => response.json())
@@ -297,8 +298,6 @@ function renderBarGraph(chart, endpoint, title, dis_legend = true) {
                     scales:{
                         y:{
                             beginAtZero: true
-                            
-                            
                         }
                     },
                     plugins: {
@@ -402,8 +401,8 @@ function loadGraphs() {
     renderPieChart(hardwareEmailPieChart, '/pie-email-data?sub_dept=H', 'Hardware Email Distribution');
     renderPieChart(softwareLaterPieChart, '/pie-data?sub_dept=S&category=later', 'Software Later Distribution');
     renderPieChart(hardwareLaterPieChart, '/pie-data?sub_dept=H&category=later', 'Hardware Later Distibutiuon');
-    renderBarGraph(softwareBarChart, '/bar-data?sub_dept=S', 'Software Counts');
-    renderBarGraph(hardwareBarChart, '/bar-data?sub_dept=H', 'Hardware Counts');
+    renderBarGraph(softwareBarChart, '/bar-data?sub_dept=S', 'Software Counts (Per Employee ID)');
+    renderBarGraph(hardwareBarChart, '/bar-data?sub_dept=H', 'Hardware Counts (Per Employee ID)');
 }
 
 function loadGraphsWithTimeConstraint(start, end) {

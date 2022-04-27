@@ -15,7 +15,7 @@ class ChartHandler:
             'rgb(189, 178, 255)',
             'rgb(255, 198, 255)',
         ]
-        self.presetColors = {"Total":'rgb(150, 78, 6)', "Calls": 'rgb(3, 22, 148)', "Emails": 'rgb(66, 1, 120)'}
+        self.presetColors = {"Total":'rgb(255, 99, 132, 0.7)', "Calls": 'rgba(75, 192, 192, 0.7)', "Emails": 'rgba(54, 162, 235, 0.7)'}
 
     def map_employees(self, employees):
         for employee in employees:
