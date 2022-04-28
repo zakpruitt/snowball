@@ -151,7 +151,6 @@ def get_pie_email_data():
         json_data["datasets"][0]["backgroundColor"].append("rgba" + str(color))
         json_data["datasets"][0]["borderColor"].append("rgba" + str(color))
 
-
     # return chart json
     return json.dumps(json_data)
 
