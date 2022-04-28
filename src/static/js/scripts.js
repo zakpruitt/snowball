@@ -117,9 +117,6 @@ employeeSheetChecks.each(function (i, element) {
         search([5, 6, 7], employeeFilter.buildSearchString());
         console.log(employeeFilter.buildSearchString());
     });
-
-    employeeFilter.addSearch(element.value);
-    employeeFilter.addSearch(element.id);
 });
 
 dateConstraint.on('apply.daterangepicker', function (ev, picker) {
@@ -236,7 +233,7 @@ downloadReportButton.on("click", function () {
     }
     
     var divs = ["#software-data", "#hardware-data", "#other-data"]
-    var pdf = new jsPDF('l', 'mm', [350, 380]);
+    var pdf = new jsPDF('p', 'mm', [400, 470]);
 
     for (let i = 0; i <= divs.length; i++) {
         html2canvas($(divs[i])[0],
@@ -244,7 +241,7 @@ downloadReportButton.on("click", function () {
                 dpi: 300,
                 scale: 1
             }).then(canvas => {
-                pdf.addImage(canvas.toDataURL("images/png", 1), 'PNG', 17, 2);
+                pdf.addImage(canvas.toDataURL("images/png", 1), 'PNG', 26, 2);
 
                 if (i == divs.length - 1) {
                     pdf.save(pdfTitle);

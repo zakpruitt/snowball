@@ -142,7 +142,7 @@ class TableHandler:
         
         if percent == TRUE:
             # tenerary operator if total == 99
-            total = 100 if total == 99 else total
+            total = 100 if total == 99 or total == 101 else total
             return "{:.0f}%".format(total)
         return total
 
