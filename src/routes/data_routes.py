@@ -26,7 +26,7 @@ def all_count():
 
     data_dict = {}
     for tuple in data:
-        data_dict[months[tuple[0]]] = {
+        data_dict[tuple[0]] = {
             "Total": tuple[1],
             "Calls": tuple[2],
             "Emails": tuple[3]
@@ -209,13 +209,3 @@ def get_concurrent_data(dict, column_name):
         concurrent_list.append(values[column_name])
     return concurrent_list
 
-
-def gen_element(name, data):
-    element = {
-        "label": name,
-        "backgroundColor": "rgb(70,60,220)",
-        "borderColor": "rgb(70,60,220)",
-        "data": [data["Total"], data["Calls"], data["Emails"]]
-    }
-    print(element["data"])
-    return element

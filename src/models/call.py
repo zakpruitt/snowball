@@ -122,13 +122,14 @@ class Call:
             self.lock.acquire(True)
             if start == None and end == None:
                 self.cursor.execute('''
-                                    SELECT strftime('%m', date_created) AS month,
+                                    SELECT strftime('%m-%Y', date_created) AS month,
                                         COUNT(*) AS Total,
                                         SUM(CASE WHEN calls.email = 0 THEN 1 ELSE 0 END) "Calls Count",
                                         SUM(CASE WHEN calls.email = 1 THEN 1 ELSE 0 END) "Emails Total"
                                     FROM calls
                                     WHERE calls.sup_code != 'W' or 'N'
-                                    GROUP BY strftime('%m', date_created);
+                                    GROUP BY strftime('%m%Y', date_created)
+                                    Order BY strftime('%Y-%m', date_created);
                                     ''')
                 return self.cursor.fetchall()
         finally:
