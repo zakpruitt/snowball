@@ -16,8 +16,7 @@ def sheets():
 
 @sheets_bp.route('/delete', methods=["POST"])
 def delete_call():
-    date = request.form["callNumber"]
-    sup_num = request.form["dateCreated"]
-    print(date + " " + sup_num)
-    calls_db.delete(date, sup_num)
-    return redirect('/sheets')
+    callNumber = request.form["callNumber"]
+    dateCreated = request.form["dateCreated"]
+    calls_db.delete(dateCreated, callNumber)
+    return f"Call {callNumber} deleted"

@@ -41,8 +41,8 @@ class Call:
             self.lock.acquire(True)
             self.cursor.execute(f'''
                                 DELETE FROM calls 
-                                WHERE date_created = {date} 
-                                AND support_number = {sup_num}  
+                                WHERE date_created = '{date}'
+                                AND support_number = '{sup_num}'  
                                 ''')
             self.conn.commit()
         finally:

@@ -8,6 +8,7 @@ const dateConstraint = $('#dateConstraint');
 const supCodeChecks = $(".supCodeCheck");
 const subDeptChecks = $(".subDeptCheck");
 const emailRadioButtons = $(".emailRadioButton");
+const sheetsDeleteButtons = $(".sheets-delete-button");
 
 const downloadReportButton = $("#downloadReportButton");
 const visualizeDateConstraint = $('#visualize-date-picker');
@@ -104,6 +105,30 @@ const employeeFilter = new DTFilter();
 const dateFilter = new DTFilter();
 const subDeptFilter = new DTFilter();
 const supCodeFilter = new DTFilter();
+
+sheetsDeleteButtons.each(function (i, element) {
+    element.addEventListener("click", (e) => {
+        attrs = e.target.attributes;
+        const callNumber = attrs.getNamedItem("callnumber").value;
+        const dateCreated = attrs.getNamedItem("datecreated").value;
+        
+        // ajax request to /sheets/delete with callnumber and datecreated
+        $.ajax({
+            url: '/sheets/delete',
+            type: 'POST',
+            data: {
+                callNumber: callNumber,
+                dateCreated: dateCreated
+            },
+            success: function (data) {
+                location.reload();
+            },
+            error: function(err) {
+                alert("Error!");
+            }
+        });
+    });
+});
 
 employeeSheetChecks.each(function (i, element) {
     element.addEventListener("change", (e) => {

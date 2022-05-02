@@ -119,28 +119,22 @@
         </thead>
         <tbody>
           {% for call in calls %}
-          <form action="{{ url_for('sheets.delete_call') }}" method="post">
-            <tr>
-              <td>{{ call[0] }}</td>
-              <td>{{ call[1] }}</td>
-              <td>{{ call[2] }}</td>
-              <td>{{ call[3] }}</td>
-              <td>{{ call[4] }}</td>
-              <td>{{ call[5] }}</td>
-              <td>{{ call[6] }}</td>
-              <td>{{ call[7] }}</td>
-              <td>{{ call[8] }}</td>
-              <td>
-                <button type="submit"
-                  onclick="return confirm('Do you want to permanently delete call number {{ call[0] }} on {{ call[1] }} ?');"
-                  class="sheets-delete-button ">
-                  <i class="fas fa-trash-alt text-warning"></i>
-                </button>
-              </td>
-              <input type="hidden" name="callNumber" value="{{ call[0] }}">
-              <input type="hidden" name="dateCreated" value="{{ call[1] }}">
-            </tr>
-          </form>
+          <tr>
+            <td>{{ call[0] }}</td>
+            <td>{{ call[1] }}</td>
+            <td>{{ call[2] }}</td>
+            <td>{{ call[3] }}</td>
+            <td>{{ call[4] }}</td>
+            <td>{{ call[5] }}</td>
+            <td>{{ call[6] }}</td>
+            <td>{{ call[7] }}</td>
+            <td>{{ call[8] }}</td>
+            <td>
+              <button type="submit" class="sheets-delete-button" callNumber="{{ call[0] }}" dateCreated="{{ call[1] }}" >
+                <i class="fas fa-trash-alt text-warning" callNumber="{{ call[0] }}" dateCreated="{{ call[1] }}"></i>
+              </button>
+            </td>
+          </tr>
           {% endfor %}
         </tbody>
       </table>
