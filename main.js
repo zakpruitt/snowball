@@ -13,6 +13,7 @@ function createWindow() {
     const mainWindow = new BrowserWindow({
         width: 1600,
         height: 1000,
+        icon: __dirname + '/src/static/myIcon.ico',
     });
     mainWindow.loadURL('http://127.0.0.1:5000');
     mainWindow.removeMenu();
