@@ -4,7 +4,7 @@ import threading
 
 class Employee:
     def __init__(self):
-        self.conn = sqlite3.connect('data/snowball.db', check_same_thread=False)
+        self.conn = sqlite3.connect('./resources/app/data/snowball.db', check_same_thread=False)
         self.cursor = self.conn.cursor()
         self.lock = threading.Lock()
         self.create_table()

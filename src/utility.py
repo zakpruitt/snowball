@@ -6,13 +6,13 @@ import random
 
 
 def create_dependencies(path):
-    if not path.exists('./data/temp'):
-        os.makedirs('./data/temp')
+    if not path.exists('./resources/app/data/temp'):
+        os.makedirs('./resources/app/data/temp')
 
 
 def create_temp_files(*args):
     for file in args:
-        file.save("./data/temp/" + file.filename)
+        file.save("./resources/app/data/temp/" + file.filename)
 
 
 def get_file_date(file_path):
