@@ -12,15 +12,15 @@
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Single Report</a>
+                            <button class="nav-link active" id="singleReportTab">Single Report</button>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Multiple Reports</a>
+                            <button class="nav-link" id="multipleReportTab">Multiple Reports</button>
                         </li>
                     </ul>
                 </div>
                 <!-- Content 1 -->
-                <div class="card-body">
+                <div class="card-body" id="singleParse">
                     <h5 class="card-title text-center">Single Report Parser</h5>
 
                     <!-- File Inputs -->
@@ -33,10 +33,26 @@
                             <label for="formFile" class="form-label">All File Input</label>
                             <input class="form-control" name="formFileAll" type="file" id="formFileAll">
                         </div>
-
+                        <input hidden name="method" value="single">
                         <button type="submit" class="btn btn-primary mt-5 float-end">Parse Report</button>
                     </form>
                 </div>
+
+                <!-- Content 2-->
+                <div class="card-body" id="multipleParse" hidden>
+                    <h5 class="card-title text-center">Multiple File Parser</h5>
+
+                    <!-- File Inputs -->
+                    <form method="post" enctype = "multipart/form-data">
+                        <div class="mb-4 mt-2">
+                            <label for="formFile" class="form-label">Multiple File Input</label>
+                            <input class="form-control" name="formFileMultiple" type="file" multiple id="formFileMultiple">
+                        </div>
+                        <input hidden name="method" value="multiple">
+                        <button type="submit" class="btn btn-primary mt-5 float-end">Parse Report</button>
+                    </form>
+                </div>
+
             </div>
         </div>
 

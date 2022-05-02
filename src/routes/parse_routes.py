@@ -11,14 +11,19 @@ def parse():
     if request.method == "GET":
         return render_template('parse.html')
     else:
-        # create temp files
-        daily = request.files['formFileDaily']
-        all = request.files['formFileAll']
-        create_temp_files(daily, all)
-
-        # parse temp files
+        method = request.form['method']
         parser = Parser()
-        parser.parse_text("./data/temp/" + daily.filename)
-        parser.parse_text("./data/temp/" + all.filename)
+
+        if method == "single":
+            daily = request.files['formFileDaily']
+            all = request.files['formFileAll']
+            create_temp_files(daily, all)
+            parser.parse_text("./data/temp/" + daily.filename)
+            parser.parse_text("./data/temp/" + all.filename)
+        elif method == "multiple":
+            files = request.files.getlist('formFileMultiple')
+            for file in files:
+                create_temp_files(file)
+                parser.parse_text("./data/temp/" + file.filename)
 
         return redirect('/sheets')

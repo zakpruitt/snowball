@@ -1,6 +1,10 @@
 
 const allFilePath = document.getElementById("formFileAll");
 const dailyFilePath = document.getElementById("formFileDaily");
+const singleReportTab = $("#singleReportTab");
+const multipleReportTab = $("#multipleReportTab");
+const singleParse = $("#singleParse");
+const multipleParse = $("#multipleParse");
 
 const sheetTable = $("#sheetTable");
 const employeeSheetChecks = $(".employeeSheetCheck");
@@ -41,6 +45,20 @@ dailyFilePath && dailyFilePath.addEventListener("change", (e) => {
         $("#taDaily").text(text);
     }
     fr.readAsText(dailyFilePath.files[0]);
+});
+
+singleReportTab.click(() => {
+    singleReportTab.addClass("active");
+    multipleReportTab.removeClass("active");
+    singleParse.prop("hidden", false);
+    multipleParse.prop("hidden", true);
+});
+
+multipleReportTab.click(() => {
+    singleReportTab.removeClass("active");
+    multipleReportTab.addClass("active");
+    singleParse.prop("hidden", true);
+    multipleParse.prop("hidden", false);
 });
 
 //#endregion
