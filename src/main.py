@@ -18,4 +18,4 @@ app.register_blueprint(settings_bp)
 
 if __name__ == '__main__':
     create_dependencies(os.path)
-    app.run(debug=True)
+    app.run(debug=False)
