@@ -5,7 +5,7 @@ import threading
 class Call:
     def __init__(self) -> None:
         self.conn = sqlite3.connect(
-            './resources/app/data/snowball.db', check_same_thread=False)
+            './data/snowball.db', check_same_thread=False)
         self.cursor = self.conn.cursor()
         self.lock = threading.Lock()
         self.create_table()
@@ -201,46 +201,49 @@ class Call:
             if start == None and end == None and sub_dept == None:
                 self.cursor.execute('''
                                     SELECT 
-                                        employees.name,
+                                        count_emp.name,
                                         COUNT(*) AS Total,
-                                        SUM(CASE WHEN employees.id = calls.employee_id THEN 1 ELSE 0 END) "Immediate Count",
-                                        SUM(CASE WHEN employees.id != calls.employee_id THEN 1 ELSE 0 END) "Later Count"
+                                        SUM(CASE WHEN count_emp.id = org_emp.id THEN 1 ELSE 0 END) "Immediate Count",
+                                        SUM(CASE WHEN count_emp.id != org_emp.id THEN 1 ELSE 0 END) "Later Count"
                                     FROM calls
-                                    LEFT JOIN employees ON calls.original_user = employees.name
+                                    LEFT JOIN employees AS org_emp ON calls.original_user = org_emp.name
+                                    LEFT JOIN employees AS count_emp ON calls.employee_id = count_emp.id
                                     WHERE calls.email = 0
-                                    AND calls.sup_code != 'W' or 'N' 
-                                    GROUP BY employees.name
+                                    AND calls.sup_code != 'W' or 'N'
+                                    GROUP BY count_emp.name
                                     ''')
                 return self.cursor.fetchall()
             elif start == None and end == None and sub_dept != None:
                 self.cursor.execute(f'''
                                     SELECT 
-                                        employees.name,
+                                        count_emp.name,
                                         COUNT(*) AS Total,
-                                        SUM(CASE WHEN employees.id = calls.employee_id THEN 1 ELSE 0 END) "Immediate Count",
-                                        SUM(CASE WHEN employees.id != calls.employee_id THEN 1 ELSE 0 END) "Later Count"
+                                        SUM(CASE WHEN count_emp.id = org_emp.id THEN 1 ELSE 0 END) "Immediate Count",
+                                        SUM(CASE WHEN count_emp.id != org_emp.id THEN 1 ELSE 0 END) "Later Count"
                                     FROM calls
-                                    LEFT JOIN employees ON calls.original_user = employees.name
+                                    LEFT JOIN employees AS org_emp ON calls.original_user = org_emp.name
+                                    LEFT JOIN employees AS count_emp ON calls.employee_id = count_emp.id
                                     WHERE calls.email = 0
-                                    AND employees.sub_dept = "{sub_dept}"
-                                    AND calls.sup_code != 'W' or 'N' 
-                                    GROUP BY employees.name
+                                    AND count_emp.sub_dept = '{sub_dept}'
+                                    AND calls.sup_code != 'W' or 'N'
+                                    GROUP BY count_emp.name
                                     ''')
                 return self.cursor.fetchall()
             else:
                 self.cursor.execute(f'''
                                     SELECT 
-                                        employees.name,
+                                        count_emp.name,
                                         COUNT(*) AS Total,
-                                        SUM(CASE WHEN employees.id = calls.employee_id THEN 1 ELSE 0 END) "Immediate Count",
-                                        SUM(CASE WHEN employees.id != calls.employee_id THEN 1 ELSE 0 END) "Later Count"
+                                        SUM(CASE WHEN count_emp.id = org_emp.id THEN 1 ELSE 0 END) "Immediate Count",
+                                        SUM(CASE WHEN count_emp.id != org_emp.id THEN 1 ELSE 0 END) "Later Count"
                                     FROM calls
-                                    LEFT JOIN employees ON calls.original_user = employees.name
+                                    LEFT JOIN employees AS org_emp ON calls.original_user = org_emp.name
+                                    LEFT JOIN employees AS count_emp ON calls.employee_id = count_emp.id
                                     WHERE calls.email = 0
-                                    AND employees.sub_dept = "{sub_dept}"
+                                    AND count_emp.sub_dept = '{sub_dept}'
                                     AND calls.date_created BETWEEN '{start}' and '{end}' 
                                     AND calls.sup_code != 'W' or 'N'
-                                    GROUP BY employees.name
+                                    GROUP BY count_emp.name
                                     ''')
                 return self.cursor.fetchall()
         finally:
@@ -287,35 +290,38 @@ class Call:
             self.lock.acquire(True)
             if start == None and end == None and sub_dept == None:
                 self.cursor.execute('''
-                                    SELECT employees.name, COUNT(*)
+                                    SELECT count_emp.name, COUNT(*)
                                     FROM calls
-                                    LEFT JOIN employees ON calls.last_user = employees.name
+                                    LEFT JOIN employees AS org_emp ON calls.original_user = org_emp.name
+                                    LEFT JOIN employees AS count_emp ON calls.employee_id = count_emp.id
                                     WHERE calls.email = 1
                                     AND calls.sup_code != 'W' or 'N' 
-                                    GROUP BY employees.name
+                                    GROUP BY count_emp.name
                                     ''')
                 return self.cursor.fetchall()
             elif start == None and end == None and sub_dept != None:
                 self.cursor.execute(f'''
-                                    SELECT employees.name, COUNT(*)
+                                    SELECT count_emp.name, COUNT(*)
                                     FROM calls
-                                    LEFT JOIN employees ON calls.last_user = employees.name
+                                    LEFT JOIN employees AS org_emp ON calls.original_user = org_emp.name
+                                    LEFT JOIN employees AS count_emp ON calls.employee_id = count_emp.id
                                     WHERE calls.email = 1
-                                    AND employees.sub_dept = "{sub_dept}"
+                                    AND count_emp.sub_dept = '{sub_dept}'
                                     AND calls.sup_code != 'W' or 'N' 
-                                    GROUP BY employees.name
+                                    GROUP BY count_emp.name
                                     ''')
                 return self.cursor.fetchall()
             else:
                 self.cursor.execute(f'''
-                                    SELECT employees.name, COUNT(*)
+                                    SELECT count_emp.name, COUNT(*)
                                     FROM calls
-                                    LEFT JOIN employees ON calls.last_user = employees.name
+                                    LEFT JOIN employees AS org_emp ON calls.original_user = org_emp.name
+                                    LEFT JOIN employees AS count_emp ON calls.employee_id = count_emp.id
                                     WHERE calls.email = 1
-                                    AND employees.sub_dept = "{sub_dept}"
+                                    AND count_emp.sub_dept = '{sub_dept}'
                                     AND calls.date_created BETWEEN '{start}' and '{end}'
                                     AND calls.sup_code != 'W' or 'N' 
-                                    GROUP BY employees.name
+                                    GROUP BY count_emp.name
                                     ''')
                 return self.cursor.fetchall()
         finally:
