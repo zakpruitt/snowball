@@ -18,12 +18,12 @@ def parse():
             daily = request.files['formFileDaily']
             all = request.files['formFileAll']
             create_temp_files(daily, all)
-            parser.parse_text("./data/temp/" + daily.filename)
-            parser.parse_text("./data/temp/" + all.filename)
+            parser.parse_text("./resources/app/data/temp/" + daily.filename)
+            parser.parse_text("./resources/app/data/temp/" + all.filename)
         elif method == "multiple":
             files = request.files.getlist('formFileMultiple')
             for file in files:
                 create_temp_files(file)
-                parser.parse_text("./data/temp/" + file.filename)
+                parser.parse_text("./resources/app/data/temp/" + file.filename)
 
         return redirect('/sheets')

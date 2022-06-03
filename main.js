@@ -28,7 +28,7 @@ function createWindow() {
 
 async function emptyTemp() {
     console.log("Emptying temp folder...");
-    const folderPath = "./data/temp/";
+    const folderPath = "./resources/app/data/temp/";
     await fs.promises.readdir(folderPath)
     .then((f) => Promise.all(f.map(e => fs.promises.unlink(`${folderPath}${e}`))))
 }
