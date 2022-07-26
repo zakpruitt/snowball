@@ -1,5 +1,5 @@
 ## Project Overview
-Snowball is an electron-based application that seemingly automates manual data processes for MaddenCo. 
+Snowball seamlessly automates large scale, data and report processes for MaddenCo. Notable features are report parsing, data aggregation tools, data filtering tools, data manipulation tools, and data visualizing tools.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
