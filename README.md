@@ -1,50 +1,106 @@
-## Project Overview
-Snowball seamlessly automates large scale, data and report processes for MaddenCo. Notable features are report parsing, data aggregation tools, data filtering tools, data manipulation tools, and data visualizing tools.
+# Snowball
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+## 1. Project Overview
+Snowball is a desktop analytics suite for MaddenCo customer support operations. The Electron shell embeds a Flask web
+application that ingests daily support reports, normalizes the data into a SQLite database, and exposes interactive tables and
+charts to help the team track call and email workloads.
 
-<!-- CONTRIBUTING -->
-## Contributing
+## 2. Features
+- **Guided report parsing** – Upload single or multiple raw reports and automatically extract call and email activity.
+- **Data stewardship tools** – Review, edit, and delete call records and employee metadata directly from the built-in sheets view.
+- **Visualization dashboards** – Generate bar and pie charts showing employee performance, sub-department volume, and channel mix.
+- **Export-ready formatting** – Normalize data and formatting helpers that keep downstream Excel outputs consistent.
+- **Packaged desktop runtime** – Electron shell bundles the Python server and static assets for a turn-key Windows installer.
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+## 3. Tech Stack
+- **Frontend**: Electron, HTML templates, Chart.js (via Flask templates)
+- **Backend**: Python 3, Flask, SQLite, Pillow
+- **Tooling**: Node.js, electron-packager, python-shell, tree-kill
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+## 4. Getting Started
+### Prerequisites
+- Node.js 16+
+- npm 8+
+- Python 3.9+
+- Windows build tools for packaging (only required when running `npm run build`)
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+### Installation
+```bash
+# clone the repository
+git clone https://github.com/zakpruitt/senior-project.git
+cd senior-project
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+# install Node.js dependencies
+npm install
 
-<!-- LICENSE -->
-## License
+# (optional) create a Python virtual environment
+python -m venv .venv
+source .venv/bin/activate  # On Windows use `.venv\\Scripts\\activate`
 
-Distributed under the Apache 2.0 License. See `LICENSE.txt` for more information.
+# install Python requirements
+pip install Flask Pillow
+```
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+### Configuration
+- Ensure the `data/` directory contains a writable SQLite database (a starter `snowball.db` is included).
+- The application stores temporary uploads in `resources/app/data/temp/`; the folder is created automatically on first run.
+- Update `src/static/myIcon.ico` to customize the packaged application icon.
 
-<!-- CONTACT -->
-## Contact
+### Run Locally
+```bash
+# start the Electron shell (spawns the Flask server automatically)
+npm start
+```
+This command launches the Electron wrapper and opens the UI at `http://127.0.0.1:5000` in the desktop window.
 
-Zak Pruitt - [LinkedIn](https://www.linkedin.com/in/zak-pruitt-136567191/) - pruittzn@gmail.com <br/>
-Swayde Sanders - [LinkedIn](https://www.linkedin.com/in/zak-pruitt-136567191/) - ssanders2@eagles.usi.edu <br/>
-Logan Oakley - [LinkedIn](https://www.linkedin.com/in/zak-pruitt-136567191/) - loakley@eagles.usi.edu <br/>
+### Run Tests
+The project does not yet include automated tests. You can run the placeholder script to confirm wiring:
+```bash
+npm test
+```
 
-Project Link: [GitHub](https://github.com/zakpruitt/senior-project)
+## 5. API Documentation
+| Method | Route | Description |
+| ------ | ----- | ----------- |
+| GET | `/` | Render the home dashboard. |
+| GET/POST | `/parse/` | Upload report files for single or multi-file parsing workflows. |
+| GET | `/sheets/` | Display parsed call and employee tables. |
+| POST | `/sheets/delete` | Remove a specific call record from the database. |
+| GET | `/data/all-count` | Retrieve aggregated counts for total calls and emails. |
+| GET | `/data/bar-data` | Return per-employee totals filtered by date range and sub-department. |
+| GET | `/data/pie-email-data` | Return pie chart data for email counts by employee. |
+| GET | `/data/pie-data` | Return pie chart data for immediate vs. later calls by employee. |
+| GET/POST | `/settings/` | Manage employee metadata, color assignments, and department mappings. |
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+## 6. Project Structure
+```
+.
+├── data/                # SQLite database
+├── main.js              # Electron bootstrapper that launches the Python server
+├── package.json         # Node.js manifest and scripts
+├── src/
+│   ├── main.py          # Flask entry point
+│   ├── routes/          # Flask blueprints for views and APIs
+│   ├── models/          # SQLite data access layer
+│   ├── templates/       # HTML templates rendered by Flask
+│   ├── static/          # Icons, styles, and client-side assets
+│   └── utility.py       # Helpers for file handling and configuration
+└── README.md
+```
 
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
+## 7. Contributing
+We welcome contributions that improve data workflows, visualizations, or packaging automation:
+1. Fork the project and create a feature branch (`git checkout -b feature/amazing-improvement`).
+2. Commit your updates with descriptive messages.
+3. Run `npm start` to verify the UI loads and any manual QA steps relevant to your change.
+4. Submit a pull request describing the problem, solution, and testing.
 
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
+## 8. License
+Distributed under the **Apache 2.0 License**. See the [`LICENSE`](LICENSE) file for details.
 
-* [Choose an Open Source License](https://choosealicense.com)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [MadenCo]("https://maddenco.com")
-* [AstraZeneca](https://www.astrazeneca.com)
+## 9. Contact
+- Zak Pruitt – [LinkedIn](https://www.linkedin.com/in/zak-pruitt-136567191/) · pruittzn@gmail.com
+- Swayde Sanders – [LinkedIn](https://www.linkedin.com/in/zak-pruitt-136567191/) · ssanders2@eagles.usi.edu
+- Logan Oakley – [LinkedIn](https://www.linkedin.com/in/zak-pruitt-136567191/) · loakley@eagles.usi.edu
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+Project Link: [https://github.com/zakpruitt/senior-project](https://github.com/zakpruitt/senior-project)
